@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import Name from './Name'
-import NameController from './NameController'
-import ColorController from './ColorController'
+import Admin from './Admin'
 
 class App extends Component {
-  state = {name: 'Nima'}
+  state = {admin: 'Bana'}
   render() {
     return (
       <div className="App">
-        <Name />
-        <NameController />
-        <ColorController />
+        <Admin />
       </div>
     );
   }
