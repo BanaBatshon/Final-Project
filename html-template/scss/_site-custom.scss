@@ -1,0 +1,39 @@
+.thumbnail-wrap {
+  padding-right: 1.5rem;
+}
+
+.list-item-thumbnail {
+  width: 150px;
+  height: 125px;
+}
+
+.carousel-inner {
+  max-height: 500px !important;
+}
+
+.my-ratings-actions > a:first-child {
+  margin-right: 1rem;
+}
+
+.ratings-action {
+  font-size: 2.5rem;
+}
+
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 300px;
+}
+
+.w-5 { 
+  width: 5% !important; 
+}
+
+.w-10 { 
+  width: 10% !important; 
+}
+
+.w-15 { 
+  width: 15% !important; 
+}

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Foodie &mdash; Find the Best Dishes at Top Restaurants</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Roboto+Mono:300,400,500">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="css/bootstrap-tagsinput.css">
+
+
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="css/fl-bigmug-line.css">
+
+  <link rel="stylesheet" href="css/aos.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+
+
+    <header class="site-navbar py-1" role="banner">
+
+      <div class="container">
+        <div class="row align-items-center">
+
+          <div class="col-6 col-xl-2">
+            <h1 class="mb-0"><a href="index.html" class="text-black h2 mb-0"><strong>Foodie</strong></a></h1>
+          </div>
+
+          <div class="col-10 col-xl-10 d-none d-xl-block">
+            <nav class="site-navigation text-right" role="navigation">
+
+              <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li class="has-children">
+                  <a href="#">Restaurants</a>
+                  <ul class="dropdown">
+                    <li><a href="explore-restaurants.html">Explore</a></li>
+                    <li><a href="new-restaurant.html">New Restaurant Submission</a></li>
+                  </ul>
+                </li>
+                <li class="has-children">
+                  <a href="#">Dishes</a>
+                  <ul class="dropdown">
+                    <li><a href="explore-dishes.html">Explore</a></li>
+                    <li><a href="new-dish.html">New Dish Submission</a></li>
+                  </ul>
+                </li>
+                <li><a href="my-ratings.html">My Ratings</a></li>
+                <li><a href="#"><span class="rounded bg-secondary py-2 px-3 text-white">Login</span></a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <div class="col-6 col-xl-2 text-right d-block">
+            <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;">
+              <a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <div class="unit-5 overlay hero-container" style="background-image: url('images/hero_bg_6.jpg');">
+      <div class="container text-center">
+        <h2 class="mb-0">New Dish Submission</h2>
+      </div>
+    </div>
+
+    <div class="site-section bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-8 mb-5">
+            <form action="#" class="p-5 bg-white">
+
+              <div class="row form-group">
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <label class="font-weight-bold" for="fullname">Restaurant</label>
+                  <input type="text" id="fullname" class="typeahead form-control"
+                    placeholder="Search by restaurant name">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <label class="font-weight-bold" for="email">Dish</label>
+                  <input type="text" class="form-control" placeholder="eg. Pepperoni Pizza">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <label class="font-weight-bold" for="email">Tags</label>
+                  <!-- <input type="text" data-role="tagsinput" class="form-control" placeholder=""> -->
+                  <input type="text" value="Italian" data-role="tagsinput" class="form-control">
+                  <!-- <input type="text" value="" data-role="tagsinput" placeholder="Add tags" /> -->
+
+                </div>
+              </div>
+
+              <div class="row form-group pt-3 pb-5">
+                <div class="col-md-12">
+                  <a href="#"><span class="rounded bg-primary py-2 px-3 text-white">Add Dish</span></a>
+                  <!-- <input type="submit" value="Submit" class="btn btn-primary  py-2 px-4"> -->
+                </div>
+              </div>
+
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th class="w-5">#</th>
+                    <th class="w-25">Dish</th>
+                    <th class="w-25">Tags</th>
+                    <th class="w-15"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Capricciosa</td>
+                    <td>
+                      <span class="badge badge-success">Italian</span>
+                      <span class="badge badge-success">Pizza</span>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-secondary btn-sm">Edit</button>
+                      <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Prosciutto e Rucola</td>
+                    <td><span class="badge badge-success">Italian</span></td>
+                    <td>
+                      <button type="button" class="btn btn-secondary btn-sm">Edit</button>
+                      <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+              <div class="row py-3">
+                <div class="col-md-12 py-3 d-block d-md-flex justify-content-center">
+                  <a href="#"><span class="rounded bg-primary py-2 px-3 text-white">Submit</span></a>
+                </div>
+              </div>
+
+            </form>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="p-4 mb-3 bg-white">
+              <h3 class="h5 text-black mb-3">Submission Disclaimer</h3>
+              <p class="mb-4">We thank you for your contribution to Foodie. Your effort is what makes Foodie the #1 food
+                review site on the internet. Please allow up to 48 hours for your submission to be approved and points
+                to be credited to your account. Thanks!</p>
+              <p class="mb-0 font-weight-bold">Questions?</p>
+              <p class="mb-0"><a href="#">youremail@domain.com</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="py-5 bg-primary">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="text-white h4 font-weihgt-normal mb-4">Subscribe Newsletter</h2>
+          </div>
+        </div>
+        <form action="" class="row">
+          <div class="col-md-9">
+            <input type="text" class="form-control border-0 mb-3 mb-md-0" placeholder="Enter Your Email">
+          </div>
+          <div class="col-md-3">
+            <input type="submit" value="Send" class="btn btn-dark btn-block" style="height: 45px;">
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+
+
+        <div class="row">
+          <div class="col-lg-4">
+            <h3 class="footer-heading mb-4">Discover</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Top Dishes</a></li>
+              <li><a href="#">Top Restaurants</a></li>
+              <li><a href="#">Top Cuisines</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4">
+            <h3 class="footer-heading mb-4">Contribute Data</h3>
+            <ul class="list-unstyled">
+              <li><a href="#">Restaurant</a></li>
+              <li><a href="#">Dishes</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4">
+            <h3 class="footer-heading mb-4">Contact Info</h3>
+            <ul class="list-unstyled">
+              <li>
+                <span class="social-media-icon icon-facebook"></span>
+                <span class="social-media-icon icon-instagram"></span>
+                <span class="social-media-icon icon-twitter"></span>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+        <div class="row pt-5 mt-5 text-center">
+          <div class="col-md-12">
+            <p>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;
+              <script data-cfasync="false"
+                src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+              <script>document.write(new Date().getFullYear());</script> All Rights Reserved | This template is made
+              with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                target="_blank">Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/bootstrap-tagsinput.js"></script>
+  <script src="js/bootstrap3-typeahead.js"></script>
+  <script>
+    $(".typeahead").typeahead({
+
+      // data source
+      source: [
+        { id: "id1", name: "Via Tevere Pizzeria" },
+        { id: "id2", name: "Nicli Antica Pizzeria" },
+        { id: "id3", name: "Pizzeria Farina" },
+        { id: "id4", name: "The Parlour" },
+        { id: "id5", name: "Pizza Garden" },
+
+      ],
+
+      // how many items to show
+      items: 8,
+
+      // default template
+      menu: '<ul class="typeahead dropdown-menu" role="listbox"></ul>',
+      item: '<li><a class="dropdown-item" href="#" role="option" data-toggle="modal" data-target="#exampleModalCenter"></a></li>',
+      // item: '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">',
+      headerHtml: '<li class="dropdown-header"></li>',
+      headerDivider: '<li class="divider" role="separator"></li>',
+      itemContentSelector: 'a',
+
+      // min length to trigger the suggestion list
+      minLength: 1,
+
+      // number of pixels the scrollable parent container scrolled down
+      scrollHeight: 0,
+
+      // auto selects the first item
+      autoSelect: true,
+
+      // callbacks
+      afterSelect: $.noop,
+      afterEmptySelect: $.noop,
+
+      // adds an item to the end of the list
+      addItem: false,
+
+      // delay between lookups
+      delay: 0,
+
+    });
+
+    $(".menu-item-tags").typeahead({
+
+      // data source
+      source: [
+        { id: "id1", name: "Pizza" },
+        { id: "id2", name: "Italian" },
+      ],
+
+      // how many items to show
+      items: 8,
+
+      // default template
+      menu: '<ul class="typeahead dropdown-menu" role="listbox"></ul>',
+      item: '<li><a class="dropdown-item" href="#" role="option" data-toggle="modal" data-target="#exampleModalCenter"></a></li>',
+      // item: '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">',
+      headerHtml: '<li class="dropdown-header"></li>',
+      headerDivider: '<li class="divider" role="separator"></li>',
+      itemContentSelector: 'a',
+
+      // min length to trigger the suggestion list
+      minLength: 1,
+
+      // number of pixels the scrollable parent container scrolled down
+      scrollHeight: 0,
+
+      // auto selects the first item
+      autoSelect: true,
+
+      // callbacks
+      afterSelect: $.noop,
+      afterEmptySelect: $.noop,
+
+      // adds an item to the end of the list
+      addItem: false,
+
+      // delay between lookups
+      delay: 0,
+
+    });
+  </script>
+
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>
