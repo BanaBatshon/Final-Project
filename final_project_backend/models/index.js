@@ -9,7 +9,6 @@ const models = {
   MenuItemRating: sequelize.import('./menuitemrating'),
   MenuItemTag: sequelize.import('./menuitemtag'),
   MenuItem: sequelize.import('./menuitem'),
-  RestaurantRating: sequelize.import('./restaurantrating'),
   RestaurantTag: sequelize.import('./restauranttag'),
   Restaurant: sequelize.import('./restaurant'),
   Tag: sequelize.import('./tag')
