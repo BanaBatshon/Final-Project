@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-class AdminForm extends Component {
+class NewRestaurantForm extends Component {
   render() {
     return (
       <div class="col-md-12 col-lg-8 mb-5">
@@ -65,4 +65,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   null
-)(AdminForm)
+)(NewRestaurantForm)
