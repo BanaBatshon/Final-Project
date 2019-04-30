@@ -4,6 +4,45 @@ var router  = express.Router();
 var cors = require('cors')
 
 router.use(cors());
+
+router.get('/tags', function(req, res) {
+  return models.tags
+  .findAll()
+  .then(function(results) {
+    let tags = [];
+    results.forEach(function(result) {
+      tags.push({id : result.dataValues.id, name : result.dataValues.name});
+    });
+    res.json(tags);
+  });
+});
+
+/**
+ * Route for creating a new menu item for a restaurant
+ */
+// router.get('/items', function(req, res) {
+//   const name = req.body.name || 'test';
+//   const restaurantId = req.body.restaurantId || 1;
+//   const approved = req.body.approved || false;
+//   const tags = req.body.tags || [{'pizza'}, {'italian'}, {2: 'pasta'}];
+//   models.menu_items.build({name: name, restaurantId: restaurantId, 
+//     approved: approved, createdAt: new Date(), updatedAt: new Date()})
+//     .save()
+//     .then(function(menu_item) {
+//       let tagsArr = [];
+//       tags.forEach(function(tag) {
+//         let tagEntry = models.menu_item_tags.build({})
+//       });
+      
+//      //res.status(200).end();
+//     })
+//     .catch(function(err){
+//       if (err) {
+//         console.log(err)
+//       }
+//     })
+// });
+
 /**
  * Route for getting a list of all restaurants
  */
