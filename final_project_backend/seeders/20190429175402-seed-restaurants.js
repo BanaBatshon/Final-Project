@@ -239,12 +239,22 @@ module.exports = {
 
     
     const pourhouseBurgerId = pourhouseBurgerRows[0][0].id;
-    return await queryInterface.bulkInsert('menuitemtags', [
+     await queryInterface.bulkInsert('menuitemtags', [
       {
         tagId: burgerTagId,
         menuitemId: pourhouseBurgerId,
         createdAt: new Date(),
         updatedAt : new Date()
+      }
+    ], {});
+
+    return await queryInterface.bulkInsert('menuitemratings', [
+      {
+        rating: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: pourhouseBurgerId,
+        userId: 1
       }
     ], {});
   },

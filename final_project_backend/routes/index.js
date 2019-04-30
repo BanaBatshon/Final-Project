@@ -67,10 +67,16 @@ router.post('/restaurants', function(req, res) {
  */
 function getRestaurant(id) {
   return models.restaurants
-  .find({where: {id: id}, include: [models.menu_items]})
+  .find({where: {id: id}, include: [{model: models.menu_items, include: [models.menu_item_ratings]}]})
   .then(function(restaurant) {
     let menuItems = [];
-    restaurant.dataValues.menuitems.forEach(function(item) {
+    let menu_items = restaurant.dataValues.menuitems;
+    menu_items.forEach(function(item) {
+      let ratings = [];
+      item.menuitemratings.forEach(function(rating) {
+        ratings.push(rating.dataValues);
+      });
+      item.menuitemratings = ratings;
       menuItems.push(item.dataValues);
     });
     restaurant.dataValues.menuitems = menuItems;
