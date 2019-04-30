@@ -20,28 +20,24 @@ router.get('/tags', function(req, res) {
 /**
  * Route for creating a new menu item for a restaurant
  */
-// router.get('/items', function(req, res) {
-//   const name = req.body.name || 'test';
-//   const restaurantId = req.body.restaurantId || 1;
-//   const approved = req.body.approved || false;
-//   const tags = req.body.tags || [{'pizza'}, {'italian'}, {2: 'pasta'}];
-//   models.menu_items.build({name: name, restaurantId: restaurantId, 
-//     approved: approved, createdAt: new Date(), updatedAt: new Date()})
-//     .save()
-//     .then(function(menu_item) {
-//       let tagsArr = [];
-//       tags.forEach(function(tag) {
-//         let tagEntry = models.menu_item_tags.build({})
-//       });
-      
-//      //res.status(200).end();
-//     })
-//     .catch(function(err){
-//       if (err) {
-//         console.log(err)
-//       }
-//     })
-// });
+router.get('/items', function(req, res) {
+  const name = req.body.name;// || 'test';
+  const restaurantId = req.body.restaurantId;// || 1;
+  const approved = req.body.approved;// || false;
+  const tags = req.body.tags; //|| [{id: 28, name: 'pizza'}, {id: 7, name:'italian'}, {id :2, name: 'pasta'}];
+  
+  models.menu_items.build({name: name, restaurantId: restaurantId, 
+    approved: approved, createdAt: new Date(), updatedAt: new Date()})
+    .save().then(function(menu_item) {
+      let menuitemId = menu_item.dataValues.id;
+      let tagsArr = [];
+      tags.forEach(function(tag) {
+        let tagEntry = models.menu_item_tags.build({menuitemId: menuitemId, 
+          tagId: tag.id, createdAt: new Date(), updatedAt: new Date()}).save()
+      });
+     res.send();
+    });
+});
 
 /**
  * Route for getting a list of all restaurants
