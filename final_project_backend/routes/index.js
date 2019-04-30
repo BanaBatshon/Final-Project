@@ -198,31 +198,9 @@ function getRestaurantIds (tag) {
   .then(function(results) {
     let restaurantIds = [];
     results.dataValues.restauranttags.forEach(function(id){
-      restaurantIds.push(id.dataValues.id);
+      restaurantIds.push(id.dataValues.restaurantId);
     });
     return restaurantIds;
-  });
-}
-
-/**
- * Returns all tags for each restaurant in array.
- * @param {Array of restaurant ids} arrRestaurantIds 
- */
-function getTags (arrRestaurantIds) {
-  return models.restaurant_tags
-  .findAll({where: {restaurantId: {$in: arrRestaurantIds}}, include: [models.tags]})
-  .then(function(results) {
-    let tagsForRestaurants = {};
-    results.forEach(function(tag) {
-      let res_id = tag.dataValues.id;
-      if (tagsForRestaurants[res_id] === undefined) {
-        let tag_name = tag.dataValues.tag.dataValues.name;
-        tagsForRestaurants[res_id] = [tag_name];
-      } else {
-        tagsForRestaurants[res_id].push(tag_name);
-      }
-    });
-    return tagsForRestaurants;
   });
 }
 
