@@ -1,15 +1,16 @@
+import RestaurantPreview from './RestaurantPreview';
 import React from 'react';
 
 const RestaurantList = props => {
   if (!props.restaurants) {
     return (
-      <div className="restaurant-preview">Loading...</div>
+      <div className="article-preview">Loading...</div>
     );
   }
 
   if (props.restaurants.length === 0) {
     return (
-      <div className="restaurant-preview">
+      <div className="article-preview">
         No restaurants are here... yet.
       </div>
     );
@@ -20,7 +21,7 @@ const RestaurantList = props => {
       {
         props.restaurants.map(restaurant => {
           return (
-            <h2>{restaurant.title}</h2>
+            <RestaurantPreview restaurant={restaurant} key={restaurant.id} />
           );
         })
       }
