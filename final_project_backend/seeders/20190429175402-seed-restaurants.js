@@ -230,6 +230,13 @@ module.exports = {
       restaurantId: restaurantId,
       createdAt: new Date(),
       updatedAt : new Date()
+    }, 
+    {
+      name: 'Steak Burger',
+      approved: true,
+      restaurantId: restaurant1Id,
+      createdAt: new Date(),
+      updatedAt : new Date()
     }
    ], {})
 
@@ -237,14 +244,57 @@ module.exports = {
       `SELECT id from menuitems where name='The Pourhouse Burger';`
     );
 
+    const steakBurgerRows = await queryInterface.sequelize.query(
+      `SELECT id from menuitems where name='Steak Burger';`
+    );
+
     
     const pourhouseBurgerId = pourhouseBurgerRows[0][0].id;
-    return await queryInterface.bulkInsert('menuitemtags', [
+    const steakBurgerId = steakBurgerRows[0][0].id;
+
+     await queryInterface.bulkInsert('menuitemtags', [
       {
         tagId: burgerTagId,
         menuitemId: pourhouseBurgerId,
         createdAt: new Date(),
         updatedAt : new Date()
+      },
+      {
+        tagId: burgerTagId,
+        menuitemId: steakBurgerId,
+        createdAt: new Date(),
+        updatedAt : new Date()
+      }
+    ], {});
+
+    return await queryInterface.bulkInsert('menuitemratings', [
+      {
+        rating: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: pourhouseBurgerId,
+        userId: 1
+      },
+      {
+        rating: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: pourhouseBurgerId,
+        userId: 2
+      },
+      {
+        rating: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: steakBurgerId,
+        userId: 2
+      },
+      {
+        rating: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: steakBurgerId,
+        userId: 1
       }
     ], {});
   },

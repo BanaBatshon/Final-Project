@@ -5,13 +5,13 @@ var Sequelize = require('sequelize');
 const sequelize = new Sequelize(`postgres://labber:labber@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 
 const models = {
-  User: sequelize.import('./user'),
-  MenuItemRating: sequelize.import('./menuitemrating'),
-  MenuItemTag: sequelize.import('./menuitemtag'),
-  MenuItem: sequelize.import('./menuitem'),
-  RestaurantTag: sequelize.import('./restauranttag'),
-  Restaurant: sequelize.import('./restaurant'),
-  Tag: sequelize.import('./tag')
+  users: sequelize.import('./user'),
+  tags: sequelize.import('./tag'),
+  menu_item_ratings: sequelize.import('./menuitemrating'),
+  menu_item_tags: sequelize.import('./menuitemtag'),
+  menu_items: sequelize.import('./menuitem'),
+  restaurant_tags: sequelize.import('./restauranttag'),
+  restaurants: sequelize.import('./restaurant')
 };
 
 Object.keys(models).forEach(modelName => {
