@@ -110,12 +110,12 @@ function getRestaurant(id) {
  */
 function getMenuItemIds (tag) {
   return models.tags
-  .findAll({where: {name: `${tag}`}, include: [models.menu_item_tags]})
+  .find({where: {name: `${tag}`}, include: [models.menu_item_tags]})
   .then(function(results) {
     let menuItemIds = [];
-    results.forEach(function(tag) {
-      menuItemIds.push(tag.dataValues.menuitemtags[0].id);
-    });
+    results.dataValues.menuitemtags.forEach(function(item) {
+      menuItemIds.push(item.dataValues.menuitemId)
+    })
     return menuItemIds;
   });
 }
