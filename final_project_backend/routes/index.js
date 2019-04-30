@@ -62,7 +62,7 @@ router.post('/restaurants', function(req, res) {
   const phone_number = '6045552121';
   const website = '';
   const approved = false;
-  models.Restaurant.build({name: name, address: address, phone_number: phone_number, 
+  models.restaurants.build({name: name, address: address, phone_number: phone_number, 
     website: website, approved: approved, createdAt: new Date(), updatedAt: new Date()})
     .save()
     res.send();
