@@ -1,7 +1,9 @@
 var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
+var cors = require('cors')
 
+router.use(cors());
 /**
  * Route for getting a list of all restaurants
  */
@@ -28,11 +30,10 @@ router.get('/restaurants/:id/', function(req, res) {
   const tag = req.params.id;
   getRestaurantIds(tag)
   .then(function(idsArr) {
+    console.log(idsArr)
     getRestaurantsById(idsArr)
     .then(function(restaurants) {
-      getTags(idsArr).then(function(tags) {
-        res.json({restaurants: restaurants, tags: tags});
-      });
+      res.json(restaurants);
     });
   });
 });
@@ -57,15 +58,24 @@ router.get('/items/:id/', function(req, res) {
  * Endpoint to create new restaurants
  */
 router.post('/restaurants', function(req, res) {
-  const name = 'test restaurant';
-  const address = '123 fake street';
-  const phone_number = '6045552121';
-  const website = '';
-  const approved = false;
+  console.log("testttttttt")
+  console.log(req.body);
+  const name = req.body.name;
+  const address = req.body.address;
+  const phone_number = req.body.phone_number;
+  const website = req.body.website;
+  const approved = req.body.approved;
   models.restaurants.build({name: name, address: address, phone_number: phone_number, 
     website: website, approved: approved, createdAt: new Date(), updatedAt: new Date()})
     .save()
-    res.send();
+    .then(function(restaurant) {
+      res.status(200).end();
+    })
+    .catch(function(err){
+      if (err) {
+        console.log(err)
+      }
+    })
 });
 
 function allRestaurants() {
@@ -162,11 +172,17 @@ function getMenuTags (arrIds) {
  */
 function getRestaurantsById(arr) {
   return models.restaurants
-  .findAll({where: {id: {$in: arr}}})
+  .findAll({where: {id: {$in: arr}}, include: [{model : models.restaurant_tags, include: [models.tags]}]})
   .then(function(restaurants) {
     let restaurantsArr = [];
-    restaurants.forEach(function(restaurant){
-      restaurantsArr.push(restaurant.dataValues)
+    restaurants.forEach(function(restaurant) {
+      let tags = restaurant.dataValues.restauranttags;
+      let tagsArr = [];
+      tags.forEach(function(tag) {
+        tagsArr.push(tag.dataValues.tag.dataValues.name);
+      });
+      restaurant.dataValues.restauranttags = tagsArr;
+      restaurantsArr.push(restaurant.dataValues);
     });
     return restaurantsArr;
   });
