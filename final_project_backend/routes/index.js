@@ -1,7 +1,9 @@
 var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
+var cors = require('cors')
 
+router.use(cors());
 /**
  * Route for getting a list of all restaurants
  */
@@ -57,15 +59,24 @@ router.get('/items/:id/', function(req, res) {
  * Endpoint to create new restaurants
  */
 router.post('/restaurants', function(req, res) {
-  const name = 'test restaurant';
-  const address = '123 fake street';
-  const phone_number = '6045552121';
-  const website = '';
-  const approved = false;
-  models.Restaurant.build({name: name, address: address, phone_number: phone_number, 
+  console.log("testttttttt")
+  console.log(req.body);
+  const name = req.body.name;
+  const address = req.body.address;
+  const phone_number = req.body.phone_number;
+  const website = req.body.website;
+  const approved = req.body.approved;
+  models.restaurants.build({name: name, address: address, phone_number: phone_number, 
     website: website, approved: approved, createdAt: new Date(), updatedAt: new Date()})
     .save()
-    res.send();
+    .then(function(restaurant) {
+      res.status(200).end();
+    })
+    .catch(function(err){
+      if (err) {
+        console.log(err)
+      }
+    })
 });
 
 function allRestaurants() {
