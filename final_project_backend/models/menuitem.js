@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
         models.menu_items.hasMany(models.menu_item_ratings, {
           onDelete: "CASCADE",
         });
+        models.menu_items.belongsTo(models.restaurants, {
+          onDelete: "CASCADE",
+        });
       }
     }
   });
