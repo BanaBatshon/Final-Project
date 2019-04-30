@@ -242,7 +242,7 @@ module.exports = {
     return await queryInterface.bulkInsert('menuitemtags', [
       {
         tagId: burgerTagId,
-        menuItemId: pourhouseBurgerId,
+        menuitemId: pourhouseBurgerId,
         createdAt: new Date(),
         updatedAt : new Date()
       }

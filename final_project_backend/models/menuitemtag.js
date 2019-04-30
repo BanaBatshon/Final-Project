@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     models.MenuItemTag.belongsTo(models.Tag, {
       onDelete: "CASCADE",
     });
+    models.MenuItemTag.belongsTo(models.MenuItem, {
+      onDelete: "CASCADE",
+    });
   }
   return MenuItemTag;
 };

@@ -6,6 +6,12 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        models.MenuItemRating.belongsTo(models.MenuItem, {
+          onDelete: "CASCADE",
+        });
+        models.MenuItemRating.belongsTo(models.User, {
+          onDelete: "CASCADE",
+        });
       }
     }
   });

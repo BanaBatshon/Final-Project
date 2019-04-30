@@ -20,6 +20,14 @@ router.get('/restaurants/:id/', function(req, res) {
 });
 
 /**
+ * Route for processing search results based on id(tags)
+ */
+router.get('/items/:id/', function(req, res) {
+  const tag = req.params.id;
+
+});
+
+/**
  * Endpoint to create new restaurants
  */
 router.post('/restaurants', function(req, res) {
@@ -33,6 +41,38 @@ router.post('/restaurants', function(req, res) {
     .save()
     res.send();
 });
+
+/**
+ * Returns array of menu item ids for specific tag.
+ * @param {Menu Item Tag} tag 
+ */
+function getMenuItemIds (tag) {
+  return models.Tag
+  .findAll({where: {name: `${tag}`}, include: [models.MenuItemTag]})
+  .then(function(results) {
+    let menuItemIds = [];
+    results.forEach(function(tag) {
+      menuItemIds.push(tag.dataValues.menuitemtags[0].id);
+    });
+    return menuItemIds;
+  });
+}
+
+/**
+ * Returns an array of Menu Item objects
+ * @param {Array of menu item ids} arrIds 
+ */
+function getMenuItemsById (arrIds) {
+  return models.MenuItem
+  .findAll({where: {id: {$in: [1]}}})
+  .then(function(results) {
+    let menuItems = [];
+    results.forEach(function(item) {
+      menuItems.push(item.dataValues);
+    });
+   return menuItems;
+  });
+}
 
 /**
  * Returns restaurant objects for each restaurant id in array.
