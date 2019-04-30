@@ -19,6 +19,11 @@ module.exports = {
       updatedAt : new Date()
     },
     {
+      name: 'pasta',
+      createdAt: new Date(),
+      updatedAt : new Date()
+    },
+    {
      name: 'lunch',
      createdAt: new Date(),
      updatedAt : new Date()
@@ -201,12 +206,34 @@ module.exports = {
       `SELECT id from restaurants where name='Moderne Burger';`
     );
 
+    const restaurant3 = await queryInterface.sequelize.query(
+      `SELECT id from restaurants where name='Campagnolo';`
+    );
+
     const burgerTagRows = await queryInterface.sequelize.query(
       `SELECT id from tags where name='burger';`
     );
+
+    const pizzaTagRows = await queryInterface.sequelize.query(
+      `SELECT id from tags where name='pizza';`
+    );
+    const pastaTagRows = await queryInterface.sequelize.query(
+      `SELECT id from tags where name='pasta';`
+    );
+    const italianTagRows = await queryInterface.sequelize.query(
+      `SELECT id from tags where name='italian';`
+    );
+
     const burgerTagId = burgerTagRows[0][0].id;
+    const pizzaTagId = pizzaTagRows[0][0].id;
+    const pastaTagId = pastaTagRows[0][0].id;
+    const italianTagId = italianTagRows[0][0].id;
+
+
     const restaurantId = restaurant[0][0].id;
     const restaurant1Id = restaurant1[0][0].id;
+    const restaurant3Id = restaurant3[0][0].id;
+
 
    await queryInterface.bulkInsert('restauranttags', [
      {
@@ -220,7 +247,25 @@ module.exports = {
       restaurantId: restaurant1Id,
       createdAt: new Date(),
       updatedAt : new Date()
-     }
+     },
+     {
+      tagId: pizzaTagId,
+      restaurantId: restaurant3Id,
+      createdAt: new Date(),
+      updatedAt : new Date()
+     },
+     {
+      tagId: pastaTagId,
+      restaurantId: restaurant3Id,
+      createdAt: new Date(),
+      updatedAt : new Date()
+     },
+     {
+      tagId: italianTagId,
+      restaurantId: restaurant3Id,
+      createdAt: new Date(),
+      updatedAt : new Date()
+     },
    ], {})
 
    await queryInterface.bulkInsert('menuitems', [
@@ -237,6 +282,27 @@ module.exports = {
       restaurantId: restaurant1Id,
       createdAt: new Date(),
       updatedAt : new Date()
+    },
+    {
+      name: 'Tagliatelle',
+      approved: true,
+      restaurantId: restaurant3Id,
+      createdAt: new Date(),
+      updatedAt : new Date()
+    },
+    {
+      name: 'Spaghetti al Pomodoro',
+      approved: true,
+      restaurantId: restaurant3Id,
+      createdAt: new Date(),
+      updatedAt : new Date()
+    },
+    {
+      name: 'Margherita Pizza',
+      approved: true,
+      restaurantId: restaurant3Id,
+      createdAt: new Date(),
+      updatedAt : new Date()
     }
    ], {})
 
@@ -248,9 +314,27 @@ module.exports = {
       `SELECT id from menuitems where name='Steak Burger';`
     );
 
+    const tagliatelleRows = await queryInterface.sequelize.query(
+      `SELECT id from menuitems where name='Tagliatelle';`
+    );
+
+    const spaghettiRows = await queryInterface.sequelize.query(
+      `SELECT id from menuitems where name='Spaghetti al Pomodoro';`
+    );
+
+    const pizzaRows = await queryInterface.sequelize.query(
+      `SELECT id from menuitems where name='Margherita Pizza';`
+    );
+
+    
+
     
     const pourhouseBurgerId = pourhouseBurgerRows[0][0].id;
     const steakBurgerId = steakBurgerRows[0][0].id;
+    const tagliatelleId = tagliatelleRows[0][0].id;
+    const spaghettiId = spaghettiRows[0][0].id;
+    const pizzaId = pizzaRows[0][0].id;
+
 
      await queryInterface.bulkInsert('menuitemtags', [
       {
@@ -264,7 +348,44 @@ module.exports = {
         menuitemId: steakBurgerId,
         createdAt: new Date(),
         updatedAt : new Date()
-      }
+      },
+      {
+        tagId: pastaTagId,
+        menuitemId: tagliatelleId,
+        createdAt: new Date(),
+        updatedAt : new Date()
+      },
+      {
+        tagId: italianTagId,
+        menuitemId: tagliatelleId,
+        createdAt: new Date(),
+        updatedAt : new Date()
+      },
+      {
+        tagId: pastaTagId,
+        menuitemId: spaghettiId,
+        createdAt: new Date(),
+        updatedAt : new Date()
+      },
+      {
+        tagId: italianTagId,
+        menuitemId: spaghettiId,
+        createdAt: new Date(),
+        updatedAt : new Date()
+      },
+      {
+        tagId: pizzaTagId,
+        menuitemId: pizzaId,
+        createdAt: new Date(),
+        updatedAt : new Date()
+      },
+      {
+        tagId: italianTagId,
+        menuitemId: pizzaId,
+        createdAt: new Date(),
+        updatedAt : new Date()
+      },
+ 
     ], {});
 
     return await queryInterface.bulkInsert('menuitemratings', [
@@ -295,6 +416,69 @@ module.exports = {
         updatedAt: new Date(),
         menuitemId: steakBurgerId,
         userId: 1
+      },
+      {
+        rating: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: tagliatelleId,
+        userId: 1
+      },
+      {
+        rating: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: tagliatelleId,
+        userId: 2
+      },
+      {
+        rating: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: tagliatelleId,
+        userId: 3
+      },
+      {
+        rating: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: spaghettiId,
+        userId: 1
+      },
+      {
+        rating: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: spaghettiId,
+        userId: 2
+      },
+      {
+        rating: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: spaghettiId,
+        userId: 3
+      },
+      {
+        rating: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: pizzaId,
+        userId: 1
+      },
+      {
+        rating: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: pizzaId,
+        userId: 2
+      },
+      {
+        rating: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: pizzaId,
+        userId: 3
       }
     ], {});
   },

@@ -4,6 +4,41 @@ var router  = express.Router();
 var cors = require('cors')
 
 router.use(cors());
+
+router.get('/tags', function(req, res) {
+  return models.tags
+  .findAll()
+  .then(function(results) {
+    let tags = [];
+    results.forEach(function(result) {
+      tags.push({id : result.dataValues.id, name : result.dataValues.name});
+    });
+    res.json(tags);
+  });
+});
+
+/**
+ * Route for creating a new menu item for a restaurant
+ */
+router.post('/items', function(req, res) {
+  const name = req.body.name;// || 'test';
+  const restaurantId = req.body.restaurantId;// || 1;
+  const approved = req.body.approved;// || false;
+  const tags = req.body.tags; //|| [{id: 28, name: 'pizza'}, {id: 7, name:'italian'}, {id :2, name: 'pasta'}];
+
+  models.menu_items.build({name: name, restaurantId: restaurantId, 
+    approved: approved, createdAt: new Date(), updatedAt: new Date()})
+    .save().then(function(menu_item) {
+      let menuitemId = menu_item.dataValues.id;
+      let tagsArr = [];
+      tags.forEach(function(tag) {
+        let tagEntry = models.menu_item_tags.build({menuitemId: menuitemId, 
+          tagId: tag.id, createdAt: new Date(), updatedAt: new Date()}).save()
+      });
+     res.send();
+    });
+});
+
 /**
  * Route for getting a list of all restaurants
  */
@@ -32,9 +67,7 @@ router.get('/restaurants/:id/', function(req, res) {
   .then(function(idsArr) {
     getRestaurantsById(idsArr)
     .then(function(restaurants) {
-      getTags(idsArr).then(function(tags) {
-        res.json({restaurants: restaurants, tags: tags});
-      });
+      res.json(restaurants);
     });
   });
 });
@@ -81,10 +114,16 @@ router.post('/restaurants', function(req, res) {
 
 function allRestaurants() {
   return models.restaurants
-  .findAll()
+  .findAll({include: [{model: models.restaurant_tags, include: [models.tags]}]})
   .then(function(results) {
     let restaurants = [];
     results.forEach(function(restaurant) {
+      let restaurant_tags = restaurant.dataValues.restauranttags;
+      let tagsArr = [];
+      restaurant_tags.forEach(function(tag) {
+        tagsArr.push(tag.dataValues.tag.name);
+      });
+      restaurant.dataValues.restauranttags = tagsArr;
       restaurants.push(restaurant.dataValues);
     });
     return restaurants;
@@ -121,12 +160,12 @@ function getRestaurant(id) {
  */
 function getMenuItemIds (tag) {
   return models.tags
-  .findAll({where: {name: `${tag}`}, include: [models.menu_item_tags]})
+  .find({where: {name: `${tag}`}, include: [models.menu_item_tags]})
   .then(function(results) {
     let menuItemIds = [];
-    results.forEach(function(tag) {
-      menuItemIds.push(tag.dataValues.menuitemtags[0].id);
-    });
+    results.dataValues.menuitemtags.forEach(function(item) {
+      menuItemIds.push(item.dataValues.menuitemId)
+    })
     return menuItemIds;
   });
 }
@@ -173,11 +212,17 @@ function getMenuTags (arrIds) {
  */
 function getRestaurantsById(arr) {
   return models.restaurants
-  .findAll({where: {id: {$in: arr}}})
+  .findAll({where: {id: {$in: arr}}, include: [{model : models.restaurant_tags, include: [models.tags]}]})
   .then(function(restaurants) {
     let restaurantsArr = [];
-    restaurants.forEach(function(restaurant){
-      restaurantsArr.push(restaurant.dataValues)
+    restaurants.forEach(function(restaurant) {
+      let tags = restaurant.dataValues.restauranttags;
+      let tagsArr = [];
+      tags.forEach(function(tag) {
+        tagsArr.push(tag.dataValues.tag.dataValues.name);
+      });
+      restaurant.dataValues.restauranttags = tagsArr;
+      restaurantsArr.push(restaurant.dataValues);
     });
     return restaurantsArr;
   });
@@ -193,31 +238,9 @@ function getRestaurantIds (tag) {
   .then(function(results) {
     let restaurantIds = [];
     results.dataValues.restauranttags.forEach(function(id){
-      restaurantIds.push(id.dataValues.id);
+      restaurantIds.push(id.dataValues.restaurantId);
     });
     return restaurantIds;
-  });
-}
-
-/**
- * Returns all tags for each restaurant in array.
- * @param {Array of restaurant ids} arrRestaurantIds 
- */
-function getTags (arrRestaurantIds) {
-  return models.restaurant_tags
-  .findAll({where: {restaurantId: {$in: arrRestaurantIds}}, include: [models.tags]})
-  .then(function(results) {
-    let tagsForRestaurants = {};
-    results.forEach(function(tag) {
-      let res_id = tag.dataValues.id;
-      if (tagsForRestaurants[res_id] === undefined) {
-        let tag_name = tag.dataValues.tag.dataValues.name;
-        tagsForRestaurants[res_id] = [tag_name];
-      } else {
-        tagsForRestaurants[res_id].push(tag_name);
-      }
-    });
-    return tagsForRestaurants;
   });
 }
 
