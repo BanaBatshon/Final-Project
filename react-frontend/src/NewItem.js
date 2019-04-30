@@ -5,7 +5,8 @@ var superagent = require('superagent');
 class NewMenuItemForm extends Component {
   state =  {
     name: '',
-    id: ''
+    id: '',
+    tags: [{}]
   }
 
  
