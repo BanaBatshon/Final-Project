@@ -255,6 +255,13 @@ module.exports = {
         updatedAt: new Date(),
         menuitemId: pourhouseBurgerId,
         userId: 1
+      },
+      {
+        rating: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        menuitemId: pourhouseBurgerId,
+        userId: 2
       }
     ], {});
   },

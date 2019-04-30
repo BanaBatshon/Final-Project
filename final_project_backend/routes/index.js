@@ -84,7 +84,6 @@ function getRestaurant(id) {
   })
 }
 
-getRestaurant(1)
 /**
  * Returns array of menu item ids for specific tag.
  * @param {Menu Item Tag} tag 
