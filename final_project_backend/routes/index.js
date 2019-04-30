@@ -20,6 +20,21 @@ router.get('/restaurants/:id/', function(req, res) {
 });
 
 /**
+ * Endpoint to create new restaurants
+ */
+router.post('/restaurants', function(req, res) {
+  const name = 'test restaurant';
+  const address = '123 fake street';
+  const phone_number = '6045552121';
+  const website = '';
+  const approved = false;
+  models.Restaurant.build({name: name, address: address, phone_number: phone_number, 
+    website: website, approved: approved, createdAt: new Date(), updatedAt: new Date()})
+    .save()
+    res.send();
+});
+
+/**
  * Returns restaurant objects for each restaurant id in array.
  * @param {Array of restaurant ids} arr 
  */
