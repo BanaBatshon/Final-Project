@@ -1,11 +1,14 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const MenuItemTag = sequelize.define('menuitemtag');
-  MenuItemTag.associate = function(models) {
+  var menu_item_tags = sequelize.define('menuitemtags');
+  menu_item_tags.associate = function(models) {
     // associations can be defined here
-    models.MenuItemTag.belongsTo(models.Tag, {
+    models.menu_item_tags.belongsTo(models.tags, {
+      onDelete: "CASCADE",
+    });
+    models.menu_item_tags.belongsTo(models.menu_items, {
       onDelete: "CASCADE",
     });
   }
-  return MenuItemTag;
+  return menu_item_tags;
 };

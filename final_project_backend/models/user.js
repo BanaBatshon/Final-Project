@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('user', {
+  var users = sequelize.define('users', {
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -11,15 +11,12 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        models.User.hasMany(models.MenuItemRating, {
+        models.users.hasMany(models.menu_item_ratings, {
           onDelete: "CASCADE",
         });
-        models.User.hasMany(models.RestaurantRating, {
-            onDelete: "CASCADE",
-          });
       }
     }
   });
 
-  return User;
+  return users;
 };

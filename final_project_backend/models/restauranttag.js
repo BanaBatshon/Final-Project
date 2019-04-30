@@ -1,14 +1,17 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var restauranttag = sequelize.define('restauranttag', {}, {
+  var restaurant_tags = sequelize.define('restauranttags', {}, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        models.RestaurantTag.belongsTo(models.Tag, {
+        models.restaurant_tags.belongsTo(models.tags, {
+          onDelete: "CASCADE",
+        });
+        models.restaurant_tags.belongsTo(models.restaurants, {
           onDelete: "CASCADE",
         });
       }
     }
   });
-  return restauranttag;
+  return restaurant_tags;
 };
