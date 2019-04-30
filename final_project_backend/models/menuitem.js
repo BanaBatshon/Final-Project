@@ -1,20 +1,23 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const MenuItem = sequelize.define('menuitem', {
+  var menu_items = sequelize.define('menuitems', {
     name: DataTypes.STRING,
     approved: DataTypes.BOOLEAN
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        models.MenuItem.hasMany(models.MenuItemTag, {
+        models.menu_items.hasMany(models.menu_item_tags, {
           onDelete: "CASCADE",
         });
-        models.MenuItem.hasMany(models.MenuItemRating, {
+        models.menu_items.hasMany(models.menu_item_ratings, {
+          onDelete: "CASCADE",
+        });
+        models.menu_items.belongsTo(models.restaurants, {
           onDelete: "CASCADE",
         });
       }
     }
   });
-  return  MenuItem;
+  return  menu_items;
 };

@@ -1,19 +1,19 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Tag = sequelize.define('tag', {
+  var tags = sequelize.define('tags', {
     name: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        models.Tag.hasMany(models.RestaurantTag, {
+        models.tags.hasMany(models.restaurant_tags, {
           onDelete: "CASCADE",
         });
-        models.Tag.hasMany(models.MenuItemTag, {
+        models.tags.hasMany(models.menu_item_tags, {
           onDelete: "CASCADE",
         });
       }
     }
   });
-  return Tag;
+  return tags;
 };
