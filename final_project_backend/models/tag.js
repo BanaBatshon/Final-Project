@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        models.Tag.hasMany(models.RestaurantTag, {
+          onDelete: "CASCADE",
+        });
       }
     }
   });

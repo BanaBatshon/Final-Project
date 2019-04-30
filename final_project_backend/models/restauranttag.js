@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
         models.RestaurantTag.belongsTo(models.Tag, {
           onDelete: "CASCADE",
         });
+        models.RestaurantTag.belongsTo(models.Restaurant, {
+          onDelete: "CASCADE",
+        });
       }
     }
   });

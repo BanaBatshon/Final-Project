@@ -13,9 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         models.Restaurant.hasMany(models.RestaurantTag, {
           onDelete: "CASCADE",
         });
-        models.Restaurant.hasMany(models.RestaurantRating, {
-          onDelete: "CASCADE",
-        });
       }
     }
   });

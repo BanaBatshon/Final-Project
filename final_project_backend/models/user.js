@@ -14,9 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         models.User.hasMany(models.MenuItemRating, {
           onDelete: "CASCADE",
         });
-        models.User.hasMany(models.RestaurantRating, {
-            onDelete: "CASCADE",
-          });
       }
     }
   });
