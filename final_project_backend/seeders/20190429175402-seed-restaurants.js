@@ -197,11 +197,16 @@ module.exports = {
       `SELECT id from restaurants where name='Pourhouse';`
     );
 
+    const restaurant1 = await queryInterface.sequelize.query(
+      `SELECT id from restaurants where name='Moderne Burger';`
+    );
+
     const burgerTagRows = await queryInterface.sequelize.query(
       `SELECT id from tags where name='burger';`
     );
     const burgerTagId = burgerTagRows[0][0].id;
     const restaurantId = restaurant[0][0].id;
+    const restaurant1Id = restaurant1[0][0].id;
 
    await queryInterface.bulkInsert('restauranttags', [
      {
@@ -209,6 +214,12 @@ module.exports = {
        restaurantId: restaurantId,
        createdAt: new Date(),
        updatedAt : new Date()
+     },
+     {
+      tagId: burgerTagId,
+      restaurantId: restaurant1Id,
+      createdAt: new Date(),
+      updatedAt : new Date()
      }
    ], {})
 
