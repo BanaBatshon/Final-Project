@@ -30,7 +30,6 @@ router.get('/restaurants/:id/', function(req, res) {
   const tag = req.params.id;
   getRestaurantIds(tag)
   .then(function(idsArr) {
-    console.log(idsArr)
     getRestaurantsById(idsArr)
     .then(function(restaurants) {
       res.json(restaurants);
@@ -80,10 +79,16 @@ router.post('/restaurants', function(req, res) {
 
 function allRestaurants() {
   return models.restaurants
-  .findAll()
+  .findAll({include: [{model: models.restaurant_tags, include: [models.tags]}]})
   .then(function(results) {
     let restaurants = [];
     results.forEach(function(restaurant) {
+      let restaurant_tags = restaurant.dataValues.restauranttags;
+      let tagsArr = [];
+      restaurant_tags.forEach(function(tag) {
+        tagsArr.push(tag.dataValues.tag.name);
+      });
+      restaurant.dataValues.restauranttags = tagsArr;
       restaurants.push(restaurant.dataValues);
     });
     return restaurants;
