@@ -9,10 +9,10 @@ var router  = express.Router();
 router.get('/restaurants/:id/', function(req, res) {
   const tag = req.params.id;
   getRestaurantIds(tag)
-  .then(function(idsArr){
+  .then(function(idsArr) {
     getRestaurantsById(idsArr)
-    .then(function(restaurants){
-      getTags(idsArr).then(function(tags){
+    .then(function(restaurants) {
+      getTags(idsArr).then(function(tags) {
         res.json({restaurants: restaurants, tags: tags});
       });
     });
@@ -24,7 +24,15 @@ router.get('/restaurants/:id/', function(req, res) {
  */
 router.get('/items/:id/', function(req, res) {
   const tag = req.params.id;
-
+  getMenuItemIds(tag) 
+  .then(function(idsArr) {
+    getMenuItemsById(idsArr) 
+    .then(function(menuItems) {
+      getMenuTags(idsArr).then(function(tags) {
+        res.json({menuItems: menuItems, tags: tags});
+      });
+    });
+  });
 });
 
 /**
@@ -47,8 +55,8 @@ router.post('/restaurants', function(req, res) {
  * @param {Menu Item Tag} tag 
  */
 function getMenuItemIds (tag) {
-  return models.Tag
-  .findAll({where: {name: `${tag}`}, include: [models.MenuItemTag]})
+  return models.tags
+  .findAll({where: {name: `${tag}`}, include: [models.menu_item_tags]})
   .then(function(results) {
     let menuItemIds = [];
     results.forEach(function(tag) {
@@ -63,7 +71,7 @@ function getMenuItemIds (tag) {
  * @param {Array of menu item ids} arrIds 
  */
 function getMenuItemsById (arrIds) {
-  return models.MenuItem
+  return models.menu_items
   .findAll({where: {id: {$in: arrIds}}})
   .then(function(results) {
     let menuItems = [];
@@ -78,21 +86,28 @@ function getMenuItemsById (arrIds) {
  * Returns all tags for each menu item in array.
  * @param {Array of restaurant ids} arrIds
  */
-function getMenuTags1 () {
+function getMenuTags (arrIds) {
   return models.menu_item_tags
-  .findAll({where: {id: {$in: [1]}}, include: [models.tags]})
-  .then(function(results){
-    console.log(results)
+  .findAll({where: {id: {$in: arrIds}}, include: [models.tags]})
+  .then(function(results) {
+    let menuTags = {};
+    results.forEach(function(menu_tag) {
+      if(menuTags[menu_tag.dataValues.id] === undefined) {
+        menuTags[menu_tag.dataValues.id] = [menu_tag.dataValues.tag.name];
+      } else {
+        menuTags[menu_tag.dataValues.id].push(menu_tag.dataValues.tag.name);
+      }
+    });
+    return menuTags;
   });
 }
-getMenuTags1(1)
 
 /**
  * Returns restaurant objects for each restaurant id in array.
  * @param {Array of restaurant ids} arr 
  */
 function getRestaurantsById(arr) {
-  return models.Restaurant
+  return models.restaurants
   .findAll({where: {id: {$in: arr}}})
   .then(function(restaurants) {
     let restaurantsArr = [];
@@ -108,8 +123,8 @@ function getRestaurantsById(arr) {
  * @param {Restaurant Tag} tag 
  */
 function getRestaurantIds (tag) {
-  return models.Tag
-  .find({where: {name: `${tag}`}, include: [models.RestaurantTag]})
+  return models.tags
+  .find({where: {name: `${tag}`}, include: [models.restaurant_tags]})
   .then(function(results) {
     let restaurantIds = [];
     results.dataValues.restauranttags.forEach(function(id){
@@ -124,8 +139,8 @@ function getRestaurantIds (tag) {
  * @param {Array of restaurant ids} arrRestaurantIds 
  */
 function getTags (arrRestaurantIds) {
-  return models.RestaurantTag
-  .findAll({where: {restaurantId: {$in: arrRestaurantIds}}, include: [models.Tag]})
+  return models.restaurant_tags
+  .findAll({where: {restaurantId: {$in: arrRestaurantIds}}, include: [models.tags]})
   .then(function(results) {
     let tagsForRestaurants = {};
     results.forEach(function(tag) {
