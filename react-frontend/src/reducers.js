@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
 function restaurantFormReducer(state = {
-  Name: '',
-  Address: '',
-  Tags: '',
-  Website: '',
-  Description: ''
+  name: '',
+  address: '',
+  phone_number: '',
+  website: '',
+  description: ''
   }, action) {
   switch (action.type) {
     default: return state;
