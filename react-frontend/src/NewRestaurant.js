@@ -7,15 +7,22 @@ class NewRestaurantForm extends Component {
     Address: '',
     Tags: '',
     Website: '',
-    Description: ''
+    Description: '',
+    submit: 'submit'
   }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  handleSubmit = (e) => {
+    e.preventefault();
+    this.setstate({ ['submit']: 'submitted'})
+  }
+
   render() {
     return (
+      
       <div class="col-md-12 col-lg-8 mb-5">
             <form action="#" class="p-5 bg-white">
 
@@ -27,22 +34,22 @@ class NewRestaurantForm extends Component {
               </div>
               <div class="row form-group">
                 <div class="col-md-12">
-                  <label class="font-weight-bold" for="email">Address</label>
-                  <input name="Address" value={this.state.Address} onChange={this.handleChange} type="text" id="email" class="form-control" placeholder="eg. 1234 Main Street, Vancouver"/>
+                  <label class="font-weight-bold" for="text">Address</label>
+                  <input name="Address" value={this.state.Address} onChange={this.handleChange} type="text" id="text" class="form-control" placeholder="eg. 1234 Main Street, Vancouver"/>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
-                  <label class="font-weight-bold" for="email">Tags</label>
-                  <input name="Tags" value={this.state.Tags} onChange={this.handleChange} type="text" id="email" class="form-control" placeholder=""/>
+                  <label class="font-weight-bold" for="text">Tags</label>
+                  <input name="Tags" value={this.state.Tags} onChange={this.handleChange} type="text" id="text" class="form-control" placeholder=""/>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
                   <label class="font-weight-bold" for="email">Website</label>
-                  <input name="Website" value={this.state.Website} onChange={this.handleChange} type="text" id="email" class="form-control" placeholder="https://www.example.com"/>
+                  <input name="Website" value={this.state.Website} onChange={this.handleChange} type="email" id="text" class="form-control" placeholder="https://www.example.com"/>
                 </div>
               </div>
 
@@ -56,7 +63,7 @@ class NewRestaurantForm extends Component {
 
               <div class="row form-group">
                 <div class="col-md-12">
-                  <input type="submit" value="Submit" class="btn btn-primary  py-2 px-4"/>
+                  <input type="submit" value={this.state.submit} onSubmit={this.handleSubmit} class="btn btn-primary  py-2 px-4"/>
                 </div>
               </div>
 
