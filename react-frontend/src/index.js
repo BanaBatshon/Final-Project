@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import configureStore from './configureStore';
 import './index.css';
-import App from './App';
+import NewRestaurant from './NewRestaurant';
 import * as serviceWorker from './serviceWorker';
 
 // Create redux store
@@ -14,7 +14,7 @@ console.log(store)
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <NewRestaurant />
   </Provider>
 , document.getElementById('root'));
 

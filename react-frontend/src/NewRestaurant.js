@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 
 class NewRestaurantForm extends Component {
+  state =  {
+    Name: '',
+    Address: '',
+    Tags: '',
+    Website: '',
+    Description: ''
+  }
+
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   render() {
     return (
       <div class="col-md-12 col-lg-8 mb-5">
@@ -10,34 +22,34 @@ class NewRestaurantForm extends Component {
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="font-weight-bold" for="fullname">Name</label>
-                  <input type="text" id="fullname" class="form-control" placeholder="Name"/>
+                  <input name="Name" value={this.state.Name} onChange={this.handleChange} type="text" id="fullname" class="form-control" placeholder="Name"/>
                 </div>
               </div>
               <div class="row form-group">
                 <div class="col-md-12">
                   <label class="font-weight-bold" for="email">Address</label>
-                  <input type="email" id="email" class="form-control" placeholder="eg. 1234 Main Street, Vancouver"/>
+                  <input name="Address" value={this.state.Address} onChange={this.handleChange} type="text" id="email" class="form-control" placeholder="eg. 1234 Main Street, Vancouver"/>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
                   <label class="font-weight-bold" for="email">Tags</label>
-                  <input type="email" id="email" class="form-control" placeholder=""/>
+                  <input name="Tags" value={this.state.Tags} onChange={this.handleChange} type="text" id="email" class="form-control" placeholder=""/>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
                   <label class="font-weight-bold" for="email">Website</label>
-                  <input type="email" id="email" class="form-control" placeholder="https://www.example.com"/>
+                  <input name="Website" value={this.state.Website} onChange={this.handleChange} type="text" id="email" class="form-control" placeholder="https://www.example.com"/>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
                   <label class="font-weight-bold" for="message">Description</label>
-                  <textarea name="message" id="message" cols="30" rows="5" class="form-control"
+                  <textarea name="Description" value={this.state.Description} onChange={this.handleChange} id="message" cols="30" rows="5" class="form-control"
                     placeholder="Description"></textarea>
                 </div>
               </div>
@@ -55,14 +67,4 @@ class NewRestaurantForm extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state)
-  return {
-    AdminForm: state.admin,
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  null
-)(NewRestaurantForm)
+export default NewRestaurantForm;

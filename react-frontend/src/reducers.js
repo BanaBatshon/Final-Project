@@ -1,34 +1,17 @@
 import { combineReducers } from 'redux';
 
-function nameReducer(state = {
-  name: 'Initial Name'
-}, action) {
+function restaurantFormReducer(state = {
+  Name: '',
+  Address: '',
+  Tags: '',
+  Website: '',
+  Description: ''
+  }, action) {
   switch (action.type) {
-    /* istanbul ignore next */
-    case 'NAME_CHANGE':
-      return {
-        name: action.name
-      };
-    default:
-      return state;
-  }
-}
-
-function colorReducer(state = {
-  color: 'red'
-}, action) {
-  switch (action.type) {
-    /* istanbul ignore next */
-    case 'COLOR_CHANGE':
-      return {
-        color: action.color
-      };
-    default:
-      return state;
+    default: return state;
   }
 }
 
 export default combineReducers({
-  nameData: nameReducer,
-  colorData: colorReducer
+  restaurantFormData: restaurantFormReducer
 })
