@@ -2,6 +2,16 @@ var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
 
+/**
+ * Route for getting detailed information for a restaurant
+ */
+router.get('/restaurant/:id/', function(req, res) {
+  const restaurantId = req.params.id;
+  getRestaurant(restaurantId)
+  .then(function(result){
+    res.json(result);
+  })
+});
 
 /**
  * Route for processing search results based on id(tags)
@@ -50,6 +60,25 @@ router.post('/restaurants', function(req, res) {
     res.send();
 });
 
+/**
+ * Returns detailed information for specific restaurant
+ * including all menu items
+ * @param {restaurantId} id 
+ */
+function getRestaurant(id) {
+  return models.restaurants
+  .find({where: {id: id}, include: [models.menu_items]})
+  .then(function(restaurant) {
+    let menuItems = [];
+    restaurant.dataValues.menuitems.forEach(function(item) {
+      menuItems.push(item.dataValues);
+    });
+    restaurant.dataValues.menuitems = menuItems;
+    return restaurant.dataValues;
+  })
+}
+
+getRestaurant(1)
 /**
  * Returns array of menu item ids for specific tag.
  * @param {Menu Item Tag} tag 
