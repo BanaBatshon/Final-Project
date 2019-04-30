@@ -32,7 +32,7 @@ module.exports = {
           onDelete: "cascade"
         }
       },
-      menuItemId :  {
+      menu_item_id :  {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
