@@ -2,6 +2,12 @@ var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
 
+/**
+ * Route for getting a list of all restaurants
+ */
+router.get('/restaurants', function(req, res) {
+  
+});
 
 /**
  * Route for processing search results based on id(tags)
@@ -41,6 +47,10 @@ router.post('/restaurants', function(req, res) {
     .save()
     res.send();
 });
+
+function allRestaurants() {
+  
+}
 
 /**
  * Returns array of menu item ids for specific tag.
