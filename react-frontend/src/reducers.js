@@ -12,6 +12,17 @@ function restaurantFormReducer(state = {
   }
 }
 
+function menuItemFormReducer(state = {
+  name: '',
+  id: ''
+  }, action) {
+  switch (action.type) {
+    default: return state;
+  }
+}
+
 export default combineReducers({
-  restaurantFormData: restaurantFormReducer
+  restaurantFormData: restaurantFormReducer,
+  menuItemFormData: menuItemFormReducer
+
 })
