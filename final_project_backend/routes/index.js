@@ -43,32 +43,6 @@ router.post('/restaurants', function(req, res) {
 });
 
 /**
- * Returns all tags for each menu item in array.
- * @param {Array of restaurant ids} arrRestaurantIds 
- */
-function getTags (arrMenuItemIds) {
-  return models.MenuItemTag
-  .find({where: {menu_item_id: {$in: [1]}}, include: [models.Tag]})
-  .then(function(results) {
-    console.log('here')
-    console.log(results)
-    let tagsForMenuItems = {};
-    // results.forEach(function(tag) {
-      //console.log(tag)
-      // let res_id = tag.dataValues.id;
-      // if (tagsForMenuItems[res_id] === undefined) {
-      //   let tag_name = tag.dataValues.tag.dataValues.name;
-      //   tagsForMenuItems[res_id] = [tag_name];
-      // } else {
-      //   tagsForMenuItems[res_id].push(tag_name);
-      // }
-    // });
-    //return tagsForMenuItems;
-  });
-}
-getTags(1)
-
-/**
  * Returns array of menu item ids for specific tag.
  * @param {Menu Item Tag} tag 
  */
@@ -99,6 +73,19 @@ function getMenuItemsById (arrIds) {
    return menuItems;
   });
 }
+
+/**
+ * Returns all tags for each menu item in array.
+ * @param {Array of restaurant ids} arrIds
+ */
+function getMenuTags1 () {
+  return models.menu_item_tags
+  .findAll({where: {id: {$in: [1]}}, include: [models.tags]})
+  .then(function(results){
+    console.log(results)
+  });
+}
+getMenuTags1(1)
 
 /**
  * Returns restaurant objects for each restaurant id in array.

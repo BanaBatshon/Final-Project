@@ -15,7 +15,20 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }, 
+      },
+      menuitemId :  {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: "menuitems",
+            schema: "public"
+          },
+          key: "id",
+          onUpdate: "cascade",
+          onDelete: "null"
+        }
+      },
       tagId :  {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -26,20 +39,7 @@ module.exports = {
           },
           key: "id",
           onUpdate: "cascade",
-          onDelete: "cascade"
-        }
-      }, 
-      menu_item_id :  {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: {
-            tableName: "menuitems",
-            schema: "public"
-          },
-          key: "id",
-          onUpdate: "cascade",
-          onDelete: "cascade"
+          onDelete: "null"
         }
       }
     });
