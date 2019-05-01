@@ -81,9 +81,7 @@ router.get('/items/:id/', function(req, res) {
   .then(function(idsArr) {
     getMenuItemsById(idsArr) 
     .then(function(menuItems) {
-      getMenuTags(idsArr).then(function(tags) {
-        res.json({menuItems: menuItems, tags: tags});
-      });
+      res.json( menuItems);
     });
   });
 });
@@ -176,33 +174,26 @@ function getMenuItemIds (tag) {
  */
 function getMenuItemsById (arrIds) {
   return models.menu_items
-  .findAll({where: {id: {$in: arrIds}}})
+  .findAll({where: {id: {$in: arrIds}}, include:[{model: models.menu_item_tags, 
+    include: [models.tags]}, models.menu_item_ratings]})
   .then(function(results) {
     let menuItems = [];
     results.forEach(function(item) {
+      let tags = item.dataValues.menuitemtags;
+      let ratings = item.dataValues.menuitemratings;
+      let tagsArr = [];
+      let reviewsArr = [];
+      tags.forEach(function(tag) {
+        tagsArr.push(tag.dataValues.tag.name);
+      });
+      item.dataValues.menuitemtags = tagsArr;
+      ratings.forEach(function(rating) {
+        reviewsArr.push({rating: rating.dataValues.rating, userId: rating.dataValues.userId});
+      });
+      item.dataValues.menuitemratings = reviewsArr;
       menuItems.push(item.dataValues);
     });
-   return menuItems;
-  });
-}
-
-/**
- * Returns all tags for each menu item in array.
- * @param {Array of restaurant ids} arrIds
- */
-function getMenuTags (arrIds) {
-  return models.menu_item_tags
-  .findAll({where: {id: {$in: arrIds}}, include: [models.tags]})
-  .then(function(results) {
-    let menuTags = {};
-    results.forEach(function(menu_tag) {
-      if(menuTags[menu_tag.dataValues.id] === undefined) {
-        menuTags[menu_tag.dataValues.id] = [menu_tag.dataValues.tag.name];
-      } else {
-        menuTags[menu_tag.dataValues.id].push(menu_tag.dataValues.tag.name);
-      }
-    });
-    return menuTags;
+    return menuItems;
   });
 }
 
