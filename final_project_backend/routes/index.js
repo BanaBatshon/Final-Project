@@ -119,9 +119,13 @@ router.post('/restaurants', function(req, res) {
     })
 });
 
+/**
+ * Gets all items for explore dishes page
+ */
 function allItems() {
   return models.menu_items
-  .findAll({include: [{model: models.menu_item_tags, include: [models.tags]}, models.menu_item_ratings, models.restaurants]})
+  .findAll({include: [{model: models.menu_item_tags, include: [models.tags]}, 
+    models.menu_item_ratings, models.restaurants]})
   .then(function(results) {
     let menuArr = [];
     results.forEach(function(result) {
@@ -148,16 +152,28 @@ function allItems() {
  */
 function allRestaurants() {
   return models.restaurants
-  .findAll({include: [{model: models.restaurant_tags, include: [models.tags]}]})
+  .findAll({include: [{model: models.restaurant_tags, 
+    include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
   .then(function(results) {
     let restaurants = [];
     results.forEach(function(restaurant) {
+      let ratings = [];
+      let sum = 0;
+      restaurant.menuitems.forEach(function(item) {
+        item.menuitemratings.forEach(function(rating) {
+          ratings.push(rating.dataValues.rating);
+          sum += rating.dataValues.rating;
+        });
+      });
+      const avg_rating = (sum/ratings.length) ?  (sum/ratings.length).toPrecision(2):0;
+      restaurant.dataValues['avg_ratings'] = avg_rating;
       let restaurant_tags = restaurant.dataValues.restauranttags;
       let tagsArr = [];
       restaurant_tags.forEach(function(tag) {
         tagsArr.push(tag.dataValues.tag.name);
       });
       restaurant.dataValues.restauranttags = tagsArr;
+      delete restaurant.dataValues.menuitems
       restaurants.push(restaurant.dataValues);
     });
     return restaurants;
