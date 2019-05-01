@@ -2,7 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
   var menu_items = sequelize.define('menuitems', {
     name: DataTypes.STRING,
-    approved: DataTypes.BOOLEAN
+    approved: DataTypes.BOOLEAN,
+    imgUrl : DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
