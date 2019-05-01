@@ -6,6 +6,19 @@ var cors = require('cors')
 router.use(cors());
 
 /**
+ * Endpoint to retrieve user reviews for 
+ * a specific restaurant
+ */
+router.get('/ratings/:userid/restaurant/:id', function(req, res) {
+  const userId = req.params.userid;
+  const restaurantId = parseInt(req.params.id);
+  getUserRestaurantReviews(userId, restaurantId)
+  .then(function(results) {
+    res.json(results);
+  });
+});
+
+/**
  * Returns all tags
  */
 router.get('/tags', function(req, res) {
@@ -336,6 +349,28 @@ function getRestaurantIds (tag) {
       restaurantIds.push(id.dataValues.restaurantId);
     });
     return restaurantIds;
+  });
+}
+
+/**
+ * Retunrs all user reviews with userId for restaurant with restaurantId
+ * @param {user id} userId 
+ * @param {restaurant id} restaurantId 
+ */
+function getUserRestaurantReviews(userId, restaurantId) {
+  return models.menu_item_ratings
+  .findAll({where: {userId: userId}, include: [{model: models.menu_items, include: [models.restaurants]}]})
+  .then(function(results) {
+    let reviewsArr = [];
+    results.forEach(function(rating) {
+      rating.dataValues.menuitem = rating.dataValues.menuitem.dataValues;
+      rating.dataValues.menuitem.restaurant = rating.dataValues.menuitem.restaurant.dataValues;
+      let restaurant_id = rating.dataValues.menuitem.restaurant.id;
+      if(restaurant_id === restaurantId) {
+        reviewsArr.push(rating.dataValues);
+      }
+    });
+    return reviewsArr;
   });
 }
 
