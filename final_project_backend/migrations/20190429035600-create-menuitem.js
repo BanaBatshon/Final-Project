@@ -14,6 +14,9 @@ module.exports = {
       approved: {
         type: Sequelize.BOOLEAN
       },
+      imgUrl: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
