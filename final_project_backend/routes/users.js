@@ -80,13 +80,18 @@ router.post('/:id/ratings', function(req, res) {
  */
 function getUserRestaurantReviews(userId, restaurantId, search_all) {
   return models.menu_item_ratings
-  .findAll({where: {userId: userId}, include: [{model: models.menu_items, include: [models.restaurants]}]})
+  .findAll({where: {userId: userId}, include: [{model: models.menu_items, 
+    include: [models.restaurants, {model: models.menu_item_tags, include:[models.tags]}]}]})
   .then(function(results) {
     let reviewsArr = [];
     results.forEach(function(rating) {
       rating.dataValues.menuitem = rating.dataValues.menuitem.dataValues;
       rating.dataValues.menuitem.restaurant = rating.dataValues.menuitem.restaurant.dataValues;
-      console.log(rating)
+      let itemTags = [];
+      rating.dataValues.menuitem.menuitemtags.forEach(function(tag) {
+        itemTags.push(tag.tag.dataValues.name);
+      });
+      rating.dataValues.menuitem.menuitemtags = itemTags;
       let restaurant_id = rating.dataValues.menuitem.restaurant.id;
       if(restaurant_id === restaurantId && !search_all) {
         reviewsArr.push(rating.dataValues);
@@ -97,5 +102,6 @@ function getUserRestaurantReviews(userId, restaurantId, search_all) {
     return reviewsArr;
   });
 }
+getUserRestaurantReviews(1,null,true);
 
 module.exports = router;
