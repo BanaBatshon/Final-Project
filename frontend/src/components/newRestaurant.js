@@ -1,17 +1,28 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
+const NewRestaurant = () => {
+  const onSubmit = ((values) => {
+    console.log(values)
+  })
+  return (
+    <div>
+      <NewRestaurantForm onSubmit={onSubmit}/>
+    </div>
+  )
+}
+
 let NewRestaurantForm = props => {
   const { handleSubmit } = props
   return (
     <form onSubmit={handleSubmit}>
       <div class="col-md-12 col-lg-8 mb-5">
-        <form action="#" class="p-5 bg-white">
+        <div action="#" class="p-5 bg-white">
 
           <div class="row form-group">
             <div class="col-md-12 mb-3 mb-md-0">
               <label class="font-weight-bold" for="fullname">Name</label>
-              <Field name= "fullname" component="input" type="text" id="fullname" class="form-control" placeholder="Name"/>
+              <Field name="fullname" component="input" type="text" id="fullname" class="form-control" placeholder="Name"/>
             </div>
           </div>
 
@@ -46,11 +57,11 @@ let NewRestaurantForm = props => {
 
           <div class="row form-group">
             <div class="col-md-12">
-              <input type="submit" value="Submit" class="btn btn-primary  py-2 px-4"/>
+              <button type="submit" class="btn btn-primary  py-2 px-4">Submit</button>
             </div>
           </div>
 
-        </form>
+        </div>
       </div>
     </form>
 
@@ -60,4 +71,4 @@ NewRestaurantForm = reduxForm({
   form: 'newRestaurant'
 })(NewRestaurantForm)
 
-export default NewRestaurantForm
+export default NewRestaurant
