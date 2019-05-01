@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
-let newRestaurantForm = props => {
+let NewRestaurantForm = props => {
   const { handleSubmit } = props
   return (
     <form onSubmit={handleSubmit}>
@@ -56,8 +56,8 @@ let newRestaurantForm = props => {
 
   )}
 
-newRestaurantForm = reduxForm({
+NewRestaurantForm = reduxForm({
   form: 'newRestaurant'
-})(newRestaurantForm)
+})(NewRestaurantForm)
 
-export default newRestaurantForm
+export default NewRestaurantForm
