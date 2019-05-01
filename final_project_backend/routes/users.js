@@ -6,9 +6,21 @@ var cors = require('cors')
 router.use(cors());
 
 /**
+ * Endpoint to get all user reviews for all restaurants
+ * they have reviews.
+ */
+router.get('/:userid/ratings', function(req, res) {
+  const userId = req.params.userid;
+  getUserRestaurantReviews(userId, null, true)
+  .then(function(results) {
+    res.json(results);
+  });
+});
+
+/**
  * Endpoint to delete a user review
  */
-router.get('/:userid/ratings/:id', function(req, res) {
+router.delete('/:userid/ratings/:id', function(req, res) {
   const user_id = req.params.userid;
   const menu_item_id = req.params.id;
   models.menu_item_ratings.destroy({where:{userId: user_id, menuitemId: menu_item_id}})
@@ -39,7 +51,7 @@ router.patch('/:userid/ratings/:id', function(req, res) {
 router.get('/:userid/restaurant/:id', function(req, res) {
   const userId = req.params.userid;
   const restaurantId = parseInt(req.params.id);
-  getUserRestaurantReviews(userId, restaurantId)
+  getUserRestaurantReviews(userId, restaurantId, false)
   .then(function(results) {
     res.json(results);
   });
@@ -66,7 +78,7 @@ router.post('/:id/ratings', function(req, res) {
  * @param {user id} userId 
  * @param {restaurant id} restaurantId 
  */
-function getUserRestaurantReviews(userId, restaurantId) {
+function getUserRestaurantReviews(userId, restaurantId, search_all) {
   return models.menu_item_ratings
   .findAll({where: {userId: userId}, include: [{model: models.menu_items, include: [models.restaurants]}]})
   .then(function(results) {
@@ -74,8 +86,11 @@ function getUserRestaurantReviews(userId, restaurantId) {
     results.forEach(function(rating) {
       rating.dataValues.menuitem = rating.dataValues.menuitem.dataValues;
       rating.dataValues.menuitem.restaurant = rating.dataValues.menuitem.restaurant.dataValues;
+      console.log(rating)
       let restaurant_id = rating.dataValues.menuitem.restaurant.id;
-      if(restaurant_id === restaurantId) {
+      if(restaurant_id === restaurantId && !search_all) {
+        reviewsArr.push(rating.dataValues);
+      } else if (search_all) {
         reviewsArr.push(rating.dataValues);
       }
     });
