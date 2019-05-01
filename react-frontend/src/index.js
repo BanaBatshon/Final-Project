@@ -1,24 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-
-import configureStore from './configureStore';
-import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import './index.css';
+import '../src/styles/bootstrap.min.css';
+import '../src/styles/style.css';
 
-// Create redux store
-const store = configureStore();
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import rootReducer from './reducers';
+import { fetchAllRestaurants } from './actions/index';
 
-console.log(store)
+import registerServiceWorker from './registerServiceWorker';
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+store.dispatch(fetchAllRestaurants());
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
-  </Provider>
-, document.getElementById('root'));
+  </Provider>, document.getElementById('root'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+registerServiceWorker();

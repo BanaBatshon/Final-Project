@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
-import Name from './Name'
-import NameController from './NameController'
-import ColorController from './ColorController'
+import Navigation from './components/Navigation';
+import Hero from './components/Hero';
+import RestaurantList from './components/RestaurantList';
 
 class App extends Component {
-  state = {name: 'Nima'}
   render() {
     return (
-      <div className="App">
-        <Name />
-        <NameController />
-        <ColorController />
+      <div className="site-wrap">
+        <Navigation />
+        <Hero />
+        <RestaurantList />
       </div>
     );
   }
