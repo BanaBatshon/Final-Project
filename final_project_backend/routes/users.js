@@ -45,6 +45,20 @@ router.get('/:userid/restaurant/:id', function(req, res) {
   });
 });
 
+/**
+ * Endpoint to sumbit a review for an item
+ */
+router.post('/:id/ratings', function(req, res) {
+  const userId = req.body.userId;
+  const menuitemId = req.body.menuitemId;
+  const rating = req.body.rating;
+  models.menu_item_ratings.build({rating: rating, userId: userId, 
+    menuitemId: menuitemId, createdAt: new Date(), updatedAt: new Date()})
+    .save().then(function(rating) {
+      res.send();
+    });
+});
+
 
 
 /**
