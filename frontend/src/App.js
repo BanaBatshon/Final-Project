@@ -4,6 +4,7 @@ import Home from './components/Home'
 import Restaurants from './components/Restaurants'
 import Navigation from './components/Navigation'
 import { BrowserRouter, Route } from 'react-router-dom'
+import newRestaurantForm from './components/newRestaurant';
 
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
           <Navigation />
           <Route exact path='/' component={Home} />
           <Route path='/restaurants/explore' component={Restaurants} />
+          <Route path='/restaurants/new' component={newRestaurantForm} />
         </div>
       </BrowserRouter>
     );
