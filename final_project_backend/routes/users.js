@@ -4,6 +4,19 @@ var router  = express.Router();
 var cors = require('cors')
 
 router.use(cors());
+
+/**
+ * Endpoint to delete a user review
+ */
+router.get('/:userid/ratings/:id', function(req, res) {
+  const user_id = req.params.userid;
+  const menu_item_id = req.params.id;
+  models.menu_item_ratings.destroy({where:{userId: user_id, menuitemId: menu_item_id}})
+  .then(function(result) {
+    res.send();
+  });
+});
+
 /**
  * Endpoint to update a users reviews
  */
