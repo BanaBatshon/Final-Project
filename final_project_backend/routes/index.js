@@ -99,8 +99,6 @@ router.get('/items/:id/', function(req, res) {
  * Endpoint to create new restaurants
  */
 router.post('/restaurants', function(req, res) {
-  console.log("testttttttt")
-  console.log(req.body);
   const name = req.body.name;
   const address = req.body.address;
   const phone_number = req.body.phone_number;
@@ -187,16 +185,18 @@ function allRestaurants() {
  */
 function getRestaurant(id) {
   return models.restaurants
-  .find({where: {id: id}, include: [{model: models.menu_items, include: [models.menu_item_ratings]}]})
+  .find({where: {id: id}, include: [{model: models.restaurant_tags, include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
   .then(function(restaurant) {
     let menuItems = [];
     let menu_items = restaurant.dataValues.menuitems;
     menu_items.forEach(function(item) {
       let ratings = [];
+      let sum_ratings = 0;
       item.menuitemratings.forEach(function(rating) {
         ratings.push(rating.dataValues);
+        sum_ratings += rating.dataValues.rating;
       });
-      item.menuitemratings = ratings;
+      item.dataValues.menuitemratings = (sum_ratings/ratings.length).toPrecision(2);
       menuItems.push(item.dataValues);
     });
     restaurant.dataValues.menuitems = menuItems;
