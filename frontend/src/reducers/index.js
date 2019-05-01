@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import restaurants from './restaurantReducer';
-import newRestaurant from 'redux-form';
+import {reducer as formReducer} from 'redux-form';
 
 export default combineReducers({
     restaurants: restaurants,
-    newRestaurant: newRestaurant
+    form: formReducer
 });
