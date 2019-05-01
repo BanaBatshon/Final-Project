@@ -5,6 +5,9 @@ var cors = require('cors')
 
 router.use(cors());
 
+/**
+ * Returns all tags
+ */
 router.get('/tags', function(req, res) {
   return models.tags
   .findAll()
@@ -14,6 +17,12 @@ router.get('/tags', function(req, res) {
       tags.push({id : result.dataValues.id, name : result.dataValues.name});
     });
     res.json(tags);
+  });
+});
+
+router.get('/items', function(req, res) {
+  allItems().then(function(results) {
+    res.json(results);
   });
 });
 
@@ -81,9 +90,7 @@ router.get('/items/:id/', function(req, res) {
   .then(function(idsArr) {
     getMenuItemsById(idsArr) 
     .then(function(menuItems) {
-      getMenuTags(idsArr).then(function(tags) {
-        res.json({menuItems: menuItems, tags: tags});
-      });
+      res.json( menuItems);
     });
   });
 });
@@ -92,8 +99,6 @@ router.get('/items/:id/', function(req, res) {
  * Endpoint to create new restaurants
  */
 router.post('/restaurants', function(req, res) {
-  console.log("testttttttt")
-  console.log(req.body);
   const name = req.body.name;
   const address = req.body.address;
   const phone_number = req.body.phone_number;
@@ -112,18 +117,61 @@ router.post('/restaurants', function(req, res) {
     })
 });
 
+/**
+ * Gets all items for explore dishes page
+ */
+function allItems() {
+  return models.menu_items
+  .findAll({include: [{model: models.menu_item_tags, include: [models.tags]}, 
+    models.menu_item_ratings, models.restaurants]})
+  .then(function(results) {
+    let menuArr = [];
+    results.forEach(function(result) {
+      let tagsArr = [];
+      result.dataValues.menuitemtags.forEach(function(tag) {
+        tagsArr.push(tag.dataValues.tag.name);
+      });
+      result.dataValues.menuitemtags = tagsArr;
+      let count = result.dataValues.menuitemratings.length;
+      let sum_ratings = 0;
+      result.dataValues.menuitemratings.forEach(function(rating) {
+        sum_ratings += rating.dataValues.rating;
+      });
+      result.dataValues.restaurant = result.restaurant.dataValues.name;
+      result.dataValues.menuitemratings = (sum_ratings/count);
+      menuArr.push(result.dataValues);
+    });
+    return menuArr;
+  });
+}
+
+/**
+ * Returns a list of all restaurants with tag names
+ */
 function allRestaurants() {
   return models.restaurants
-  .findAll({include: [{model: models.restaurant_tags, include: [models.tags]}]})
+  .findAll({include: [{model: models.restaurant_tags, 
+    include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
   .then(function(results) {
     let restaurants = [];
     results.forEach(function(restaurant) {
+      let ratings = [];
+      let sum = 0;
+      restaurant.menuitems.forEach(function(item) {
+        item.menuitemratings.forEach(function(rating) {
+          ratings.push(rating.dataValues.rating);
+          sum += rating.dataValues.rating;
+        });
+      });
+      const avg_rating = (sum/ratings.length) ?  (sum/ratings.length).toPrecision(2):0;
+      restaurant.dataValues['avg_ratings'] = avg_rating;
       let restaurant_tags = restaurant.dataValues.restauranttags;
       let tagsArr = [];
       restaurant_tags.forEach(function(tag) {
         tagsArr.push(tag.dataValues.tag.name);
       });
       restaurant.dataValues.restauranttags = tagsArr;
+      delete restaurant.dataValues.menuitems
       restaurants.push(restaurant.dataValues);
     });
     return restaurants;
@@ -132,28 +180,31 @@ function allRestaurants() {
 
 /**
  * Returns detailed information for specific restaurant
- * including all menu items
+ * including all menu items sorted by highest ranking first
  * @param {restaurantId} id 
  */
 function getRestaurant(id) {
   return models.restaurants
-  .find({where: {id: id}, include: [{model: models.menu_items, include: [models.menu_item_ratings]}]})
+  .find({where: {id: id}, include: [{model: models.restaurant_tags, include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
   .then(function(restaurant) {
     let menuItems = [];
     let menu_items = restaurant.dataValues.menuitems;
     menu_items.forEach(function(item) {
       let ratings = [];
+      let sum_ratings = 0;
       item.menuitemratings.forEach(function(rating) {
         ratings.push(rating.dataValues);
+        sum_ratings += rating.dataValues.rating;
       });
-      item.menuitemratings = ratings;
+      item.dataValues.menuitemratings = (sum_ratings/ratings.length).toPrecision(2);
       menuItems.push(item.dataValues);
     });
+    menuItems.sort(compare);
     restaurant.dataValues.menuitems = menuItems;
     return restaurant.dataValues;
   })
 }
-
+getRestaurant(4)
 /**
  * Returns array of menu item ids for specific tag.
  * @param {Menu Item Tag} tag 
@@ -176,33 +227,26 @@ function getMenuItemIds (tag) {
  */
 function getMenuItemsById (arrIds) {
   return models.menu_items
-  .findAll({where: {id: {$in: arrIds}}})
+  .findAll({where: {id: {$in: arrIds}}, include:[{model: models.menu_item_tags, 
+    include: [models.tags]}, models.menu_item_ratings]})
   .then(function(results) {
     let menuItems = [];
     results.forEach(function(item) {
+      let tags = item.dataValues.menuitemtags;
+      let ratings = item.dataValues.menuitemratings;
+      let tagsArr = [];
+      let reviewsArr = [];
+      tags.forEach(function(tag) {
+        tagsArr.push(tag.dataValues.tag.name);
+      });
+      item.dataValues.menuitemtags = tagsArr;
+      ratings.forEach(function(rating) {
+        reviewsArr.push({rating: rating.dataValues.rating, userId: rating.dataValues.userId});
+      });
+      item.dataValues.menuitemratings = reviewsArr;
       menuItems.push(item.dataValues);
     });
-   return menuItems;
-  });
-}
-
-/**
- * Returns all tags for each menu item in array.
- * @param {Array of restaurant ids} arrIds
- */
-function getMenuTags (arrIds) {
-  return models.menu_item_tags
-  .findAll({where: {id: {$in: arrIds}}, include: [models.tags]})
-  .then(function(results) {
-    let menuTags = {};
-    results.forEach(function(menu_tag) {
-      if(menuTags[menu_tag.dataValues.id] === undefined) {
-        menuTags[menu_tag.dataValues.id] = [menu_tag.dataValues.tag.name];
-      } else {
-        menuTags[menu_tag.dataValues.id].push(menu_tag.dataValues.tag.name);
-      }
-    });
-    return menuTags;
+    return menuItems;
   });
 }
 
@@ -242,6 +286,19 @@ function getRestaurantIds (tag) {
     });
     return restaurantIds;
   });
+}
+
+/**
+ * Function which sorts by menuitemratings
+ */
+function compare( a, b) {
+  if ( a.menuitemratings > b.menuitemratings ){
+    return -1;
+  }
+  if (a.menuitemratings < b.menuitemratings) {
+    return 1;
+  }
+  return 0;
 }
 
 module.exports = router;
