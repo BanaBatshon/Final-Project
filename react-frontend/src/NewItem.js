@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-var superagent = require('superagent');
-// import { connect } from 'react-redux'
+var axios = require ('axios');
 
 class NewMenuItemForm extends Component {
   state =  {
@@ -20,7 +19,7 @@ class NewMenuItemForm extends Component {
     console.log('form submission event:', e)
     e.preventDefault();
 
-    superagent
+    axios
       .post('http://localhost:3001/restaurants')
       .send({name: this.state.name, id: this.state.id, approved: false}) // sends a JSON post body
       .set('accept', 'json')
