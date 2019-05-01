@@ -4,11 +4,9 @@ var axios = require ('axios');
 class NewMenuItemForm extends Component {
   state =  {
     name: '',
-    id: '',
+    restaurantId: '',
     tags: [{}]
   }
-
- 
  
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -20,8 +18,8 @@ class NewMenuItemForm extends Component {
     e.preventDefault();
 
     axios
-      .post('http://localhost:3001/restaurants')
-      .send({name: this.state.name, id: this.state.id, approved: false}) // sends a JSON post body
+      .post('http://localhost:3001/tags')
+      .send({name: this.state.name, restaurantId: this.state.restaurantId, approved: false}) // sends a JSON post body
       .set('accept', 'json')
       .end((err, res) => {
         if (err) {
@@ -42,14 +40,22 @@ class NewMenuItemForm extends Component {
 
               <div className="row form-group">
                 <div className="col-md-12 mb-3 mb-md-0">
-                  <label className="font-weight-bold" htmlFor="fullname">MenuItem</label>
-                  <input name="name" value={this.state.name} onChange={this.handleChange} type="text" id="fullname" className="form-control" placeholder="Menu Item"/>
+                  <label className="font-weight-bold" htmlFor="fullname">Menu Item</label>
+                  <input name="name" value={this.state.name} onChange={this.handleChange} type="text" id="fullname" className="form-control" placeholder="suggest a new menu item"/>
                 </div>
               </div>
+
               <div className="row form-group">
                 <div className="col-md-12">
                   <label className="font-weight-bold" htmlFor="text">Restaurant ID</label>
-                  <input name="id" value={this.state.id} onChange={this.handleChange} type="number" id="number" className="form-control" placeholder="eg. 1"/>
+                  <input name="restaurantId" value={this.state.restaurantId} onChange={this.handleChange} type="number" id="number" className="form-control" placeholder="eg. 1"/>
+                </div>
+              </div>
+
+              <div className="row form-group">
+                <div className="col-md-12">
+                  <label className="font-weight-bold" htmlFor="text">Tags</label>
+                  <input name="tags" value={this.state.tags} onChange={this.handleChange} type="text" id="text" className="form-control" placeholder="tags..."/>
                 </div>
               </div>
 
