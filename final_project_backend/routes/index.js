@@ -180,7 +180,7 @@ function allRestaurants() {
 
 /**
  * Returns detailed information for specific restaurant
- * including all menu items
+ * including all menu items sorted by highest ranking first
  * @param {restaurantId} id 
  */
 function getRestaurant(id) {
@@ -199,11 +199,12 @@ function getRestaurant(id) {
       item.dataValues.menuitemratings = (sum_ratings/ratings.length).toPrecision(2);
       menuItems.push(item.dataValues);
     });
+    menuItems.sort(compare);
     restaurant.dataValues.menuitems = menuItems;
     return restaurant.dataValues;
   })
 }
-
+getRestaurant(4)
 /**
  * Returns array of menu item ids for specific tag.
  * @param {Menu Item Tag} tag 
@@ -285,6 +286,19 @@ function getRestaurantIds (tag) {
     });
     return restaurantIds;
   });
+}
+
+/**
+ * Function which sorts by menuitemratings
+ */
+function compare( a, b) {
+  if ( a.menuitemratings > b.menuitemratings ){
+    return -1;
+  }
+  if (a.menuitemratings < b.menuitemratings) {
+    return 1;
+  }
+  return 0;
 }
 
 module.exports = router;
