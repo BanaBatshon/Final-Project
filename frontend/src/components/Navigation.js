@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom'
 
 class Navigation extends React.Component {
   render() {
@@ -9,7 +10,7 @@ class Navigation extends React.Component {
           <div className="row align-items-center">
 
             <div className="col-6 col-xl-2">
-              <h1 className="mb-0"><a href="/" className="text-black h2 mb-0"><strong>Foodie</strong></a></h1>
+              <h1 className="mb-0"><Link to="/" className="text-black h2 mb-0"><strong>Foodie</strong></Link></h1>
             </div>
 
             <div className="col-10 col-xl-10 d-none d-xl-block">
@@ -17,21 +18,21 @@ class Navigation extends React.Component {
 
                 <ul className="site-menu js-clone-nav mr-auto d-none d-lg-block">
                   <li className="has-children">
-                    <a href="/restaurants/explore">Restaurants</a>
+                    <Link to="/restaurants/explore">Restaurants</Link>
                     <ul className="dropdown">
-                      <li><a href="/restaurants/explore">Explore</a></li>
-                      <li><a href="/">New Restaurant Submission</a></li>
+                      <li><Link to="/restaurants/explore">Explore</Link></li>
+                      <li><Link to="/">New Restaurant Submission</Link></li>
                     </ul>
                   </li>
                   <li className="has-children">
-                    <a href="/">Dishes</a>
+                    <Link to="/">Dishes</Link>
                     <ul className="dropdown">
-                      <li><a href="/">Explore</a></li>
-                      <li><a href="/">New Dish Submission</a></li>
+                      <li><Link to="/">Explore</Link></li>
+                      <li><Link to="/">New Dish Submission</Link></li>
                     </ul>
                   </li>
-                  <li><a href="/">My Ratings</a></li>
-                  <li><a href="/"><span className="rounded bg-secondary py-2 px-3 text-white">Login</span></a>
+                  <li><Link to="/">My Ratings</Link></li>
+                  <li><Link to="/"><span className="rounded bg-secondary py-2 px-3 text-white">Login</span></Link>
                   </li>
                 </ul>
               </nav>
