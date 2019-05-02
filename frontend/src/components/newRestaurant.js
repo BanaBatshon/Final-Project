@@ -5,7 +5,7 @@ import axios from 'axios'
 const NewRestaurant = () => {
   const onSubmit = ((values) => {
     axios
-    .post('http://localhost:3001/restaurants', values)
+    .post('http://localhost:3001/restaurant', values)
   })
   return (
     <div>
@@ -44,6 +44,13 @@ let NewRestaurantForm = props => {
 
           <div className="row form-group">
             <div className="col-md-12">
+              <label className="font-weight-bold" htmlFor="text">phone_number</label>
+              <Field name="website" component="input" type="text" id="text" className="form-control" placeholder="eg. (xxx) xxx xxxx"/>
+            </div>
+          </div>
+
+          <div className="row form-group">
+            <div className="col-md-12">
               <label className="font-weight-bold" htmlFor="email">Website</label>
               <Field name="website" component="input" type="email" id="email" className="form-control" placeholder="https://www.example.com"/>
             </div>
@@ -70,7 +77,7 @@ let NewRestaurantForm = props => {
   )}
 
 NewRestaurantForm = reduxForm({
-  form: 'newRestaurant'
+  form: 'NewRestaurant'
 })(NewRestaurantForm)
 
 export default NewRestaurant
