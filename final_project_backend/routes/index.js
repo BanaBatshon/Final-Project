@@ -5,6 +5,25 @@ var cors = require('cors')
 
 router.use(cors());
 
+
+/**
+ * Endpoint to login
+ */
+router.get('/login/:id', function(req, res) {
+  const user_id = req.params.id;
+  models.users.find({where:{id: user_id}})
+  .then(function(user) {
+    res.json(user.dataValues);
+  })
+});
+
+/**
+ * Endpoint to login
+ */
+router.get('/logout', function(req, res) {
+  res.json({});
+});
+
 /**
  * Returns all tags
  */

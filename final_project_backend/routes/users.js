@@ -102,6 +102,5 @@ function getUserRestaurantReviews(userId, restaurantId, search_all) {
     return reviewsArr;
   });
 }
-getUserRestaurantReviews(1,null,true);
 
 module.exports = router;
