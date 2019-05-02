@@ -1,9 +1,23 @@
-import { FETCH_RESTAURANTS } from '../actions/types';
+import { FETCH_RESTAURANTS, FETCH_RESTAURANT } from '../actions/types';
 
-export default function restaurantReducer(state = [], action) {
+const defaultState = {
+  activeRestaurant: {
+  },
+  restaurants: [],
+}
+
+export default function restaurantReducer(state = defaultState, action) {
   switch (action.type) {
     case FETCH_RESTAURANTS:
-      return action.restaurants;
+      return {
+        ...state,
+        restaurants: action.restaurants,
+      }
+    case FETCH_RESTAURANT:
+      return {
+        ...state,
+        activeRestaurant: action.restaurant
+      }
     default:
       return state;
   }
