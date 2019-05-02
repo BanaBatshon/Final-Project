@@ -1,12 +1,13 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import axios from 'axios'
+import { connect}  from 'react-redux'
+import { addNewItemToNewItemList } from '../actions';
 
-const NewItem = () => {
+const NewItem = (props) => {
   const onSubmit = ((values) => {
-    axios
-    .post('http://localhost:3001/items', values)
+    props.addNewItemToNewItemList(values)
   })
+  console.log(props);
   return (
     <div>
       <NewItemForm onSubmit={onSubmit}/>
@@ -30,15 +31,15 @@ let NewItemForm = props => {
 
           <div className="row form-group">
             <div className="col-md-12">
-              <label className="font-weight-bold" htmlFor="email">Dish</label>
-              <Field name="item" component="input" type="email" id="email" className="form-control" placeholder="eg. Pepperoni Pizza"/>
+              <label className="font-weight-bold" htmlFor="item">Dish</label>
+              <Field name="item" component="input" type="text" id="item" className="form-control" placeholder="eg. Pepperoni Pizza"/>
             </div>
           </div>
 
           <div className="row form-group">
             <div className="col-md-12">
-              <label className="font-weight-bold" htmlFor="email">Tags</label>
-              <Field name="tags" component="input" data-role="tagsinput" type="email" id="email" className="form-control" placeholder=""/>
+              <label className="font-weight-bold" htmlFor="tags">Tags</label>
+              <Field name="tags" component="input" data-role="tagsinput" type="text" id="tags" className="form-control" placeholder=""/>
             </div>
           </div>
 
@@ -53,9 +54,18 @@ let NewItemForm = props => {
     </form>
 
   )}
-
 NewItemForm = reduxForm({
   form: 'newItem'
 })(NewItemForm)
 
-export default NewItem;
+const mapStateToProps = (state) => ({
+  newItems: state.newItems
+})
+
+const mapDispatchToProps = {addNewItemToNewItemList}
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+  )
+  (NewItem);
+
