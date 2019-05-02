@@ -1,1 +1,2 @@
 export const FETCH_RESTAURANTS = 'FETCH_RESTAURANTS';
+export const SHOW_RESULTS = 'SHOW_RESULTS';

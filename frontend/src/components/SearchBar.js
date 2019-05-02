@@ -1,6 +1,7 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
+import { fetchAllSearchRestaurants } from '../actions/index';
 
 
 const InputField = (field) => ( 
@@ -33,10 +34,11 @@ RestaurantSearchForm = reduxForm({
 class SearchBar extends React.Component {
 
   handleRestaurantSearch = values => {
-    console.log(values);
+    this.props.dispatch(fetchAllSearchRestaurants(values.restaurantQuery));
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="dish-restaurant-search">
         <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -60,4 +62,12 @@ class SearchBar extends React.Component {
   }
 }
 
-export default SearchBar;
+const mapStateToProps = state => {
+  return {
+    results: state.results
+  };
+};
+
+export default connect(
+  mapStateToProps
+)(SearchBar);
