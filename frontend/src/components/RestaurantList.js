@@ -24,7 +24,7 @@ const RestaurantList = ({ restaurants }) => {
 }
 const mapStateToProps = state => {
   return {
-    restaurants: state.restaurants
+    restaurants: state.restaurants.restaurants
   };
 };
 
