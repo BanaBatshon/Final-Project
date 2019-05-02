@@ -1,4 +1,4 @@
-import { FETCH_RESTAURANTS } from './types';
+import { FETCH_RESTAURANTS, NEW_ITEM_ADDED } from './types';
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:3001/restaurants';
@@ -20,4 +20,11 @@ export const fetchAllRestaurants = () => {
         throw (error);
       });
   };
+};
+
+export const addNewItemToNewItemList = (menuItem) => {
+  return {
+    type: NEW_ITEM_ADDED,
+    menuItem
+  }
 };
