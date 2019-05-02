@@ -1,9 +1,11 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import axios from 'axios'
 
 const NewRestaurant = () => {
   const onSubmit = ((values) => {
-    console.log(values)
+    axios
+    .post('http://localhost:3001/restaurants', values)
   })
   return (
     <div>
@@ -21,8 +23,8 @@ let NewRestaurantForm = props => {
 
           <div className="row form-group">
             <div className="col-md-12 mb-3 mb-md-0">
-              <label className="font-weight-bold" htmlFor="fullname">Name</label>
-              <Field name="fullname" component="input" type="text" id="fullname" className="form-control" placeholder="Name"/>
+              <label className="font-weight-bold" htmlFor="name">Name</label>
+              <Field name="name" component="input" type="text" id="fullname" className="form-control" placeholder="Name"/>
             </div>
           </div>
 
