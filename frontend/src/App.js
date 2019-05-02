@@ -17,8 +17,8 @@ class App extends Component {
           <Navigation />
           <Route exact path='/' component={Home} />
           <Route path='/restaurants/explore' component={Restaurants} />
-          <Route path='/restaurant' component={NewRestaurant} />
-          <Route path='/item' component={NewItem} />
+          <Route path='/restaurant/new' component={NewRestaurant} />
+          <Route path='/dish/new' component={NewItem} />
 
         </div>
       </BrowserRouter>
