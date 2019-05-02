@@ -5,6 +5,8 @@ import Restaurants from './components/Restaurants'
 import Navigation from './components/Navigation'
 import { BrowserRouter, Route } from 'react-router-dom'
 import NewRestaurant from './components/NewRestaurant';
+import NewItem from './components/NewItem';
+
 
 
 class App extends Component {
