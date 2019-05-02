@@ -20,8 +20,22 @@ router.get('/tags', function(req, res) {
   });
 });
 
+/**
+ * Endpoint to retrieve all items in database
+ */
 router.get('/items', function(req, res) {
   allItems().then(function(results) {
+    res.json(results);
+  });
+});
+
+
+/**
+ * Endpoint to retrieve all items for a restaurant with id id
+ */
+router.get('/restaurants/:id/items', function(req, res) {
+  const id = req.params.id;
+  getMenuItemsByRestaurant(id).then(function(results) {
     res.json(results);
   });
 });
@@ -39,9 +53,8 @@ router.post('/items', function(req, res) {
     approved: approved, createdAt: new Date(), updatedAt: new Date()})
     .save().then(function(menu_item) {
       let menuitemId = menu_item.dataValues.id;
-      let tagsArr = [];
       tags.forEach(function(tag) {
-        let tagEntry = models.menu_item_tags.build({menuitemId: menuitemId, 
+        models.menu_item_tags.build({menuitemId: menuitemId, 
           tagId: tag.id, createdAt: new Date(), updatedAt: new Date()}).save()
       });
      res.send();
@@ -116,6 +129,28 @@ router.post('/restaurants', function(req, res) {
       }
     })
 });
+
+function getMenuItemsByRestaurant(restaurantId) {
+  return models.menu_items
+  .findAll({where: {restaurantId: restaurantId}, include: [models.menu_item_ratings]})
+  .then(function(results) {
+    let itemsArr = [];
+    results.forEach(function(item) {
+      let sum_ratings = 0;
+      let count_ratings = 0;
+      item.menuitemratings.forEach(function(rating) {
+        sum_ratings += rating.dataValues.rating;
+        count_ratings++;
+      });
+      let avg_rating = (sum_ratings/count_ratings) ? (sum_ratings/count_ratings).toPrecision(2) : 0
+      item.dataValues.menuitemratings = avg_rating;
+      delete item.menuitemratings;
+      itemsArr.push(item.dataValues)
+    });
+    return itemsArr;
+  });
+}
+
 
 /**
  * Gets all items for explore dishes page
@@ -204,7 +239,7 @@ function getRestaurant(id) {
     return restaurant.dataValues;
   })
 }
-getRestaurant(4)
+
 /**
  * Returns array of menu item ids for specific tag.
  * @param {Menu Item Tag} tag 

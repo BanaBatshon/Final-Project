@@ -1,42 +1,107 @@
 var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
+var cors = require('cors')
 
-router.get('/create', function(req, res) {
-  models.MenuItemTag.create({
-  }).then(function() {
-    res.redirect('/');
+router.use(cors());
+
+/**
+ * Endpoint to get all user reviews for all restaurants
+ * they have reviews.
+ */
+router.get('/:userid/ratings', function(req, res) {
+  const userId = req.params.userid;
+  getUserRestaurantReviews(userId, null, true)
+  .then(function(results) {
+    res.json(results);
   });
 });
 
-router.get('/:user_id/destroy', function(req, res) {
-  models.User.destroy({
-    where: {
-      id: req.params.user_id
-    }
-  }).then(function() {
-    res.redirect('/');
+/**
+ * Endpoint to delete a user review
+ */
+router.delete('/:userid/ratings/:id', function(req, res) {
+  const user_id = req.params.userid;
+  const menu_item_id = req.params.id;
+  models.menu_item_ratings.destroy({where:{userId: user_id, menuitemId: menu_item_id}})
+  .then(function(result) {
+    res.send();
   });
 });
 
-router.post('/:user_id/tasks/create', function (req, res) {
-  models.Task.create({
-    title: req.body.title,
-    UserId: req.params.user_id
-  }).then(function() {
-    res.redirect('/');
+/**
+ * Endpoint to update a users reviews
+ */
+router.patch('/:userid/ratings/:id', function(req, res) {
+  const user_id = req.params.userid;
+  const rating = req.body.rating || 1;
+  const menu_item_id = req.params.id;
+
+  models.menu_item_ratings.update({rating: rating, updatedAt: new Date()}, 
+  {where: {menuitemId: menu_item_id, userId: user_id}})
+  .then(function(rows) {
+    res.send();
   });
 });
 
-router.get('/:user_id/tasks/:task_id/destroy', function (req, res) {
-  models.Task.destroy({
-    where: {
-      id: req.params.task_id
-    }
-  }).then(function() {
-    res.redirect('/');
+/**
+ * Endpoint to retrieve user reviews for 
+ * a specific restaurant
+ */
+router.get('/:userid/restaurant/:id', function(req, res) {
+  const userId = req.params.userid;
+  const restaurantId = parseInt(req.params.id);
+  getUserRestaurantReviews(userId, restaurantId, false)
+  .then(function(results) {
+    res.json(results);
   });
 });
 
+/**
+ * Endpoint to sumbit a review for an item
+ */
+router.post('/:id/ratings', function(req, res) {
+  const userId = req.body.userId;
+  const menuitemId = req.body.menuitemId;
+  const rating = req.body.rating;
+  models.menu_item_ratings.build({rating: rating, userId: userId, 
+    menuitemId: menuitemId, createdAt: new Date(), updatedAt: new Date()})
+    .save().then(function(rating) {
+      res.send();
+    });
+});
+
+
+
+/**
+ * Retunrs all user reviews with userId for restaurant with restaurantId
+ * @param {user id} userId 
+ * @param {restaurant id} restaurantId 
+ */
+function getUserRestaurantReviews(userId, restaurantId, search_all) {
+  return models.menu_item_ratings
+  .findAll({where: {userId: userId}, include: [{model: models.menu_items, 
+    include: [models.restaurants, {model: models.menu_item_tags, include:[models.tags]}]}]})
+  .then(function(results) {
+    let reviewsArr = [];
+    results.forEach(function(rating) {
+      rating.dataValues.menuitem = rating.dataValues.menuitem.dataValues;
+      rating.dataValues.menuitem.restaurant = rating.dataValues.menuitem.restaurant.dataValues;
+      let itemTags = [];
+      rating.dataValues.menuitem.menuitemtags.forEach(function(tag) {
+        itemTags.push(tag.tag.dataValues.name);
+      });
+      rating.dataValues.menuitem.menuitemtags = itemTags;
+      let restaurant_id = rating.dataValues.menuitem.restaurant.id;
+      if(restaurant_id === restaurantId && !search_all) {
+        reviewsArr.push(rating.dataValues);
+      } else if (search_all) {
+        reviewsArr.push(rating.dataValues);
+      }
+    });
+    return reviewsArr;
+  });
+}
+getUserRestaurantReviews(1,null,true);
 
 module.exports = router;

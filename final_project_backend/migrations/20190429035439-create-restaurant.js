@@ -20,6 +20,9 @@ module.exports = {
       website: {
         type: Sequelize.STRING
       },
+      description: {
+        type: Sequelize.STRING
+      },
       approved: {
         type: Sequelize.BOOLEAN
       },
