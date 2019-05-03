@@ -2,10 +2,7 @@ import React, { Fragment } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { fetchAllSearchRestaurants } from '../actions/index';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-
-
 
 const InputField = (field) => (
   <div className="col-md-6 col-lg-9 mb-3 mb-lg-0">
@@ -47,7 +44,6 @@ class SearchBar extends React.Component {
 
   render() {
     const { redirect } = this.state
-    console.log(this.props);
     return (
       <Fragment>
         {redirect && (<Redirect to="/restaurants/results" />)}
@@ -72,10 +68,6 @@ class SearchBar extends React.Component {
     )
   }
 }
-
-// SearchBar.contextTypes = {
-//   router: PropTypes.object
-// }
 
 const mapStateToProps = state => {
   return {

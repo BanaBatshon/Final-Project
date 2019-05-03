@@ -1,4 +1,4 @@
-import { FETCH_RESTAURANTS, FETCH_RESTAURANT } from '../actions/types';
+import { FETCH_RESTAURANTS, FETCH_RESTAURANT, FETCH_RESTAURANT_SEARCH_RESULTS } from '../actions/types';
 
 const defaultState = {
   activeRestaurant: {
@@ -6,6 +6,7 @@ const defaultState = {
     restauranttags: []
   },
   restaurants: [],
+  searchResults: []
 }
 
 export default function restaurantReducer(state = defaultState, action) {
@@ -19,6 +20,11 @@ export default function restaurantReducer(state = defaultState, action) {
       return {
         ...state,
         activeRestaurant: action.restaurant
+      }
+    case FETCH_RESTAURANT_SEARCH_RESULTS:
+      return {
+        ...state,
+        searchResults: action.searchResults
       }
     default:
       return state;

@@ -1,7 +1,7 @@
-import { FETCH_RESTAURANTS, SHOW_RESULTS, FETCH_RESTAURANT } from './types';
+import { FETCH_RESTAURANTS, FETCH_RESTAURANT_SEARCH_RESULTS, FETCH_RESTAURANT } from './types';
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:3001/restaurants';
+const apiUrl = 'http://localhost:3001';
 
 export const fetchRestaurants = (restaurants) => {
   return {
@@ -12,7 +12,7 @@ export const fetchRestaurants = (restaurants) => {
 
 export const fetchAllRestaurants = () => {
   return (dispatch) => {
-    return axios.get(apiUrl)
+    return axios.get(`${apiUrl}/restaurants`)
       .then(response => {
         dispatch(fetchRestaurants(response.data))
       })
@@ -31,7 +31,7 @@ export const fetchRestaurant = (restaurant) => {
 
 export const fetchSingleRestaurant = (url) => {
   return (dispatch) => {
-    return axios.get('http://localhost:3001' + url)
+    return axios.get(`${apiUrl}${url}`)
       .then(response => {
         dispatch(fetchRestaurant(response.data))
       })
@@ -42,16 +42,16 @@ export const fetchSingleRestaurant = (url) => {
 };
 
 
-export const fetchSearchRestaurants = (results) => {
+export const fetchSearchRestaurants = (searchResults) => {
   return {
-    type: SHOW_RESULTS,
-    results
+    type: FETCH_RESTAURANT_SEARCH_RESULTS,
+    searchResults
   }
 };
 
 export const fetchAllSearchRestaurants = (query) => {
   return (dispatch) => {
-    return axios.get(apiUrl + '/' + query)
+    return axios.get(`${apiUrl}/restaurants/${query}`)
       .then(response => {
         dispatch(fetchSearchRestaurants(response.data))
       })

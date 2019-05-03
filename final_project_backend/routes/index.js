@@ -65,7 +65,7 @@ router.get('/restaurants/:id/items', function(req, res) {
 router.post('/items', function(req, res) {
   const name = req.body.name;// || 'test';
   const restaurantId = req.body.restaurantId;// || 1;
-  const approved = req.body.approved;// || false;
+  const approved = false;
   const tags = req.body.tags; //|| [{id: 28, name: 'pizza'}, {id: 7, name:'italian'}, {id :2, name: 'pasta'}];
 
   models.menu_items.build({name: name, restaurantId: restaurantId, 
@@ -239,25 +239,44 @@ function allRestaurants() {
  */
 function getRestaurant(id) {
   return models.restaurants
-  .find({where: {id: id}, include: [{model: models.restaurant_tags, include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
+  .find({where: {id: id}, include: [{model: models.restaurant_tags, 
+    include: [models.tags]}, {model: models.menu_items, 
+      include: [models.menu_item_ratings, {model: models.menu_item_tags, 
+        include: [models.tags]}]}]})
   .then(function(restaurant) {
     let menuItems = [];
     let menu_items = restaurant.dataValues.menuitems;
+    let restauranttags = [];
+    restaurant.restauranttags.forEach(function(tag) {
+      restauranttags.push(tag.tag.dataValues.name);
+    });
+    restaurant.dataValues.restauranttags = restauranttags;
+    let avg_ratings = {sum:0, count:0};
     menu_items.forEach(function(item) {
       let ratings = [];
       let sum_ratings = 0;
+      let menu_item_tags = [];
+      item.menuitemtags.forEach(function(tag) {
+        menu_item_tags.push(tag.tag.dataValues.name)
+      });
+      item.dataValues.menuitemtags = menu_item_tags;
       item.menuitemratings.forEach(function(rating) {
         ratings.push(rating.dataValues);
         sum_ratings += rating.dataValues.rating;
+        avg_ratings.sum += parseInt(rating.dataValues.rating);
+        avg_ratings.count ++;
       });
       item.dataValues.menuitemratings = (sum_ratings/ratings.length).toPrecision(2);
       menuItems.push(item.dataValues);
     });
+    avg_ratings = (avg_ratings.sum/avg_ratings.count).toPrecision(2);
     menuItems.sort(compare);
     restaurant.dataValues.menuitems = menuItems;
+    restaurant.dataValues['avg_ratings'] = avg_ratings;
     return restaurant.dataValues;
   })
 }
+
 
 /**
  * Returns array of menu item ids for specific tag.
