@@ -270,7 +270,7 @@ function getRestaurant(id) {
       menuItems.push(item.dataValues);
     });
     avg_ratings = (avg_ratings.sum/avg_ratings.count).toPrecision(2);
-    menuItems.sort(compare);
+    menuItems.sort(compare_ratings);
     restaurant.dataValues.menuitems = menuItems;
     restaurant.dataValues['avg_ratings'] = avg_ratings;
     return restaurant.dataValues;
@@ -323,6 +323,7 @@ function getMenuItemsById (arrIds) {
       item.dataValues.menuitemratings = reviewsArr;
       menuItems.push(item.dataValues);
     });
+    menuItems.sort(compare_avg_ratings);
     return menuItems;
   });
 }
@@ -368,11 +369,24 @@ function getRestaurantIds (tag) {
 /**
  * Function which sorts by menuitemratings
  */
-function compare( a, b) {
+function compare_ratings( a, b) {
   if ( a.menuitemratings > b.menuitemratings ){
     return -1;
   }
   if (a.menuitemratings < b.menuitemratings) {
+    return 1;
+  }
+  return 0;
+}
+
+/**
+ * Function which sorts by menuitemratings
+ */
+function compare_avg_ratings( a, b) {
+  if ( a.avg_rating > b.avg_rating ){
+    return -1;
+  }
+  if (a.avg_rating < b.avg_rating) {
     return 1;
   }
   return 0;
