@@ -3,7 +3,6 @@ import DishListItem from '../components/DishListItem';
 
 const DishListView = (props) => {
   const { dishes } = props;
-  console.log(dishes)
   if (!dishes.length) {
     return (
       <div>
