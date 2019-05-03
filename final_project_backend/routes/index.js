@@ -240,7 +240,9 @@ function allRestaurants() {
 function getRestaurant(id) {
   return models.restaurants
   .find({where: {id: id}, include: [{model: models.restaurant_tags, 
-    include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
+    include: [models.tags]}, {model: models.menu_items, 
+      include: [models.menu_item_ratings, {model: models.menu_item_tags, 
+        include: [models.tags]}]}]})
   .then(function(restaurant) {
     let menuItems = [];
     let menu_items = restaurant.dataValues.menuitems;
@@ -252,6 +254,11 @@ function getRestaurant(id) {
     menu_items.forEach(function(item) {
       let ratings = [];
       let sum_ratings = 0;
+      let menu_item_tags = [];
+      item.menuitemtags.forEach(function(tag) {
+        menu_item_tags.push(tag.tag.dataValues.name)
+      });
+      item.dataValues.menuitemtags = menu_item_tags;
       item.menuitemratings.forEach(function(rating) {
         ratings.push(rating.dataValues);
         sum_ratings += rating.dataValues.rating;
@@ -264,6 +271,7 @@ function getRestaurant(id) {
     return restaurant.dataValues;
   })
 }
+
 
 /**
  * Returns array of menu item ids for specific tag.
