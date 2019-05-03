@@ -65,7 +65,7 @@ router.get('/restaurants/:id/items', function(req, res) {
 router.post('/items', function(req, res) {
   const name = req.body.name;// || 'test';
   const restaurantId = req.body.restaurantId;// || 1;
-  const approved = req.body.approved;// || false;
+  const approved = false;
   const tags = req.body.tags; //|| [{id: 28, name: 'pizza'}, {id: 7, name:'italian'}, {id :2, name: 'pasta'}];
 
   models.menu_items.build({name: name, restaurantId: restaurantId, 
