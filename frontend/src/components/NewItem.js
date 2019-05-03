@@ -3,7 +3,8 @@ import { Field, reduxForm } from 'redux-form'
 import { connect}  from 'react-redux'
 import { addNewItemToNewItemList } from '../actions';
 import ReactTags from 'react-tag-autocomplete';
-import { Component} from 'react'
+import { Component} from 'react';
+import axios from 'axios';
 
 const NewItem = (props) => {
   const onSubmit = ((values) => {
@@ -17,6 +18,36 @@ const NewItem = (props) => {
 }
 
 class NewItemForm extends Component {
+  constructor (props) {
+    super(props)
+    
+    this.state = {
+      tags: [],
+      suggestions: []
+    }
+
+    this.fetchAllTags();
+  }
+
+  fetchAllTags = () => {
+    axios
+    .get('http://localhost:3001/tags')
+    .then(response => {
+      this.setState({suggestions: response.data})
+    })
+  }
+
+  handleDelete = (i) => {
+    const tags = this.state.tags.slice(0)
+    tags.splice(i, 1)
+    this.setState({ tags })
+  }
+ 
+  handleAddition = (tag) => {
+    const tags = [].concat(this.state.tags, tag)
+    this.setState({ tags })
+  }
+
   render() {
   const { handleSubmit } = this.props
   return (
@@ -41,7 +72,13 @@ class NewItemForm extends Component {
           <div className="row form-group">
             <div className="col-md-12">
               <label className="font-weight-bold" htmlFor="tags">Tags</label>
-              <Field name="tags" component="input" data-role="tagsinput" type="text" id="tags" className="form-control" placeholder=""/>
+              {/* <Field name="tags" component="input" data-role="tagsinput" type="text" id="tags" className="form-control" placeholder=""/> */}
+              <ReactTags
+                tags={this.state.tags}
+                suggestions={this.state.suggestions}
+                handleDelete={this.handleDelete}
+                handleAddition={this.handleAddition}
+                allowNew={true} />
             </div>
           </div>
 
@@ -57,6 +94,7 @@ class NewItemForm extends Component {
 
   )}
 }
+
 NewItemForm = reduxForm({
   form: 'newItem'
 })(NewItemForm)
