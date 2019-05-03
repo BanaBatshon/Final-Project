@@ -38,6 +38,9 @@ class SearchBar extends React.Component {
   }
 
   handleRestaurantSearch = values => {
+
+    // dispatch function is passed to props automatically when a component is connected
+    // https://react-redux.js.org/using-react-redux/connect-mapdispatch 
     this.props.dispatch(fetchAllSearchRestaurants(values.restaurantQuery));
     this.setState({ redirect: true });
   }
@@ -69,12 +72,4 @@ class SearchBar extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    results: state.results
-  };
-};
-
-export default connect(
-  mapStateToProps
-)(SearchBar);
+export default connect()(SearchBar);
