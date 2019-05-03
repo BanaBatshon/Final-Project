@@ -239,10 +239,16 @@ function allRestaurants() {
  */
 function getRestaurant(id) {
   return models.restaurants
-  .find({where: {id: id}, include: [{model: models.restaurant_tags, include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
+  .find({where: {id: id}, include: [{model: models.restaurant_tags, 
+    include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
   .then(function(restaurant) {
     let menuItems = [];
     let menu_items = restaurant.dataValues.menuitems;
+    let restauranttags = [];
+    restaurant.restauranttags.forEach(function(tag) {
+      restauranttags.push(tag.tag.dataValues.name);
+    });
+    restaurant.dataValues.restauranttags = restauranttags
     menu_items.forEach(function(item) {
       let ratings = [];
       let sum_ratings = 0;
