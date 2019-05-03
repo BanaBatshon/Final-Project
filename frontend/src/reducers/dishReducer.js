@@ -1,4 +1,4 @@
-import { FETCH_DISHES, FETCH_DISH, FETCH_DISH_SEARCH_RESULTS } from '../actions/types';
+import { FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS } from '../actions/types';
 
 const defaultState = {
   activeDish: {
@@ -13,11 +13,6 @@ export default function dishReducer(state = defaultState, action) {
       return {
         ...state,
         dishes: action.dishes,
-      }
-    case FETCH_DISH:
-      return {
-        ...state,
-        activeDish: action.dish
       }
     case FETCH_DISH_SEARCH_RESULTS:
       return {
