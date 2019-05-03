@@ -1,19 +1,19 @@
-import RestaurantListView from '../RestaurantListView';
+import DishListView from '../DishListView';
 import React from 'react';
 import { connect } from 'react-redux';
 
 const MainView = (props) => {
-  const { restaurants } = props
+  const { dishes } = props
   
   return (
     <div className="site-section bg-light">
       <div className="container">
         <div className="row justify-content-start text-left mb-5">
           <div className="col-md-9">
-            <h2 className="font-weight-bold text-black">Discover Restaurants</h2>
+            <h2 className="font-weight-bold text-black">Top Dishes</h2>
           </div>
         </div>
-        <RestaurantListView restaurants={restaurants} />
+        <DishListView dishes={dishes} />
       </div>
     </div>
   );
@@ -21,7 +21,7 @@ const MainView = (props) => {
 
 const mapStateToProps = state => {
   return {
-    restaurants: state.restaurants.restaurants
+    dishes: state.dishes.dishes
   };
 };
 
