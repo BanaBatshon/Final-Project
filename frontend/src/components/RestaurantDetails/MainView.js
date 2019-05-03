@@ -1,4 +1,3 @@
-import RestaurantList from '../RestaurantList';
 import React from 'react';
 
 const MainView = () => {

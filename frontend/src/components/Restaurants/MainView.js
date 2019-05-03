@@ -1,4 +1,3 @@
-import RestaurantList from '../RestaurantList';
 import React from 'react';
 
 const MainView = () => {
@@ -10,7 +9,6 @@ const MainView = () => {
             <h2 className="font-weight-bold text-black">Discover Restaurants</h2>
           </div>
         </div>
-        <RestaurantList />
       </div>
     </div>
   );
