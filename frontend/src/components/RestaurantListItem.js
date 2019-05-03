@@ -9,7 +9,7 @@ export default ({ restaurant: { name, address, restauranttags, id } }) => {
 
         <div className="list-item bg-white p-4 d-block d-md-flex align-items-center">
           <div className="thumbnail-wrap">
-            <img src="images/thumbnail_1.jpg" className="list-item-thumbnail" />
+            <img src="images/thumbnail_1.jpg" alt="" className="list-item-thumbnail" />
           </div>
           <div className="mb-4 mb-md-0 mr-5">
             <div className="list-item-header d-flex align-items-center">
