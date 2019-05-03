@@ -1,4 +1,4 @@
-import { FETCH_RESTAURANTS, NEW_ITEM_ADDED, FETCH_NEW_ITEMS } from './types';
+import { FETCH_RESTAURANTS, NEW_ITEM_ADDED, FETCH_NEW_ITEMS, SEND_NEW_ITEM_LIST } from './types';
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:3001/restaurants';
@@ -28,6 +28,13 @@ export const addNewItemToNewItemList = (menuItem) => {
     menuItem
   }
 };
+
+export const postNewItemListToServer = (newItems) => {
+  return {
+    type: SEND_NEW_ITEM_LIST,
+    newItems
+  }
+}
 
 export const fetchNewItems = (newItems) => {
   return {
