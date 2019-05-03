@@ -196,6 +196,7 @@ function allItems() {
       result.dataValues['avg_rating'] = (sum_ratings/count);
       menuArr.push(result.dataValues);
     });
+    menuArr.sort(compare_avg_ratings);
     return menuArr;
   });
 }
