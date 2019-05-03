@@ -1,6 +1,7 @@
 import React from 'react';
 import Summary from './Summary';
 import DishListView from './DishListView';
+import AddRatingContainer from './AddRatingContainer';
 
 const MainView = (props) => {
   const { restaurant } = props;
@@ -19,10 +20,12 @@ const MainView = (props) => {
               {/* {restaurant && restaurant.menuitems && <DishListView dishes={restaurant.menuitems} />} */}
               <DishListView dishes={restaurant.menuitems} />
             </div>
+            <AddRatingContainer />
           </div>
         </div>
       </div>
     </div>
+
   );
 };
 
