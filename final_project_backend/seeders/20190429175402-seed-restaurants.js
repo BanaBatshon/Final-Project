@@ -165,6 +165,13 @@ module.exports = {
       address: '162 Water St, Vancouver, BC V6B 1B2',
       phone_number:	'(604) 568-7022',
       website:	'pourhousevancouver.com',
+      description: "is simply dummy text of the printing "
+      + "and typesetting industry. Lorem Ipsum has been the " 
+      + "industry's standard dummy text ever since the 1500s, " + 
+      + "when an unknown printer took a galley of type and scrambled " +
+       "it to make a type specimen book. It has survived not only five " + 
+       "centuries, but also the leap into electronic typesetting, remaining " + 
+       "essentially unchanged. It was popularised in ",
       approved: true,
       createdAt: new Date(),
       updatedAt : new Date()
@@ -174,6 +181,13 @@ module.exports = {
       address: '865 W Broadway, Vancouver, BC V5Z 1J9',
       phone_number:	'(604) 739-0005',
       website:	'moderneburger.com',
+      description: "is simply dummy text of the printing "
+      + "and typesetting industry. Lorem Ipsum has been the " 
+      + "industry's standard dummy text ever since the 1500s, " + 
+      + "when an unknown printer took a galley of type and scrambled " +
+       "it to make a type specimen book. It has survived not only five " + 
+       "centuries, but also the leap into electronic typesetting, remaining " + 
+       "essentially unchanged. It was popularised in ",
       approved: true,
       createdAt: new Date(),
       updatedAt : new Date()
@@ -182,6 +196,13 @@ module.exports = {
       name: 'Red Truck Beer’s Truck Stop',
       address: '295 E 1st Ave, Vancouver, BC V5T 1A7',
       phone_number:	'(604) 682-4733',
+      description: "is simply dummy text of the printing "
+      + "and typesetting industry. Lorem Ipsum has been the " 
+      + "industry's standard dummy text ever since the 1500s, " + 
+      + "when an unknown printer took a galley of type and scrambled " +
+       "it to make a type specimen book. It has survived not only five " + 
+       "centuries, but also the leap into electronic typesetting, remaining " + 
+       "essentially unchanged. It was popularised in ",
       website:	'',
       approved: true,
       createdAt: new Date(),
@@ -192,6 +213,13 @@ module.exports = {
       address: '1020 Main St, Vancouver, BC V6A 2W1',
       phone_number:	'(604) 484-6018',
       website:	'campagnolorestaurant.ca',
+      description: "is simply dummy text of the printing "
+      + "and typesetting industry. Lorem Ipsum has been the " 
+      + "industry's standard dummy text ever since the 1500s, " + 
+      + "when an unknown printer took a galley of type and scrambled " +
+       "it to make a type specimen book. It has survived not only five " + 
+       "centuries, but also the leap into electronic typesetting, remaining " + 
+       "essentially unchanged. It was popularised in ",
       approved: true,
       createdAt: new Date(),
       updatedAt : new Date()
