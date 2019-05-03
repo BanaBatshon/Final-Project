@@ -1,18 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import axios from 'axios'
 import MenuItemRow from './MenuItemRow';
 import { Component } from 'react';
+import { postToServer } from '../util/index.js';
 
 class NewItemListTable extends Component {
   handleOnSubmit = (e) => {
     e.preventDefault();
-    for ( let k = 0; k < this.props.newItems.menuItem.length; k++ ) {
-      this.props.newItems.menuItem[0].tags = [this.props.newItems.menuItem[0].tags];
-      this.props.newItems.menuItem[0].restaurantId=1;
-      axios
-      .post ('http://localhost:3001/items', (this.props.newItems.menuItem[k]) )
-    }
+    postToServer(this.props.newItems.menuItem);
   }
   render() {
     if (this.props.newItems.menuItem.length) {
@@ -57,5 +52,5 @@ const mapStateToProps = state => {
 }
   
 export default connect(
-  mapStateToProps
+  mapStateToProps,
 )(NewItemListTable);
