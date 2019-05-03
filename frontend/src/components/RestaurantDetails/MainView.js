@@ -1,5 +1,6 @@
 import React from 'react';
 import Summary from './Summary';
+import DishListView from './DishListView';
 
 const MainView = (props) => {
   const { restaurant } = props;
@@ -15,6 +16,8 @@ const MainView = (props) => {
               <div className="col-md-9 px-0 pb-4" data-aos="fade">
                 <h2 className="font-weight-bold text-black">Top Dishes</h2>
               </div>
+              {/* {restaurant && restaurant.menuitems && <DishListView dishes={restaurant.menuitems} />} */}
+              <DishListView dishes={restaurant.menuitems} />
             </div>
           </div>
         </div>
