@@ -8,7 +8,7 @@ const MainView = (restaurants) => {
       <div className="container">
         <div className="row justify-content-start text-left mb-5">
           <div className="col-md-9">
-            <h2 className="font-weight-bold text-black">Discover Restaurants</h2>
+            <h2 className="font-weight-bold text-black">Search Results</h2>
           </div>
         </div>
         <RestaurantListView restaurants={restaurants.restaurants} />
@@ -19,7 +19,7 @@ const MainView = (restaurants) => {
 
 const mapStateToProps = state => {
   return {
-    restaurants: state.restaurants.restaurants
+    restaurants: state.results
   };
 };
 

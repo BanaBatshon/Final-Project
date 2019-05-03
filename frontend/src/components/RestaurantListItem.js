@@ -1,5 +1,6 @@
 import React from 'react';
 import Tag from './Tag';
+import { Link, NavLink } from 'react-router-dom'
 
 export default ({ restaurant: { name, address, restauranttags, id } }) => {
   return (
@@ -12,7 +13,7 @@ export default ({ restaurant: { name, address, restauranttags, id } }) => {
           </div>
           <div className="mb-4 mb-md-0 mr-5">
             <div className="list-item-header d-flex align-items-center">
-              <h2 className="mr-3 text-black h4"><a href="details.html">{name}</a></h2>
+              <h2 className="mr-3 text-black h4"><Link to={`/restaurant/${id}`}>{name}</Link></h2>
               <div className="badge-wrap">
                 {restauranttags.map(restaurantTag => {
                   return (
