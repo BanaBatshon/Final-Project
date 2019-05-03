@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Home from './components/Home'
-import Restaurants from './components/Restaurants'
+import ExploreRestaurants from './components/ExploreRestaurants'
 import RestaurantSearchResults from './components/RestaurantSearchResults'
 import RestaurantDetails from './components/RestaurantDetails'
 import Navigation from './components/Navigation'
@@ -15,7 +15,7 @@ class App extends Component {
         <div className="site-wrap">
           <Navigation />
           <Route exact path='/' component={Home} />
-          <Route path='/restaurants/explore' component={Restaurants} />
+          <Route path='/restaurants/explore' component={ExploreRestaurants} />
           <Route path='/restaurants/results' component={RestaurantSearchResults} />
           <Route path='/restaurant' component={RestaurantDetails} />
         </div>
