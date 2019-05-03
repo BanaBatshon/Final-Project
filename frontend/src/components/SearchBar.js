@@ -75,32 +75,68 @@ class SearchBar extends React.Component {
     this.setState({ redirect: true });
   }
 
+  clickHandler = event => {
+    event.preventDefault();
+    if(event.target.text === 'Top Restaurants') {
+      this.setState({tab: false});
+    } else {
+      this.setState({tab: true});
+    }
+  }
+
   render() {
     const { redirect } = this.state
-    return (
-      <Fragment>
-        {redirect && (<Redirect to="/dishes/results" />)}
-        {/* {redirect && (<Redirect to="/restaurants/results" />)} */}
-        <div className="dish-restaurant-search">
-          <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li className="nav-item">
-              <a className="nav-link active py-3" id="pills-restaurant-tab" data-toggle="pill" href="#pills-restaurant"
-                role="tab" aria-controls="pills-restaurant" aria-selected="true">Top Restaurants</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link py-3" id="pills-dish-tab" data-toggle="pill" href="#pills-dish" role="tab"
-                aria-controls="pills-dish" aria-selected="false">Top Dishes</a>
-            </li>
-          </ul>
-          <div className="tab-content bg-white p-4 rounded" id="pills-tabContent">
-            <div className="tab-pane fade show active" id="pills-restaurant" role="tabpanel" aria-labelledby="pills-restaurant-tab">
-              {/* <RestaurantSearchForm onSubmit={this.handleRestaurantSearch} /> */}
-              <DishSearchForm onSubmit={(this.handleDishSearch)} />
+    if (!this.state.tab) {
+      return (
+        <Fragment>
+          {/* {redirect && (<Redirect to="/dishes/results" />)} */}
+          {redirect && (<Redirect to="/restaurants/results" />)}
+          <div className="dish-restaurant-search">
+            <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li className="nav-item">
+                <a onClick={this.clickHandler} className="nav-link active py-3" id="pills-restaurant-tab" data-toggle="pill" href="#pills-restaurant"
+                  role="tab" aria-controls="pills-restaurant" aria-selected="true">Top Restaurants</a>
+              </li>
+              <li className="nav-item">
+                <a onClick={this.clickHandler} className="nav-link py-3" id="pills-dish-tab" data-toggle="pill" href="#pills-dish" role="tab"
+                  aria-controls="pills-dish" aria-selected="false">Top Dishes</a>
+              </li>
+            </ul>
+            <div className="tab-content bg-white p-4 rounded" id="pills-tabContent">
+              <div className="tab-pane fade show active" id="pills-restaurant" role="tabpanel" aria-labelledby="pills-restaurant-tab">
+                <RestaurantSearchForm onSubmit={this.handleRestaurantSearch} />
+                {/* <DishSearchForm onSubmit={(this.handleDishSearch)} /> */}
+              </div>
             </div>
           </div>
-        </div>
-      </Fragment>
-    )
+        </Fragment>
+      )
+    } else {
+      return (
+        <Fragment>
+          {redirect && (<Redirect to="/dishes/results" />)}
+          {/* {redirect && (<Redirect to="/restaurants/results" />)} */}
+          <div className="dish-restaurant-search">
+            <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li className="nav-item">
+                <a onClick={this.clickHandler} className="nav-link py-3" id="pills-restaurant-tab" data-toggle="pill" href="#pills-restaurant"
+                  role="tab" aria-controls="pills-restaurant" aria-selected="true">Top Restaurants</a>
+              </li>
+              <li className="nav-item">
+                <a onClick={this.clickHandler} className="nav-link active py-3" id="pills-dish-tab" data-toggle="pill" href="#pills-dish" role="tab"
+                  aria-controls="pills-dish" aria-selected="false">Top Dishes</a>
+              </li>
+            </ul>
+            <div className="tab-content bg-white p-4 rounded" id="pills-tabContent">
+              <div className="tab-pane fade show active" id="pills-restaurant" role="tabpanel" aria-labelledby="pills-restaurant-tab">
+                {/* <RestaurantSearchForm onSubmit={this.handleRestaurantSearch} /> */}
+                <DishSearchForm onSubmit={(this.handleDishSearch)} />
+              </div>
+            </div>
+          </div>
+        </Fragment>
+      )
+    }
   }
 }
 
