@@ -2,21 +2,23 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect}  from 'react-redux'
 import { addNewItemToNewItemList } from '../actions';
+import ReactTags from 'react-tag-autocomplete';
+import { Component} from 'react'
 
 const NewItem = (props) => {
   const onSubmit = ((values) => {
     props.addNewItemToNewItemList(values)
   })
-  console.log(props);
   return (
     <div>
       <NewItemForm onSubmit={onSubmit}/>
     </div>
-  )
+  ) 
 }
 
-let NewItemForm = props => {
-  const { handleSubmit } = props
+class NewItemForm extends Component {
+  render() {
+  const { handleSubmit } = this.props
   return (
     <form onSubmit={handleSubmit}>
       <div className="col-md-12 col-lg-8 mb-5">
@@ -45,7 +47,7 @@ let NewItemForm = props => {
 
           <div className="row form-group">
             <div className="col-md-12">
-              <button type="submit" className="btn btn-primary  py-2 px-4">Add Dish</button>
+              <button type="submit" onClick={this.handleOnSubmit} className="btn btn-primary  py-2 px-4">Add Dish</button>
             </div>
           </div>
 
@@ -54,6 +56,7 @@ let NewItemForm = props => {
     </form>
 
   )}
+}
 NewItemForm = reduxForm({
   form: 'newItem'
 })(NewItemForm)
