@@ -250,7 +250,8 @@ function getRestaurant(id) {
     restaurant.restauranttags.forEach(function(tag) {
       restauranttags.push(tag.tag.dataValues.name);
     });
-    restaurant.dataValues.restauranttags = restauranttags
+    restaurant.dataValues.restauranttags = restauranttags;
+    let avg_ratings = {sum:0, count:0};
     menu_items.forEach(function(item) {
       let ratings = [];
       let sum_ratings = 0;
@@ -262,12 +263,16 @@ function getRestaurant(id) {
       item.menuitemratings.forEach(function(rating) {
         ratings.push(rating.dataValues);
         sum_ratings += rating.dataValues.rating;
+        avg_ratings.sum += parseInt(rating.dataValues.rating);
+        avg_ratings.count ++;
       });
       item.dataValues.menuitemratings = (sum_ratings/ratings.length).toPrecision(2);
       menuItems.push(item.dataValues);
     });
+    avg_ratings = (avg_ratings.sum/avg_ratings.count).toPrecision(2);
     menuItems.sort(compare);
     restaurant.dataValues.menuitems = menuItems;
+    restaurant.dataValues['avg_ratings'] = avg_ratings;
     return restaurant.dataValues;
   })
 }
