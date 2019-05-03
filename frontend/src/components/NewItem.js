@@ -72,13 +72,11 @@ class NewItemForm extends Component {
           <div className="row form-group">
             <div className="col-md-12">
               <label className="font-weight-bold" htmlFor="tags">Tags</label>
-              {/* <Field name="tags" component="input" data-role="tagsinput" type="text" id="tags" className="form-control" placeholder=""/> */}
               <ReactTags
                 tags={this.state.tags}
                 suggestions={this.state.suggestions}
                 handleDelete={this.handleDelete}
-                handleAddition={this.handleAddition}
-                allowNew={true} />
+                handleAddition={this.handleAddition}/>
             </div>
           </div>
 
