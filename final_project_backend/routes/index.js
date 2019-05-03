@@ -301,21 +301,25 @@ function getMenuItemIds (tag) {
 function getMenuItemsById (arrIds) {
   return models.menu_items
   .findAll({where: {id: {$in: arrIds}}, include:[{model: models.menu_item_tags, 
-    include: [models.tags]}, models.menu_item_ratings]})
+    include: [models.tags]}, models.menu_item_ratings, models.restaurants]})
   .then(function(results) {
     let menuItems = [];
     results.forEach(function(item) {
+      item.dataValues.restaurant = item.dataValues.restaurant.dataValues.name;
       let tags = item.dataValues.menuitemtags;
       let ratings = item.dataValues.menuitemratings;
       let tagsArr = [];
       let reviewsArr = [];
+      let avg_ratings = 0;
       tags.forEach(function(tag) {
         tagsArr.push(tag.dataValues.tag.name);
       });
       item.dataValues.menuitemtags = tagsArr;
       ratings.forEach(function(rating) {
         reviewsArr.push({rating: rating.dataValues.rating, userId: rating.dataValues.userId});
+        avg_ratings += rating.dataValues.rating;
       });
+      item.dataValues['avg_rating'] = (avg_ratings/reviewsArr.length).toPrecision(2);
       item.dataValues.menuitemratings = reviewsArr;
       menuItems.push(item.dataValues);
     });
