@@ -1,5 +1,5 @@
 import { FETCH_RESTAURANTS, FETCH_RESTAURANT_SEARCH_RESULTS, FETCH_RESTAURANT, 
-  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_DISH } from './types';
+  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS } from './types';
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:3001';
@@ -80,25 +80,6 @@ export const fetchAllDishes = () => {
       });
   };
 };
-
-export const fetchDish = (dish) => {
-    return {
-      type: FETCH_DISH,
-      dish
-    }
-  };
-  
-  export const fetchSingleDish = (url) => {
-    return (dispatch) => {
-      return axios.get(`${apiUrl}${url}`)
-        .then(response => {
-          dispatch(fetchDish(response.data))
-        })
-        .catch(error => {
-          throw (error);
-        });
-    };
-  };
 
   export const fetchSearchDishes = (searchResults) => {
     return {
