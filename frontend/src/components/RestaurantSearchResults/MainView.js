@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const MainView = (props) => {
   const { restaurants } = props;
-
+  
   return (
     <div className="site-section bg-light">
       <div className="container">

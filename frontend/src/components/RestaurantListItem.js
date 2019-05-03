@@ -1,6 +1,6 @@
 import React from 'react';
 import Tag from './Tag';
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default ({ restaurant: { name, address, restauranttags, id } }) => {
   return (
