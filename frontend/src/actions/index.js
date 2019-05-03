@@ -1,4 +1,5 @@
-import { FETCH_RESTAURANTS, FETCH_RESTAURANT_SEARCH_RESULTS, FETCH_RESTAURANT } from './types';
+import { FETCH_RESTAURANTS, FETCH_RESTAURANT_SEARCH_RESULTS, FETCH_RESTAURANT, 
+  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_DISH } from './types';
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:3001';
@@ -60,3 +61,60 @@ export const fetchAllSearchRestaurants = (query) => {
       });
   };
 };
+
+export const fetchDishes = (dishes) => {
+  return {
+    type: FETCH_DISHES,
+    dishes
+  }
+};
+
+export const fetchAllDishes = () => {
+  return (dispatch) => {
+    return axios.get(`${apiUrl}/items`)
+      .then(response => {
+        dispatch(fetchDishes(response.data))
+      })
+      .catch(error => {
+        throw (error);
+      });
+  };
+};
+
+export const fetchDish = (dish) => {
+    return {
+      type: FETCH_DISH,
+      dish
+    }
+  };
+  
+  export const fetchSingleDish = (url) => {
+    return (dispatch) => {
+      return axios.get(`${apiUrl}${url}`)
+        .then(response => {
+          dispatch(fetchDish(response.data))
+        })
+        .catch(error => {
+          throw (error);
+        });
+    };
+  };
+
+  export const fetchSearchDishes = (searchResults) => {
+    return {
+      type: FETCH_DISH_SEARCH_RESULTS,
+      searchResults
+    }
+  };
+  
+  export const fetchAllSearchDishes = (query) => {
+    return (dispatch) => {
+      return axios.get(`${apiUrl}/items/${query}`)
+        .then(response => {
+          dispatch(fetchSearchDishes(response.data))
+        })
+        .catch(error => {
+          throw (error);
+        });
+    };
+  };

@@ -4,6 +4,9 @@ import Home from './components/Home'
 import ExploreRestaurants from './components/ExploreRestaurants'
 import RestaurantSearchResults from './components/RestaurantSearchResults'
 import RestaurantDetails from './components/RestaurantDetails'
+import DishSearchResults from './components/DishSearchResults';
+import DishDetails from './components/DishDetails';
+import ExploreDishes from './components/ExploreDishes';
 import Navigation from './components/Navigation'
 import { BrowserRouter, Route } from 'react-router-dom'
 
@@ -18,6 +21,9 @@ class App extends Component {
           <Route path='/restaurants/explore' component={ExploreRestaurants} />
           <Route path='/restaurants/results' component={RestaurantSearchResults} />
           <Route path='/restaurant' component={RestaurantDetails} />
+          <Route path='/dishes/explore' component={ExploreDishes} />
+          <Route path='/dishes/results' component={DishSearchResults} />
+          <Route path='/dish' component={DishDetails} />
         </div>
       </BrowserRouter>
     );
