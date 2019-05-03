@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import SearchBar from './SearchBar';
 import Background from '../images/hero_bg_4.jpg';
 
@@ -6,7 +6,7 @@ const heroStyle = {
   backgroundImage: `url(${Background})`
 }
 
-class Hero extends React.Component {
+class Hero extends Component {
   render() {
     return (
       <div className="site-blocks-cover" style={heroStyle} data-stellar-background-ratio="0.5">
