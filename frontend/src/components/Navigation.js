@@ -31,7 +31,7 @@ class Navigation extends React.Component {
                       <li><Link to="/">New Dish Submission</Link></li>
                     </ul>
                   </li>
-                  <li><Link to="/">My Ratings</Link></li>
+                  <li><Link to="/myratings">My Ratings</Link></li>
                   <li><Link to="/"><span className="rounded bg-secondary py-2 px-3 text-white">Login</span></Link>
                   </li>
                 </ul>
