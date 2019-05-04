@@ -29,7 +29,9 @@ class AutoSuggest extends Component {
       });
   };
 
-  getSuggestions = (value) => {
+  escapeRegexCharacters = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  getSuggestions = value => {
     const escapedValue = this.escapeRegexCharacters(value.trim());
 
     if (escapedValue === '') {
@@ -37,29 +39,44 @@ class AutoSuggest extends Component {
     }
 
     const regex = new RegExp('^' + escapedValue, 'i');
+    const suggestions = this.state.dishes.filter(dish => regex.test(dish.name));
 
-    return this.state.dishes.filter(dish => regex.test(dish.name));
-  }
+    if (suggestions.length === 0) {
+      return [
+        { isAddNew: true }
+      ];
+    }
 
-
-  getSuggestionValue = (suggestion) => {
-    return suggestion.name;
-  }
-
-  renderSuggestion = (suggestion) => {
-    return (
-      <span>{suggestion.name}</span>
-    );
-  }
-
-  escapeRegexCharacters = (str) => {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return suggestions;
   }
 
   onChange = (event, { newValue, method }) => {
+    if (newValue === '') {
+      this.props.selection([]);
+    }
     this.setState({
       value: newValue
     });
+  };
+
+  getSuggestionValue = suggestion => {
+    if (suggestion.isAddNew) {
+      return this.state.value;
+    }
+
+    return suggestion.name;
+  };
+
+  renderSuggestion = suggestion => {
+    if (suggestion.isAddNew) {
+      return (
+        <span>
+          [+] Add new: <strong>{this.state.value}</strong>
+        </span>
+      );
+    }
+
+    return suggestion.name;
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
@@ -74,14 +91,22 @@ class AutoSuggest extends Component {
     });
   };
 
-  onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
-    this.props.selection(suggestion);
-  }
+  onSuggestionSelected = (event, { suggestion }) => {
+
+    if (suggestion.isAddNew) {
+      console.log('Add new:', this.state.value);
+    } else {
+      this.props.selection(suggestion);
+    }
+    this.setState({
+      value: ''
+    });
+  };
 
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: "Search for dish ",
+      placeholder: "Search for dish",
       value,
       onChange: this.onChange
     };
@@ -93,11 +118,83 @@ class AutoSuggest extends Component {
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         getSuggestionValue={this.getSuggestionValue}
         renderSuggestion={this.renderSuggestion}
-        inputProps={inputProps}
         onSuggestionSelected={this.onSuggestionSelected}
+        inputProps={inputProps}
       />
     );
   }
+  // getSuggestions = (value) => {
+  //   const escapedValue = this.escapeRegexCharacters(value.trim());
+
+  //   if (escapedValue === '') {
+  //     return [];
+  //   }
+
+  //   const regex = new RegExp('^' + escapedValue, 'i');
+
+  //   return this.state.dishes.filter(dish => regex.test(dish.name));
+  // }
+
+  // getSuggestionValue = (suggestion) => {
+  //   return suggestion.name;
+  // }
+
+  // renderSuggestion = (suggestion) => {
+  //   return (
+  //     <span>{suggestion.name}</span>
+  //   );
+  // }
+
+  // escapeRegexCharacters = (str) => {
+  //   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // }
+
+  // onChange = (event, { newValue, method }) => {
+  //   if(newValue === '') {
+  //     this.props.selection([]);
+  //   }
+
+  //   this.setState({
+  //     value: newValue
+  //   });
+  // };
+
+  // onSuggestionsFetchRequested = ({ value }) => {
+  //   this.setState({
+  //     suggestions: this.getSuggestions(value)
+  //   });
+  // };
+
+  // onSuggestionsClearRequested = () => {
+  //   this.setState({
+  //     suggestions: []
+  //   });
+  // };
+
+  // onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+  //   this.props.selection(suggestion);
+  // }
+
+  // render() {
+  //   const { value, suggestions } = this.state;
+  //   const inputProps = {
+  //     placeholder: "Search for dish ",
+  //     value,
+  //     onChange: this.onChange
+  //   };
+
+  //   return (
+  //     <Autosuggest
+  //       suggestions={suggestions}
+  //       onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+  //       onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+  //       getSuggestionValue={this.getSuggestionValue}
+  //       renderSuggestion={this.renderSuggestion}
+  //       inputProps={inputProps}
+  //       onSuggestionSelected={this.onSuggestionSelected}
+  //     />
+  //   );
+  // }
 }
 
 export default withRouter(AutoSuggest);
