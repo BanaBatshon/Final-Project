@@ -193,7 +193,7 @@ function allItems() {
       });
       result.dataValues.restaurant = result.restaurant.dataValues.name;
       delete result.dataValues.menuitemratings;
-      result.dataValues['avg_rating'] = (sum_ratings/count);
+      result.dataValues['avg_rating'] = (sum_ratings/count).toPrecision(2);
       menuArr.push(result.dataValues);
     });
     menuArr.sort(compare_avg_ratings);
@@ -386,11 +386,11 @@ function getRestaurantIds (tag) {
  * Function which sorts by menuitemratings
  */
 function compare_ratings( a, b) {
-  if ( a.menuitemratings > b.menuitemratings ){
-    return -1;
-  }
-  if (a.menuitemratings < b.menuitemratings) {
+  if ( a.menuitemratings < b.menuitemratings ){
     return 1;
+  }
+  if (a.menuitemratings > b.menuitemratings) {
+    return -1;
   }
   return 0;
 }
@@ -399,11 +399,11 @@ function compare_ratings( a, b) {
  * Function which sorts by menuitemratings
  */
 function compare_avg_ratings( a, b) {
-  if ( a.avg_rating > b.avg_rating ){
-    return -1;
-  }
-  if (a.avg_rating < b.avg_rating) {
+  if ( a.avg_rating < b.avg_rating ){
     return 1;
+  }
+  if (a.avg_rating > b.avg_rating) {
+    return -1;
   }
   return 0;
 }

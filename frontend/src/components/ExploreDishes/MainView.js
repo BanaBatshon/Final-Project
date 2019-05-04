@@ -10,7 +10,7 @@ const MainView = (props) => {
       <div className="container">
         <div className="row justify-content-start text-left mb-5">
           <div className="col-md-9">
-            <h2 className="font-weight-bold text-black">Top Dishes</h2>
+            <h2 className="font-weight-bold text-black">Discover Dishes</h2>
           </div>
         </div>
         <DishListView dishes={dishes} />

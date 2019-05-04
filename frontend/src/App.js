@@ -4,9 +4,11 @@ import Home from './components/Home'
 import ExploreRestaurants from './components/ExploreRestaurants'
 import RestaurantSearchResults from './components/RestaurantSearchResults'
 import RestaurantDetails from './components/RestaurantDetails'
+import DishSearchResults from './components/DishSearchResults';
+import ExploreDishes from './components/ExploreDishes';
 import Navigation from './components/Navigation'
 import { BrowserRouter, Route } from 'react-router-dom'
-
+import 'font-awesome/css/font-awesome.min.css';
 
 class App extends Component {
   render() {
@@ -18,6 +20,8 @@ class App extends Component {
           <Route path='/restaurants/explore' component={ExploreRestaurants} />
           <Route path='/restaurants/results' component={RestaurantSearchResults} />
           <Route path='/restaurant' component={RestaurantDetails} />
+          <Route path='/dishes/explore' component={ExploreDishes} />
+          <Route path='/dishes/results' component={DishSearchResults} />
         </div>
       </BrowserRouter>
     );

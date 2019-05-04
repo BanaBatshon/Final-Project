@@ -3,7 +3,7 @@ import Tag from './Tag';
 import { Link } from 'react-router-dom'
 import Rating from 'react-rating'
 
-export default ({ restaurant: { name, address, avg_rating, restauranttags, id } }) => {
+export default ({ dish: { name, restaurantId, avg_rating, menuitemtags, restaurant } }) => {
   return (
     <div className="row">
       <div className="col-md-12">
@@ -14,17 +14,17 @@ export default ({ restaurant: { name, address, avg_rating, restauranttags, id } 
           </div>
           <div className="mb-4 mb-md-0 mr-5">
             <div className="list-item-header d-flex align-items-center">
-              <h2 className="mr-3 text-black h4"><Link to={`/restaurant/${id}`}>{name}</Link></h2>
+              <h2 className="mr-3 text-black h4"><Link to={`/restaurant/${restaurantId}`}>{name}</Link></h2>
               <div className="badge-wrap">
-                {restauranttags.map(restaurantTag => {
+                {menuitemtags.map(dishTag => {
                   return (
-                    <Tag tag={restaurantTag} />
+                    <Tag tag={dishTag} />
                   );
                 })}
               </div>
             </div>
             <div className="list-item-body d-block d-md-flex">
-              <div className="mr-3"><span className="fl-bigmug-line-portfolio23"></span> <a href="#">{address}</a>
+              <div className="mr-3"><span className="fl-bigmug-line-portfolio23"></span> <a href="#">{restaurant}</a>
               </div>
             </div>
           </div>

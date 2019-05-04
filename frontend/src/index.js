@@ -10,6 +10,8 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 import { fetchAllRestaurants } from './actions/index';
+import { fetchAllDishes } from './actions/index';
+
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -19,6 +21,7 @@ const store = createStore(rootReducer,composeEnhancers(
 ));
 
 store.dispatch(fetchAllRestaurants());
+store.dispatch(fetchAllDishes());
 
 ReactDOM.render(
   <Provider store={store}>
