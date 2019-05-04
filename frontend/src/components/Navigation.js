@@ -25,9 +25,9 @@ class Navigation extends React.Component {
                     </ul>
                   </li>
                   <li className="has-children">
-                    <Link to="/">Dishes</Link>
+                    <Link to="/dishes/explore">Dishes</Link>
                     <ul className="dropdown">
-                      <li><Link to="/">Explore</Link></li>
+                      <li><Link to="/dishes/explore">Explore</Link></li>
                       <li><Link to="/">New Dish Submission</Link></li>
                     </ul>
                   </li>
