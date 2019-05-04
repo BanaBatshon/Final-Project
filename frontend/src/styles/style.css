@@ -18,8 +18,7 @@ body {
 .line-height-sm {
   line-height: 1.4 !important; }
 .checked {
-  color: orange;
-}
+  color: orange;}
 a {
   transition: .3s all ease; }
   a:hover {
