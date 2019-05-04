@@ -1,4 +1,4 @@
-import DishListView from '../DishListView';
+import RatingListView from '../RatingListView';
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { fetchAllMyRatings } from '../../actions/index';
@@ -19,7 +19,7 @@ class MainView extends Component {
                     <h2 className="font-weight-bold text-black">My Ratings</h2>
                     </div>
                 </div>
-                  return <DishListView dishes={this.props.myRatings} />
+                    <RatingListView myRatings={this.props.myRatings} />
                 </div>
             </div>
             );

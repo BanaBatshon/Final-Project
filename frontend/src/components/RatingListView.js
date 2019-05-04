@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import RatingListItem from './RatingListItem';
 
-const RatingsListView = (props) => {
+const RatingListView = (props) => {
   const { myRatings } = props;
   if (!myRatings.length) {
     return (
@@ -14,7 +14,7 @@ const RatingsListView = (props) => {
     <Fragment>
       {myRatings.map(rating => {
           return (
-            <RatingListItem rating={rating.menuitem} key={rating.id} />
+            <RatingListItem rating={rating} key={rating.id} />
           );
         })}
     </Fragment>
