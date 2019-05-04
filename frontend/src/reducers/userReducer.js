@@ -1,8 +1,9 @@
-import { FETCH_MY_RATINGS } from '../actions/types';
+import { FETCH_MY_RATINGS, FETCH_MY_RATINGS_BY_RESTAURANT } from '../actions/types';
 
 const defaultState = {
   user: { id: null },
-  myRatings: []
+  myRatings: [],
+  myRatingsByRestaurant: []
 }
 
 export default function userReducer(state = defaultState, action) {
@@ -10,7 +11,12 @@ export default function userReducer(state = defaultState, action) {
     case FETCH_MY_RATINGS:
       return {
         ...state,
-        myRatings: action.ratings,
+        myRatings: action.ratings
+      }
+    case FETCH_MY_RATINGS_BY_RESTAURANT:
+      return {
+        ...state,
+        myRatingsByRestaurant: action.ratings
       }
     default:
       return state;
