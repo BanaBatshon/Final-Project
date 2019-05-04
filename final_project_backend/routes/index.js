@@ -220,7 +220,7 @@ function allRestaurants() {
         });
       });
       const avg_rating = (sum/ratings.length) ?  (sum/ratings.length).toPrecision(2):0;
-      restaurant.dataValues['avg_ratings'] = avg_rating;
+      restaurant.dataValues['avg_rating'] = avg_rating;
       let restaurant_tags = restaurant.dataValues.restauranttags;
       let tagsArr = [];
       restaurant_tags.forEach(function(tag) {
@@ -274,7 +274,7 @@ function getRestaurant(id) {
     avg_ratings = (avg_ratings.sum/avg_ratings.count).toPrecision(2);
     menuItems.sort(compare_ratings);
     restaurant.dataValues.menuitems = menuItems;
-    restaurant.dataValues['avg_ratings'] = avg_ratings;
+    restaurant.dataValues['avg_rating'] = avg_ratings;
     return restaurant.dataValues;
   })
 }
