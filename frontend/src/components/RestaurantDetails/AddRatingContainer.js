@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
 import AutoSuggest from './AutoSuggest'
+import DishListItem from './DishListItem'
 
 class AddRatingContainer extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      dishToRate: {}
+    }
+  }
+
+  getSelection = (selectedDish) => {
+    this.setState({dishToRate: selectedDish})
+  }
+
   render() {
+
     return (
       <div className="row col-md-12">
         <div className="col-md-9 px-0 pb-4" data-aos="fade">
@@ -11,9 +26,13 @@ class AddRatingContainer extends Component {
         <div className="row col-md-12 px-0">
           <form className="col-md-12 py-4">
             <div className="input-group">
-              <AutoSuggest />
+              <AutoSuggest restaurant={this.props.restaurant} selection={this.getSelection}/>
             </div>
           </form>
+        </div>
+        <div className="container p-0 pb-5">
+          {Object.keys(this.state.dishToRate).length !== 0 && <DishListItem dish={this.state.dishToRate}/> }
+          
         </div>
 
         <div className="row d-flex w-100 p-4 justify-content-center">
@@ -29,7 +48,6 @@ class AddRatingContainer extends Component {
             <a href="#" className="btn ratings-action"><span className="icon-star"></span></a>
             <a href="#" className="btn ratings-action"><span className="icon-star"></span></a>
           </div>
-
 
         </div>
 

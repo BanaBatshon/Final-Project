@@ -20,7 +20,7 @@ const MainView = (props) => {
               {/* {restaurant && restaurant.menuitems && <DishListView dishes={restaurant.menuitems} />} */}
               <DishListView dishes={restaurant.menuitems} />
             </div>
-            <AddRatingContainer />
+            <AddRatingContainer restaurant={restaurant} />
           </div>
         </div>
       </div>

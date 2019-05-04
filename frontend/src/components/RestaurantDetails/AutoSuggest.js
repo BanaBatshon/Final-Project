@@ -1,101 +1,59 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
+import axios from 'axios';
+import { withRouter } from "react-router-dom"
 
-const languages = [
-  {
-    name: 'C',
-    year: 1972
-  },
-  {
-    name: 'C#',
-    year: 2000
-  },
-  {
-    name: 'C++',
-    year: 1983
-  },
-  {
-    name: 'Clojure',
-    year: 2007
-  },
-  {
-    name: 'Elm',
-    year: 2012
-  },
-  {
-    name: 'Go',
-    year: 2009
-  },
-  {
-    name: 'Haskell',
-    year: 1990
-  },
-  {
-    name: 'Java',
-    year: 1995
-  },
-  {
-    name: 'Javascript',
-    year: 1995
-  },
-  {
-    name: 'Perl',
-    year: 1987
-  },
-  {
-    name: 'PHP',
-    year: 1995
-  },
-  {
-    name: 'Python',
-    year: 1991
-  },
-  {
-    name: 'Ruby',
-    year: 1995
-  },
-  {
-    name: 'Scala',
-    year: 2003
-  }
-];
+class AutoSuggest extends Component {
 
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
-function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function getSuggestions(value) {
-  const escapedValue = escapeRegexCharacters(value.trim());
-  
-  if (escapedValue === '') {
-    return [];
-  }
-
-  const regex = new RegExp('^' + escapedValue, 'i');
-
-  return languages.filter(language => regex.test(language.name));
-}
-
-function getSuggestionValue(suggestion) {
-  return suggestion.name;
-}
-
-function renderSuggestion(suggestion) {
-  return (
-    <span>{suggestion.name}</span>
-  );
-}
-
-class AutoSuggest extends React.Component {
-  
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       value: '',
-      suggestions: []
-    };    
+      suggestions: [],
+      dishes: []
+    };
+
+    this.fetchAllRestaurantDishes();
+  }
+
+  fetchAllRestaurantDishes = () => {
+    const restaurantId = this.props.location.pathname.split('/restaurant/')[1];
+
+    axios.get(`http://localhost:3001/restaurants/${restaurantId}/items`)
+      .then(response => {
+        this.setState({ dishes: response.data })
+      })
+      .catch(error => {
+        throw (error);
+      });
+  };
+
+  getSuggestions = (value) => {
+    const escapedValue = this.escapeRegexCharacters(value.trim());
+
+    if (escapedValue === '') {
+      return [];
+    }
+
+    const regex = new RegExp('^' + escapedValue, 'i');
+
+    return this.state.dishes.filter(dish => regex.test(dish.name));
+  }
+
+
+  getSuggestionValue = (suggestion) => {
+    return suggestion.name;
+  }
+
+  renderSuggestion = (suggestion) => {
+    return (
+      <span>{suggestion.name}</span>
+    );
+  }
+
+  escapeRegexCharacters = (str) => {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   onChange = (event, { newValue, method }) => {
@@ -103,10 +61,10 @@ class AutoSuggest extends React.Component {
       value: newValue
     });
   };
-  
+
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-      suggestions: getSuggestions(value)
+      suggestions: this.getSuggestions(value)
     });
   };
 
@@ -116,24 +74,30 @@ class AutoSuggest extends React.Component {
     });
   };
 
+  onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+    this.props.selection(suggestion);
+  }
+
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: "Type 'c'",
+      placeholder: "Search for dish ",
       value,
       onChange: this.onChange
     };
 
     return (
-      <Autosuggest 
+      <Autosuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        inputProps={inputProps} />
+        getSuggestionValue={this.getSuggestionValue}
+        renderSuggestion={this.renderSuggestion}
+        inputProps={inputProps}
+        onSuggestionSelected={this.onSuggestionSelected}
+      />
     );
   }
 }
 
-export default AutoSuggest;
+export default withRouter(AutoSuggest);
