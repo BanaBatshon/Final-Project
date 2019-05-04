@@ -6,7 +6,7 @@ import RestaurantSearchResults from './components/RestaurantSearchResults'
 import RestaurantDetails from './components/RestaurantDetails'
 import Navigation from './components/Navigation'
 import { BrowserRouter, Route } from 'react-router-dom'
-
+import 'font-awesome/css/font-awesome.min.css';
 
 class App extends Component {
   render() {
