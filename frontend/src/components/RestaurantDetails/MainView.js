@@ -2,6 +2,7 @@ import React from 'react';
 import Summary from './Summary';
 import DishListView from './DishListView';
 import AddRatingContainer from './AddRatingContainer';
+import MyRatingsSideBar from './MyRatingsSideBar';
 
 const MainView = (props) => {
   const { restaurant } = props;
@@ -22,6 +23,7 @@ const MainView = (props) => {
             </div>
             <AddRatingContainer restaurant={restaurant} />
           </div>
+          <MyRatingsSideBar />
         </div>
       </div>
     </div>
