@@ -192,9 +192,11 @@ function allItems() {
         sum_ratings += rating.dataValues.rating;
       });
       result.dataValues.restaurant = result.restaurant.dataValues.name;
-      result.dataValues.menuitemratings = (sum_ratings/count);
+      delete result.dataValues.menuitemratings;
+      result.dataValues['avg_rating'] = (sum_ratings/count);
       menuArr.push(result.dataValues);
     });
+    menuArr.sort(compare_avg_ratings);
     return menuArr;
   });
 }
@@ -270,7 +272,7 @@ function getRestaurant(id) {
       menuItems.push(item.dataValues);
     });
     avg_ratings = (avg_ratings.sum/avg_ratings.count).toPrecision(2);
-    menuItems.sort(compare);
+    menuItems.sort(compare_ratings);
     restaurant.dataValues.menuitems = menuItems;
     restaurant.dataValues['avg_ratings'] = avg_ratings;
     return restaurant.dataValues;
@@ -301,24 +303,29 @@ function getMenuItemIds (tag) {
 function getMenuItemsById (arrIds) {
   return models.menu_items
   .findAll({where: {id: {$in: arrIds}}, include:[{model: models.menu_item_tags, 
-    include: [models.tags]}, models.menu_item_ratings]})
+    include: [models.tags]}, models.menu_item_ratings, models.restaurants]})
   .then(function(results) {
     let menuItems = [];
     results.forEach(function(item) {
+      item.dataValues.restaurant = item.dataValues.restaurant.dataValues.name;
       let tags = item.dataValues.menuitemtags;
       let ratings = item.dataValues.menuitemratings;
       let tagsArr = [];
       let reviewsArr = [];
+      let avg_ratings = 0;
       tags.forEach(function(tag) {
         tagsArr.push(tag.dataValues.tag.name);
       });
       item.dataValues.menuitemtags = tagsArr;
       ratings.forEach(function(rating) {
         reviewsArr.push({rating: rating.dataValues.rating, userId: rating.dataValues.userId});
+        avg_ratings += rating.dataValues.rating;
       });
+      item.dataValues['avg_rating'] = (avg_ratings/reviewsArr.length).toPrecision(2);
       item.dataValues.menuitemratings = reviewsArr;
       menuItems.push(item.dataValues);
     });
+    menuItems.sort(compare_avg_ratings);
     return menuItems;
   });
 }
@@ -329,10 +336,22 @@ function getMenuItemsById (arrIds) {
  */
 function getRestaurantsById(arr) {
   return models.restaurants
-  .findAll({where: {id: {$in: arr}}, include: [{model : models.restaurant_tags, include: [models.tags]}]})
+  .findAll({where: {id: {$in: arr}}, include: [{model: models.menu_items, include: [models.menu_item_ratings]}, 
+    {model : models.restaurant_tags, include: [models.tags]}]})
   .then(function(restaurants) {
     let restaurantsArr = [];
     restaurants.forEach(function(restaurant) {
+      let avg_rating = 0;
+      let rating_count = 0;
+      restaurant.menuitems.forEach(function(item) {
+        item.menuitemratings.forEach(function(rating) {
+          avg_rating += rating.dataValues.rating;
+          rating_count ++;
+        });
+      });
+      delete restaurant.dataValues.menuitems;
+      avg_rating = (avg_rating/rating_count).toPrecision(2);
+      restaurant.dataValues.avg_rating = avg_rating;
       let tags = restaurant.dataValues.restauranttags;
       let tagsArr = [];
       tags.forEach(function(tag) {
@@ -341,10 +360,12 @@ function getRestaurantsById(arr) {
       restaurant.dataValues.restauranttags = tagsArr;
       restaurantsArr.push(restaurant.dataValues);
     });
+    restaurantsArr.sort(compare_avg_ratings);
     return restaurantsArr;
   });
 }
 
+getRestaurantsById([1])
 /**
  * Returns array of restaurant ids.
  * @param {Restaurant Tag} tag 
@@ -364,11 +385,24 @@ function getRestaurantIds (tag) {
 /**
  * Function which sorts by menuitemratings
  */
-function compare( a, b) {
+function compare_ratings( a, b) {
   if ( a.menuitemratings > b.menuitemratings ){
     return -1;
   }
   if (a.menuitemratings < b.menuitemratings) {
+    return 1;
+  }
+  return 0;
+}
+
+/**
+ * Function which sorts by menuitemratings
+ */
+function compare_avg_ratings( a, b) {
+  if ( a.avg_rating > b.avg_rating ){
+    return -1;
+  }
+  if (a.avg_rating < b.avg_rating) {
     return 1;
   }
   return 0;
