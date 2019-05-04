@@ -19,7 +19,17 @@ class AddRatingContainer extends Component {
   }
 
   handleClick = (event) => {
-    this.setState({ value: undefined });
+    // this.setState({ value: undefined });
+    const request = {
+      userId: 1,
+      menuitemId: this.state.dishToRate.id,
+      rating: this.state.value
+    }
+    console.log(request)
+  }
+
+  cancelRating = () => {
+    this.setState({ dishToRate: {}, value: 0})
   }
 
   render() {
@@ -49,15 +59,18 @@ class AddRatingContainer extends Component {
 
             <div>
               <Rating
+                initialRating={this.state.value}
                 emptySymbol="fa fa-star-o fa-2x"
                 fullSymbol="fa fa-star fa-2x"
                 fractions={2}
+                onChange={(value) => this.setState({value: value})}
               />
             </div>
           </div>
 
           <div className="row d-flex w-100 p-4 justify-content-center">
-            <p><a href="#" className="btn btn-primary  py-2 px-4 rounded-0">Submit</a></p>
+            <button onClick={this.handleClick} className="btn btn-primary py-2 px-4 mx-1 rounded-0">Submit</button>
+            <button onClick={this.cancelRating} className="btn btn-danger  py-2 px-4 mx-1 rounded-0">Cancel</button>
           </div>
         </div>
       );
