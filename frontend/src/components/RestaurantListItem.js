@@ -1,6 +1,7 @@
 import React from 'react';
 import Tag from './Tag';
 import { Link } from 'react-router-dom'
+import Rating from 'react-rating'
 
 export default ({ restaurant: { name, address, avg_rating, restauranttags, id } }) => {
   return (
@@ -29,12 +30,13 @@ export default ({ restaurant: { name, address, avg_rating, restauranttags, id } 
           </div>
 
           <div className="ml-auto">
-            {[...Array(parseInt(avg_rating, 10))].map((e) => {return <span className="fa fa-star checked"></span>})}
-            {[...Array(5 - parseInt(avg_rating, 10))].map((e) => {return <span className="fa fa-star"></span>})}
-            {/* <a href="#" className="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span
-              className="icon-thumbs-up"></span></a>
-            <a href="#" className="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span
-              className="icon-thumbs-down"></span></a> */}
+          <Rating
+                readonly={true}
+                initialRating={parseFloat(avg_rating)}
+                fullSymbol="fa fa-star fa-2x"
+                emptySymbol="fa fa-star-o fa-2x"
+                fractions={2}
+              />
           </div>
         </div>
       </div>
