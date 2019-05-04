@@ -29,11 +29,12 @@ export default ({ dish: { name, restaurantId, avg_rating, menuitemtags, restaura
           </div>
 
           <div className="ml-auto">
-          <span className="p-4">{avg_rating} Stars</span>
-            <a href="#" className="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span
+            {[...Array(parseInt(avg_rating, 10))].map((e) => {return <span className="fa fa-star checked"></span>})}
+            {[...Array(5 - parseInt(avg_rating, 10))].map((e) => {return <span className="fa fa-star"></span>})}
+            {/* <a href="#" className="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span
               className="icon-thumbs-up"></span></a>
             <a href="#" className="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span
-              className="icon-thumbs-down"></span></a>
+              className="icon-thumbs-down"></span></a> */}
           </div>
         </div>
       </div>

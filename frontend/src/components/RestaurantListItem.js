@@ -2,7 +2,7 @@ import React from 'react';
 import Tag from './Tag';
 import { Link } from 'react-router-dom'
 
-export default ({ restaurant: { name, address, restauranttags, id } }) => {
+export default ({ restaurant: { name, address, avg_rating, restauranttags, id } }) => {
   return (
     <div className="row">
       <div className="col-md-12">
@@ -29,11 +29,12 @@ export default ({ restaurant: { name, address, restauranttags, id } }) => {
           </div>
 
           <div className="ml-auto">
-            <span className="p-4">200 Upvotes</span>
-            <a href="#" className="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span
+            {[...Array(parseInt(avg_rating, 10))].map((e) => {return <span className="fa fa-star checked"></span>})}
+            {[...Array(5 - parseInt(avg_rating, 10))].map((e) => {return <span className="fa fa-star"></span>})}
+            {/* <a href="#" className="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span
               className="icon-thumbs-up"></span></a>
             <a href="#" className="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span
-              className="icon-thumbs-down"></span></a>
+              className="icon-thumbs-down"></span></a> */}
           </div>
         </div>
       </div>
