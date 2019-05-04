@@ -2,6 +2,8 @@ import { FETCH_RESTAURANTS, FETCH_RESTAURANT, FETCH_RESTAURANT_SEARCH_RESULTS } 
 
 const defaultState = {
   activeRestaurant: {
+    menuitems: [],
+    restauranttags: []
   },
   restaurants: [],
   searchResults: []

@@ -8,7 +8,7 @@ import DishSearchResults from './components/DishSearchResults';
 import ExploreDishes from './components/ExploreDishes';
 import Navigation from './components/Navigation'
 import { BrowserRouter, Route } from 'react-router-dom'
-
+import 'font-awesome/css/font-awesome.min.css';
 
 class App extends Component {
   render() {

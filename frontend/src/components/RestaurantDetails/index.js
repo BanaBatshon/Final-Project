@@ -12,7 +12,7 @@ class RestaurantDetails extends Component {
   render() {
     return (
       <Fragment>
-        <MainView />
+        <MainView restaurant={this.props.activeRestaurant}/>
       </Fragment>
     );
   }
