@@ -1443,3 +1443,7 @@ a {
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd;
 }
+
+span > .fa {
+  padding: 1rem;
+}
