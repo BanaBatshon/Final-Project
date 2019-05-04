@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AutoSuggest from './AutoSuggest'
 import DishListItem from './DishListItem'
+import Rating from 'react-rating'
 
 class AddRatingContainer extends Component {
 
@@ -8,12 +9,17 @@ class AddRatingContainer extends Component {
     super(props)
 
     this.state = {
-      dishToRate: {}
+      dishToRate: {},
+      value: 0
     }
   }
 
   getSelection = (selectedDish) => {
     this.setState({dishToRate: selectedDish})
+  }
+
+  handleClick = (event) => {
+    this.setState({value: undefined});
   }
 
   render() {
@@ -42,13 +48,8 @@ class AddRatingContainer extends Component {
           </div>
 
           <div>
-            <a href="#" className="btn ratings-action"><span className="icon-star"></span></a>
-            <a href="#" className="btn ratings-action"><span className="icon-star"></span></a>
-            <a href="#" className="btn ratings-action"><span className="icon-star"></span></a>
-            <a href="#" className="btn ratings-action"><span className="icon-star"></span></a>
-            <a href="#" className="btn ratings-action"><span className="icon-star"></span></a>
+            <Rating {...this.props} initialRating={this.state.value} />
           </div>
-
         </div>
 
         <div className="row d-flex w-100 p-4 justify-content-center">
