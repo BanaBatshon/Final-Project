@@ -336,10 +336,22 @@ function getMenuItemsById (arrIds) {
  */
 function getRestaurantsById(arr) {
   return models.restaurants
-  .findAll({where: {id: {$in: arr}}, include: [{model : models.restaurant_tags, include: [models.tags]}]})
+  .findAll({where: {id: {$in: arr}}, include: [{model: models.menu_items, include: [models.menu_item_ratings]}, 
+    {model : models.restaurant_tags, include: [models.tags]}]})
   .then(function(restaurants) {
     let restaurantsArr = [];
     restaurants.forEach(function(restaurant) {
+      let avg_rating = 0;
+      let rating_count = 0;
+      restaurant.menuitems.forEach(function(item) {
+        item.menuitemratings.forEach(function(rating) {
+          avg_rating += rating.dataValues.rating;
+          rating_count ++;
+        });
+      });
+      delete restaurant.dataValues.menuitems;
+      avg_rating = (avg_rating/rating_count).toPrecision(2);
+      restaurant.dataValues.avg_rating = avg_rating;
       let tags = restaurant.dataValues.restauranttags;
       let tagsArr = [];
       tags.forEach(function(tag) {
@@ -348,10 +360,12 @@ function getRestaurantsById(arr) {
       restaurant.dataValues.restauranttags = tagsArr;
       restaurantsArr.push(restaurant.dataValues);
     });
+    restaurantsArr.sort(compare_avg_ratings);
     return restaurantsArr;
   });
 }
 
+getRestaurantsById([1])
 /**
  * Returns array of restaurant ids.
  * @param {Restaurant Tag} tag 
