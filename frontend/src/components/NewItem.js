@@ -82,7 +82,7 @@ class NewItemForm extends Component {
 
           <div className="row form-group">
             <div className="col-md-12">
-              <button type="submit" onClick={this.handleOnSubmit} className="btn btn-primary  py-2 px-4">Add Dish</button>
+              <button type="submit" className="btn btn-primary  py-2 px-4">Add Dish</button>
             </div>
           </div>
 

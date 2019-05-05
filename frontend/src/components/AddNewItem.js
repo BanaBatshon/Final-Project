@@ -4,10 +4,6 @@ import NewItem from './NewItem';
 import NewItemList from './NewItemList';
 
 class AddNewItem extends Component {
-
-  componentDidUpdate() {
-   this.render()
-   }
   
   render() {
     return (
