@@ -138,6 +138,13 @@ export const fetchAllDishes = () => {
     };
   }
 
+  export const createRatingSuccess =  (data) => {
+    return {
+      type: ADD_RATING,
+      data
+    }
+  };
+
   export const createdRating = ({userId, menuitemId, rating, restaurantId}) => {
     return (dispatch) => {
       return axios.post(`${apiUrl}/users/${userId}/ratings`, {userId, menuitemId, rating})
@@ -149,11 +156,4 @@ export const fetchAllDishes = () => {
           throw(error);
         });
     };
-  };
-  
-  export const createRatingSuccess =  (data) => {
-    return {
-      type: ADD_RATING,
-      data
-    }
   };
