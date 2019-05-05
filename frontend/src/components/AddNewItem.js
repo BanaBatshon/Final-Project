@@ -1,18 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import NewItem from './NewItem';
+import NewItemForm from './NewItem';
 import NewItemList from './NewItemList';
+import { addNewItemToNewItemList } from '../actions';
+
 
 class AddNewItem extends Component {
-
-  componentDidUpdate() {
-   this.render()
-   }
+  
+  handleSubmit = values => {
+    this.props.dispatch(addNewItemToNewItemList(values));
+    console.log("values: ", values)
+  }
   
   render() {
     return (
       <Fragment>
-        <NewItem />
+        <NewItemForm onSubmit={ this.handleSubmit }/>
         <NewItemList />
       </Fragment>
     );
