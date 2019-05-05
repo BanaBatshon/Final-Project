@@ -11,7 +11,7 @@ router.use(cors());
  */
 router.get('/login/:id', function(req, res) {
   const user_id = req.params.id;
-  models.users.find({where:{id: user_id}})
+  models.users.find({where:{email: user_id}})
   .then(function(user) {
     res.json(user.dataValues);
   })
