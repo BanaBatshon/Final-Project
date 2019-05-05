@@ -1,5 +1,5 @@
 import { FETCH_RESTAURANTS, FETCH_RESTAURANT_SEARCH_RESULTS, FETCH_RESTAURANT, 
-  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_MY_RATINGS } from './types';
+  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_MY_RATINGS, LOGIN } from './types';
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:3001';
@@ -112,6 +112,25 @@ export const fetchAllDishes = () => {
       return axios.get(`${apiUrl}/users/${id}/ratings`)
         .then(response => {
           dispatch(fetchMyRatings(response.data))
+        })
+        .catch(error => {
+          throw (error);
+        });
+    };
+  };
+
+  export const login = (user) => {
+    return {
+      type: LOGIN,
+      user
+    }
+  };
+  
+  export const loginRequest = (email) => {
+    return (dispatch) => {
+      return axios.get(`${apiUrl}/login/${email}`)
+        .then(response => {
+          dispatch(login(response.data))
         })
         .catch(error => {
           throw (error);

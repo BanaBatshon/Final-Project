@@ -32,7 +32,7 @@ class Navigation extends React.Component {
                     </ul>
                   </li>
                   <li><Link to="/myratings">My Ratings</Link></li>
-                  <li><Link to="/"><span className="rounded bg-secondary py-2 px-3 text-white">Login</span></Link>
+                  <li><Link to="/login"><span className="rounded bg-secondary py-2 px-3 text-white">Login</span></Link>
                   </li>
                 </ul>
               </nav>
