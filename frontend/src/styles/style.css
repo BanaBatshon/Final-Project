@@ -1445,6 +1445,10 @@ a {
   background-color: #ddd;
 }
 
+.ratings-add-section {
+  padding: 1rem;
+} 
+
 .ratings-sidebar {
  padding: 0.1rem;
 }

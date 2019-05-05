@@ -62,8 +62,8 @@ class AddRatingContainer extends Component {
             <div>
               <Rating
                 initialRating={this.state.value}
-                emptySymbol="fa fa-star-o fa-2x"
-                fullSymbol="fa fa-star fa-2x"
+                emptySymbol="ratings-add-section fa fa-star-o fa-2x"
+                fullSymbol="ratings-add-section fa fa-star fa-2x"
                 fractions={2}
                 onChange={(value) => this.setState({value: value})}
               />
