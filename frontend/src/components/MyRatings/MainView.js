@@ -7,9 +7,8 @@ import { fetchAllMyRatings } from '../../actions/index';
 class MainView extends Component {
 
     componentDidMount() {
-        this.props.dispatch(fetchAllMyRatings(1));
+        this.props.dispatch(fetchAllMyRatings(this.props.user.id));
     }
-
     render() {
         return (
             <div className="site-section bg-light">
@@ -28,7 +27,8 @@ class MainView extends Component {
 
 const mapStateToProps = state => {
   return {
-     myRatings: state.myRatings.myRatings
+     myRatings: state.myRatings.myRatings,
+     user: state.user.user
   };
 };
 
