@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import AutoSuggest from './AutoSuggest'
 import DishListItem from './DishListItem'
 import Rating from 'react-rating'
+import { createdRating } from '../../actions/index'
 
 class AddRatingContainer extends Component {
 
@@ -18,14 +20,15 @@ class AddRatingContainer extends Component {
     this.setState({ dishToRate: selectedDish })
   }
 
-  handleClick = (event) => {
+  submitRating = (event) => {
     // this.setState({ value: undefined });
     const request = {
       userId: 1,
       menuitemId: this.state.dishToRate.id,
-      rating: this.state.value
+      rating: this.state.value,
+      restaurantId: this.props.restaurant.id
     }
-    console.log(request)
+    this.props.dispatch(createdRating(request));
   }
 
   cancelRating = () => {
@@ -33,7 +36,6 @@ class AddRatingContainer extends Component {
   }
 
   render() {
-
     if (Object.keys(this.state.dishToRate).length !== 0) {
       return (
         <div className="row col-md-12">
@@ -69,7 +71,7 @@ class AddRatingContainer extends Component {
           </div>
 
           <div className="row d-flex w-100 p-4 justify-content-center">
-            <button onClick={this.handleClick} className="btn btn-primary py-2 px-4 mx-1 rounded-0">Submit</button>
+            <button onClick={this.submitRating} className="btn btn-primary py-2 px-4 mx-1 rounded-0">Submit</button>
             <button onClick={this.cancelRating} className="btn btn-danger  py-2 px-4 mx-1 rounded-0">Cancel</button>
           </div>
         </div>
@@ -91,8 +93,6 @@ class AddRatingContainer extends Component {
       )
     }
   }
-
-
 }
 
-export default AddRatingContainer;
+export default connect()(AddRatingContainer);
