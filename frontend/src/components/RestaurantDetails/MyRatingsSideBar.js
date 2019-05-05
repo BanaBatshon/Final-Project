@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { withRouter } from "react-router-dom"
 import { connect } from 'react-redux';
 import { fetchAllMyRatingsByRestaurant } from '../../actions/index';
@@ -7,17 +6,14 @@ import RatingListView from './RatingListView';
 
 class MyRatingsSideBar extends Component {
 
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
-    this.props.dispatch(fetchAllMyRatingsByRestaurant(1, 4));
+    const restaurantId = this.props.location.pathname.split('/restaurant/')[1];
+    this.props.dispatch(fetchAllMyRatingsByRestaurant(1, restaurantId));
   }
 
   render() {
     const { dishes } = this.props;
-
+  
     return (
       <div className="col-lg-4">
         <div className="p-4 mb-3 bg-white">
@@ -31,10 +27,11 @@ class MyRatingsSideBar extends Component {
 
 const mapStateToProps = state => {
   return {
-    dishes: state.myRatings.myRatingsByRestaurant
+    dishes: state.myRatings.myRatingsByRestaurant,
+    // activeRestaurant: state.restaurants.activeRestaurant
   };
 };
 
 export default connect(
   mapStateToProps
-)(MyRatingsSideBar);
+)(withRouter(MyRatingsSideBar));
