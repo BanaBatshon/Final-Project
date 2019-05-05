@@ -1,21 +1,9 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect}  from 'react-redux'
-import { addNewItemToNewItemList } from '../actions';
 import ReactTags from 'react-tag-autocomplete';
-import { Component} from 'react';
+import { Component } from 'react';
 import axios from 'axios';
-
-const NewItem = (props) => {
-  const onSubmit = ((values) => {
-    props.addNewItemToNewItemList(values)
-  })
-  return (
-    <div>
-      <NewItemForm onSubmit={onSubmit}/>
-    </div>
-  ) 
-}
 
 class NewItemForm extends Component {
   constructor (props) {
@@ -49,9 +37,8 @@ class NewItemForm extends Component {
   }
 
   render() {
-  const { handleSubmit } = this.props
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={ this.props.handleSubmit }>
       <div className="col-md-12 col-lg-8 mb-5">
         <div action="#" className="p-5 bg-white">
 
@@ -82,7 +69,7 @@ class NewItemForm extends Component {
 
           <div className="row form-group">
             <div className="col-md-12">
-              <button type="submit" onClick={this.handleOnSubmit} className="btn btn-primary  py-2 px-4">Add Dish</button>
+              <button type="submit" className="btn btn-primary  py-2 px-4">Add Dish</button>
             </div>
           </div>
 
@@ -101,10 +88,6 @@ const mapStateToProps = (state) => ({
   newItems: state.newItems
 })
 
-const mapDispatchToProps = {addNewItemToNewItemList}
 export default connect(
-  mapStateToProps, 
-  mapDispatchToProps
-  )
-  (NewItem);
+  mapStateToProps)(NewItemForm);
 
