@@ -9,7 +9,7 @@ export default ({ rating, index }) => {
 
           <div className="mb-4 mb-md-0">
             <div className="list-item-header d-flex align-items-center">
-              <h2 className="text-black h5">Margherita</h2>
+              <h2 className="text-black h5">{rating.menuitem.name}</h2>
             </div>
             <div className="badge-wrap">
               <div>
