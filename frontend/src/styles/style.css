@@ -1445,6 +1445,6 @@ a {
   background-color: #ddd;
 }
 
-span > .fa {
-  padding: 1rem;
+.ratings-sidebar {
+ padding: 0.1rem;
 }

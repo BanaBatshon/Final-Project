@@ -1,4 +1,5 @@
 import React from 'react';
+import Rating from 'react-rating'
 
 export default ({ rating, index }) => {
   return (
@@ -13,11 +14,13 @@ export default ({ rating, index }) => {
             </div>
             <div className="badge-wrap">
               <div>
-                <span className="icon-star"></span>
-                <span className="icon-star"></span>
-                <span className="icon-star"></span>
-                <span className="icon-star"></span>
-                <span className="icon-star"></span>
+              <Rating
+                initialRating={rating.rating}
+                emptySymbol="ratings-sidebar fa fa-star-o fa-1x"
+                fullSymbol="ratings-sidebar fa fa-star fa-1x"
+                fractions={2}
+                readonly={true}
+              />
               </div>
               <span className="bg-primary text-white badge">Pending</span>
             </div>
