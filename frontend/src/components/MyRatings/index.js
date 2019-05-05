@@ -2,15 +2,15 @@ import React, { Component, Fragment } from 'react';
 import MainView from './MainView';
 import HeroSearch from '../HeroSearch';
 
-class RestaurantsSearchResults extends Component {
+class MyRatings extends Component {
   render() {
     return (
       <Fragment>
-        <HeroSearch/>
+        <HeroSearch />
         <MainView />
       </Fragment>
     );
   }
 }
 
-export default RestaurantsSearchResults;
+export default MyRatings;

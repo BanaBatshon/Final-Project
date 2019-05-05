@@ -7,6 +7,8 @@ import RestaurantDetails from './components/RestaurantDetails'
 import DishSearchResults from './components/DishSearchResults';
 import ExploreDishes from './components/ExploreDishes';
 import Navigation from './components/Navigation'
+import MyRatings from './components/MyRatings'
+import Login from './components/Login';
 import { BrowserRouter, Route } from 'react-router-dom'
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -22,6 +24,8 @@ class App extends Component {
           <Route path='/restaurant' component={RestaurantDetails} />
           <Route path='/dishes/explore' component={ExploreDishes} />
           <Route path='/dishes/results' component={DishSearchResults} />
+          <Route path='/myratings' component={MyRatings} />
+          <Route path='/login' component={Login} />
         </div>
       </BrowserRouter>
     );
