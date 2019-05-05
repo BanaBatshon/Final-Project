@@ -6,7 +6,7 @@ const MenuItemRow = (props) => {
     <th scope="row">1</th>
     <td>{props.name}</td>
     <td>
-      <span class="badge badge-success">{props.tags}</span>
+      <span className="badge badge-success">{props.tags}</span>
       {/* {props.tags.map((tag) => {
         return (
           <span class="badge badge-success">{tag}</span>
@@ -14,8 +14,8 @@ const MenuItemRow = (props) => {
       )} */}
     </td>
     <td>
-      <button type="button" class="btn btn-secondary btn-sm">Edit</button>
-      <button type="button" class="btn btn-danger btn-sm">Delete</button>
+      <button type="button" className="btn btn-secondary btn-sm">Edit</button>
+      <button type="button" className="btn btn-danger btn-sm">Delete</button>
     </td>
     </tr>
   )}
