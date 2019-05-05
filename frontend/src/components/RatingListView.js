@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import RatingListItem from './RatingListItem';
 
-const RatingsListView = (props) => {
+const RatingListView = (props) => {
   const { myRatings } = props;
   if (!myRatings.length) {
     return (
