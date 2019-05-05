@@ -1,5 +1,5 @@
 import { FETCH_RESTAURANTS, FETCH_RESTAURANT_SEARCH_RESULTS, FETCH_RESTAURANT, 
-  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_MY_RATINGS, FETCH_MY_RATINGS_BY_RESTAURANT } from './types';
+  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_MY_RATINGS, FETCH_MY_RATINGS_BY_RESTAURANT, ADD_RATING } from './types';
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:3001';
@@ -119,7 +119,7 @@ export const fetchAllDishes = () => {
     };
   };
 
-  export const fetchMyRatingsByRestaurant = (ratings) => {
+  export const fetchMyRatingsByRestaurant = (ratings = []) => {
     return {
       type: FETCH_MY_RATINGS_BY_RESTAURANT,
       ratings
@@ -137,3 +137,23 @@ export const fetchAllDishes = () => {
         });
     };
   }
+
+  export const createdRating = ({userId, menuitemId, rating, restaurantId}) => {
+    return (dispatch) => {
+      return axios.post(`${apiUrl}/users/${userId}/ratings`, {userId, menuitemId, rating})
+        .then(response => {
+          dispatch(createRatingSuccess(response.data))
+          dispatch(fetchAllMyRatingsByRestaurant(userId, restaurantId));
+        })
+        .catch(error => {
+          throw(error);
+        });
+    };
+  };
+  
+  export const createRatingSuccess =  (data) => {
+    return {
+      type: ADD_RATING,
+      data
+    }
+  };
