@@ -15,6 +15,9 @@ router.get('/login/:id', function(req, res) {
   .then(function(user) {
     res.json(user.dataValues);
   })
+  .catch(function(err) {
+    res.json({});
+  })
 });
 
 /**
@@ -36,7 +39,10 @@ router.get('/tags', function(req, res) {
       tags.push({id : result.dataValues.id, name : result.dataValues.name});
     });
     res.json(tags);
-  });
+  })
+  .catch(function(err) {
+    res.json({});
+  })
 });
 
 /**
@@ -106,6 +112,9 @@ router.get('/restaurant/:id/', function(req, res) {
   .then(function(result){
     res.json(result);
   })
+  .catch(function(err) {
+    res.json({});
+  })
 });
 
 /**
@@ -118,8 +127,14 @@ router.get('/restaurants/:id/', function(req, res) {
     getRestaurantsById(idsArr)
     .then(function(restaurants) {
       res.json(restaurants);
-    });
-  });
+    })
+    .catch(function(err) {
+      res.json({});
+    })
+  })
+  .catch(function(err) {
+    res.json({});
+  })
 });
 
 /**
@@ -132,8 +147,14 @@ router.get('/items/:id/', function(req, res) {
     getMenuItemsById(idsArr) 
     .then(function(menuItems) {
       res.json( menuItems);
-    });
-  });
+    })
+    .catch(function(err) {
+      res.json({});
+    })
+  })
+  .catch(function(err) {
+    res.json({});
+  })
 });
 
 /**
@@ -292,7 +313,7 @@ function notApprovedRestaurants() {
 function getRestaurant(id) {
   return models.restaurants
   .find({where: {id: id, approved: true}, include: [{model: models.restaurant_tags, 
-    include: [models.tags]}, {model: models.menu_items, where: {approved: true},
+    include: [models.tags]}, {model: models.menu_items,
       include: [models.menu_item_ratings, {model: models.menu_item_tags, 
         include: [models.tags]}]}]})
   .then(function(restaurant) {
@@ -323,7 +344,7 @@ function getRestaurant(id) {
       menuItems.push(item.dataValues);
     });
     restaurant.dataValues['numRatings'] = avg_ratings.count;
-    avg_ratings = (avg_ratings.sum/avg_ratings.count).toPrecision(2);
+    avg_ratings = (avg_ratings.sum/avg_ratings.count) ? (avg_ratings.sum/avg_ratings.count).toPrecision(2): 0;
     menuItems.sort(compare_ratings);
     restaurant.dataValues.menuitems = menuItems;
     restaurant.dataValues['avg_rating'] = avg_ratings;
