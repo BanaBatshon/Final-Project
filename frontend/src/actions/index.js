@@ -141,3 +141,7 @@ export const fetchAllDishes = () => {
   export const editUserReview = (id, review) => {
     return axios.patch(`${apiUrl}/users/${id}/ratings`, {rating: review})
   };
+
+  export const deleteUserReview = (id, review) => {
+    return axios.delete(`${apiUrl}/users/${id}/ratings`, {rating: review})
+  };

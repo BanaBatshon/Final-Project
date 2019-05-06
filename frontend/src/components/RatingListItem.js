@@ -41,6 +41,11 @@ class RatingListItem extends Component {
     });
   };
 
+  handleDelete = (event) => {
+    event.preventDefault();
+    
+  }
+
   render() {
     const menuitem = this.state.rating.menuitem;
     return (
@@ -72,7 +77,7 @@ class RatingListItem extends Component {
               </div>
               <div className="my-ratings-actions ml-auto d-flex justify-content-between">
                 <a href="#" onClick={this.clickHandler} className="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Edit</a>
-                <a href="#" className="btn btn-danger btn-sm">Delete</a>
+                <a href="#" handleDelete={this.handleDelete} className="btn btn-danger btn-sm">Delete</a>
               </div>
             </div>
           </div>
