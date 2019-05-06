@@ -12,7 +12,8 @@ class AddRatingContainer extends Component {
 
     this.state = {
       dishToRate: {},
-      value: 0
+      value: 0,
+      submitted: false
     }
   }
 
@@ -28,11 +29,14 @@ class AddRatingContainer extends Component {
       rating: this.state.value,
       restaurantId: this.props.restaurant.id
     }
-    this.props.dispatch(createdRating(request));
+    this.props.dispatch(createdRating(request)).then(() => {
+      this.resetRating();
+      this.setState({ submitted: true })
+    })
   }
 
-  cancelRating = () => {
-    this.setState({ dishToRate: {}, value: 0})
+  resetRating = () => {
+    this.setState({ dishToRate: {}, value: 0 })
   }
 
   render() {
@@ -65,14 +69,14 @@ class AddRatingContainer extends Component {
                 emptySymbol="ratings-add-section fa fa-star-o fa-2x"
                 fullSymbol="ratings-add-section fa fa-star fa-2x"
                 fractions={2}
-                onChange={(value) => this.setState({value: value})}
+                onChange={(value) => this.setState({ value: value })}
               />
             </div>
           </div>
 
           <div className="row d-flex w-100 p-4 justify-content-center">
             <button onClick={this.submitRating} className="btn btn-primary py-2 px-4 mx-1 rounded-0">Submit</button>
-            <button onClick={this.cancelRating} className="btn btn-danger  py-2 px-4 mx-1 rounded-0">Cancel</button>
+            <button onClick={this.resetRating} className="btn btn-danger  py-2 px-4 mx-1 rounded-0">Cancel</button>
           </div>
         </div>
       );
@@ -88,6 +92,17 @@ class AddRatingContainer extends Component {
                 <AutoSuggest restaurant={this.props.restaurant} selection={this.getSelection} />
               </div>
             </form>
+            {this.state.submitted ? (
+              <div className="row d-flex w-100 p-4 justify-content-center">
+
+                <div className="my-auto">
+                  <h4 className="font-weight-bold text-black">Thanks for submitting your rating!</h4>
+                </div>
+              </div>
+            ) : (
+                null
+              )
+            }
           </div>
         </div>
       )
