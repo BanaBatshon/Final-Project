@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Rating from 'react-rating'
 import Button from 'react-bootstrap/Button'
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import EditRatingsModal from './EditRatingModal'
 
 export default ({ rating, index, deleteRatingHandler, editRatingHandler }) => {
