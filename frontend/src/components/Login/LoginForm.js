@@ -18,7 +18,7 @@ class LoginForm extends Component {
         e.preventDefault();
         const email = this.email.value;
         // const password = this.password.value;
-        this.props.dispatch(loginRequest(1));
+        this.props.dispatch(loginRequest(email));
         this.setState({ redirect: true });
     }
 

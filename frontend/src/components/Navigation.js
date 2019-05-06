@@ -9,13 +9,13 @@ class LoginRouter extends React.Component {
     this.clickHandler.bind(this)
   }
   clickHandler = event => {
-    console.log(event)
+    this.props.user = {id:null};
   };
 
   render() {
     if (!this.props.loggedIn) {
       return (
-        <li><Link to="/login"><span onClick={this.clickHandler} className="rounded bg-secondary py-2 px-3 text-white">Login</span></Link></li>
+        <li><Link to="/login"><span className="rounded bg-secondary py-2 px-3 text-white">Login</span></Link></li>
       );
     } else {
       return (
@@ -59,7 +59,7 @@ class Navigation extends React.Component {
                     </ul>
                   </li>
                   <li><Link to="/myratings">My Ratings</Link></li>
-                  <LoginRouter loggedIn={loggedIn}/>
+                  <LoginRouter user={this.props.user} loggedIn={loggedIn}/>
                 </ul>
               </nav>
             </div>
