@@ -5,4 +5,3 @@ export const FETCH_DISHES = 'FETCH_DISHES';
 export const FETCH_DISH_SEARCH_RESULTS = 'FETCH_DISH_SEARCH_RESULTS';
 export const FETCH_MY_RATINGS = 'FETCH_MY_RATINGS';
 export const LOGIN = 'LOGIN';
-

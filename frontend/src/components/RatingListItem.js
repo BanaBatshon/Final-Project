@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import Tag from './Tag';
-import { Link } from 'react-router-dom'
-import Rating from 'react-rating'
-import { editUserReview } from '../actions/index';
+import { Link } from 'react-router-dom';
+import Rating from 'react-rating';
+import { connect } from 'react-redux';
+import { editUserReview, fetchAllMyRatings } from '../actions/index';
+import { deleteUserReview } from '../actions/index';
 
 class RatingItem extends Component {
   render () {
@@ -41,9 +43,9 @@ class RatingListItem extends Component {
     });
   };
 
-  handleDelete = (event) => {
+  handleDeleteEvent = (event) => {
     event.preventDefault();
-    
+    this.props.dispatch(deleteUserReview(this.state.rating.id));
   }
 
   render() {
@@ -77,7 +79,7 @@ class RatingListItem extends Component {
               </div>
               <div className="my-ratings-actions ml-auto d-flex justify-content-between">
                 <a href="#" onClick={this.clickHandler} className="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Edit</a>
-                <a href="#" handleDelete={this.handleDelete} className="btn btn-danger btn-sm">Delete</a>
+                <a href="#" onClick={this.handleDeleteEvent} className="btn btn-danger btn-sm">Delete</a>
               </div>
             </div>
           </div>
@@ -85,7 +87,15 @@ class RatingListItem extends Component {
       </div>
     );
   };
-
-
 }
-export default RatingListItem;
+
+const mapStateToProps = state => {
+  return {
+     myRatings: state.myRatings.myRatings,
+     user: state.user.user
+  };
+};
+
+export default connect(
+  mapStateToProps
+)(RatingListItem);
