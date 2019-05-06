@@ -26,7 +26,7 @@ const Summary = (props) => {
             fractions={2}
             readonly={true}
           />
-          <span class="num-ratings">{details.numRatings}</span>
+          <span className="num-ratings">{details.numRatings}</span>
         </div>
       </div>
       <div className="row col-md-12 pb-4">
