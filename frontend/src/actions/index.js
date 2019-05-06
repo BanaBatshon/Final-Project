@@ -1,5 +1,5 @@
 import { FETCH_RESTAURANTS, FETCH_RESTAURANT_SEARCH_RESULTS, FETCH_RESTAURANT, 
-  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_MY_RATINGS, FETCH_MY_RATINGS_BY_RESTAURANT, ADD_RATING } from './types';
+  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_MY_RATINGS, FETCH_MY_RATINGS_BY_RESTAURANT, ADD_RATING, DELETE_RATING } from './types';
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:3001';
@@ -151,6 +151,26 @@ export const fetchAllDishes = () => {
         .then(response => {
           dispatch(createRatingSuccess(response.data))
           dispatch(fetchAllMyRatingsByRestaurant(userId, restaurantId));
+        })
+        .catch(error => {
+          throw(error);
+        });
+    };
+  };
+
+  export const deleteRatingSuccess = id => {
+    return {
+      type: DELETE_RATING,
+      id
+    }
+  }
+
+  export const deleteRating = (userId, menuitemId, restaurantId) => {
+    return (dispatch) => {
+      return axios.delete(`${apiUrl}/users/${userId}/ratings/${menuitemId}`)
+        .then(response => {
+          dispatch(deleteRatingSuccess(response.data))
+          dispatch(fetchAllMyRatingsByRestaurant(userId, restaurantId))
         })
         .catch(error => {
           throw(error);
