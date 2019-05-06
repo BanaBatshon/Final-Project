@@ -151,7 +151,7 @@ router.post('/restaurants', function(req, res) {
 
 function getMenuItemsByRestaurant(restaurantId) {
   return models.menu_items
-  .findAll({where: {restaurantId: restaurantId}, include: [models.menu_item_ratings]})
+  .findAll({where: {approved: true, restaurantId: restaurantId}, include: [models.menu_item_ratings]})
   .then(function(results) {
     let itemsArr = [];
     results.forEach(function(item) {
@@ -176,7 +176,7 @@ function getMenuItemsByRestaurant(restaurantId) {
  */
 function allItems() {
   return models.menu_items
-  .findAll({include: [{model: models.menu_item_tags, include: [models.tags]}, 
+  .findAll({where: {approved: true}, include: [{model: models.menu_item_tags, include: [models.tags]}, 
     models.menu_item_ratings, models.restaurants]})
   .then(function(results) {
     let menuArr = [];
@@ -206,7 +206,7 @@ function allItems() {
  */
 function allRestaurants() {
   return models.restaurants
-  .findAll({include: [{model: models.restaurant_tags, 
+  .findAll({where: {approved: true}, include: [{model: models.restaurant_tags, 
     include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
   .then(function(results) {
     let restaurants = [];
@@ -241,8 +241,8 @@ function allRestaurants() {
  */
 function getRestaurant(id) {
   return models.restaurants
-  .find({where: {id: id}, include: [{model: models.restaurant_tags, 
-    include: [models.tags]}, {model: models.menu_items, 
+  .find({where: {id: id, approved: true}, include: [{model: models.restaurant_tags, 
+    include: [models.tags]}, {model: models.menu_items, where: {approved: true},
       include: [models.menu_item_ratings, {model: models.menu_item_tags, 
         include: [models.tags]}]}]})
   .then(function(restaurant) {
@@ -302,7 +302,7 @@ function getMenuItemIds (tag) {
  */
 function getMenuItemsById (arrIds) {
   return models.menu_items
-  .findAll({where: {id: {$in: arrIds}}, include:[{model: models.menu_item_tags, 
+  .findAll({where: {approved:true, id: {$in: arrIds}}, include:[{model: models.menu_item_tags, 
     include: [models.tags]}, models.menu_item_ratings, models.restaurants]})
   .then(function(results) {
     let menuItems = [];
@@ -336,7 +336,8 @@ function getMenuItemsById (arrIds) {
  */
 function getRestaurantsById(arr) {
   return models.restaurants
-  .findAll({where: {id: {$in: arr}}, include: [{model: models.menu_items, include: [models.menu_item_ratings]}, 
+  .findAll({where: {approved: true, id: {$in: arr}}, include: [{model: models.menu_items, 
+    where:{approved:true}, include: [models.menu_item_ratings]}, 
     {model : models.restaurant_tags, include: [models.tags]}]})
   .then(function(restaurants) {
     let restaurantsArr = [];
@@ -365,7 +366,6 @@ function getRestaurantsById(arr) {
   });
 }
 
-getRestaurantsById([1])
 /**
  * Returns array of restaurant ids.
  * @param {Restaurant Tag} tag 
