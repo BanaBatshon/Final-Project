@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import AutoSuggest from './AutoSuggest'
 import DishListItem from './DishListItem'
 import Rating from 'react-rating'
+import { createdRating } from '../../actions/index'
 
 class AddRatingContainer extends Component {
 
@@ -10,7 +12,8 @@ class AddRatingContainer extends Component {
 
     this.state = {
       dishToRate: {},
-      value: 0
+      value: 0,
+      submitted: false
     }
   }
 
@@ -18,22 +21,25 @@ class AddRatingContainer extends Component {
     this.setState({ dishToRate: selectedDish })
   }
 
-  handleClick = (event) => {
+  submitRating = (event) => {
     // this.setState({ value: undefined });
     const request = {
       userId: 1,
       menuitemId: this.state.dishToRate.id,
-      rating: this.state.value
+      rating: this.state.value,
+      restaurantId: this.props.restaurant.id
     }
-    console.log(request)
+    this.props.dispatch(createdRating(request)).then(() => {
+      this.resetRating();
+      this.setState({ submitted: true })
+    })
   }
 
-  cancelRating = () => {
-    this.setState({ dishToRate: {}, value: 0})
+  resetRating = () => {
+    this.setState({ dishToRate: {}, value: 0 })
   }
 
   render() {
-
     if (Object.keys(this.state.dishToRate).length !== 0) {
       return (
         <div className="row col-md-12">
@@ -60,17 +66,17 @@ class AddRatingContainer extends Component {
             <div>
               <Rating
                 initialRating={this.state.value}
-                emptySymbol="fa fa-star-o fa-2x"
-                fullSymbol="fa fa-star fa-2x"
+                emptySymbol="ratings-add-section fa fa-star-o fa-2x"
+                fullSymbol="ratings-add-section fa fa-star fa-2x"
                 fractions={2}
-                onChange={(value) => this.setState({value: value})}
+                onChange={(value) => this.setState({ value: value })}
               />
             </div>
           </div>
 
           <div className="row d-flex w-100 p-4 justify-content-center">
-            <button onClick={this.handleClick} className="btn btn-primary py-2 px-4 mx-1 rounded-0">Submit</button>
-            <button onClick={this.cancelRating} className="btn btn-danger  py-2 px-4 mx-1 rounded-0">Cancel</button>
+            <button onClick={this.submitRating} className="btn btn-primary py-2 px-4 mx-1 rounded-0">Submit</button>
+            <button onClick={this.resetRating} className="btn btn-danger  py-2 px-4 mx-1 rounded-0">Cancel</button>
           </div>
         </div>
       );
@@ -86,13 +92,22 @@ class AddRatingContainer extends Component {
                 <AutoSuggest restaurant={this.props.restaurant} selection={this.getSelection} />
               </div>
             </form>
+            {this.state.submitted ? (
+              <div className="row d-flex w-100 p-4 justify-content-center">
+
+                <div className="my-auto">
+                  <h4 className="font-weight-bold text-black">Thanks for submitting your rating!</h4>
+                </div>
+              </div>
+            ) : (
+                null
+              )
+            }
           </div>
         </div>
       )
     }
   }
-
-
 }
 
-export default AddRatingContainer;
+export default connect()(AddRatingContainer);

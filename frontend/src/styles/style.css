@@ -1364,7 +1364,7 @@ a {
 .carousel-inner {
   max-height: 500px !important; }
 
-.my-ratings-actions > a:first-child {
+.my-ratings-actions > button:first-child {
   margin-right: 1rem; }
 
 .ratings-action {
@@ -1445,6 +1445,22 @@ a {
   background-color: #ddd;
 }
 
-span > .fa {
+.ratings-add-section {
   padding: 1rem;
+} 
+
+.ratings-sidebar {
+ padding: 0.1rem;
+}
+
+.list-rating {
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  font-size: 1.3em;
+}
+
+.list-rating-review {
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  font-size: 1.0em;
 }
