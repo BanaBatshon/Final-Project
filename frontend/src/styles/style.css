@@ -1364,7 +1364,7 @@ a {
 .carousel-inner {
   max-height: 500px !important; }
 
-.my-ratings-actions > a:first-child {
+.my-ratings-actions > button:first-child {
   margin-right: 1rem; }
 
 .ratings-action {

@@ -34,22 +34,24 @@ export default ({ rating, index, deleteRatingHandler, editRatingHandler }) => {
           </div>
 
           <div className="my-ratings-actions ml-auto d-flex justify-content-between">
-            <ButtonToolbar>
               <Button
-                variant="secondary sm"
+                variant="secondary btn-sm"
                 onClick={() => setModalShow(true)}
               >
                 Edit
             </Button>
-
+              <Button
+                variant="danger btn-sm"
+                onClick={() => deleteRatingHandler(rating)}
+              >
+                Delete
+            </Button>
               <EditRatingsModal
                 show={modalShow}
                 onHide={modalClose}
                 rating={rating}
                 submitEditRating={editRatingHandler}
               />
-            </ButtonToolbar>
-            <button onClick={() => deleteRatingHandler(rating)} className="btn btn-danger btn-sm">Delete</button>
           </div>
         </div>
       </div>
