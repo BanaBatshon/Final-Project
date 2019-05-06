@@ -1,12 +1,24 @@
 import ApproveRestaurantListView from '../ApproveRestaurantListView';
 import React, { Component } from 'react';
+import axios from 'axios';
+const apiUrl = 'http://localhost:3001';
 
 class MainView extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {restaurants: []};
   }
   
+  componentDidMount() {
+    return axios.get(`${apiUrl}/unapprovedrestaurants`)
+      .then(response => {
+        this.setState({restaurants: response.data})
+      })
+      .catch(error => {
+        throw (error);
+      });
+  }
+
   render() {
     return (
       <div className="site-section bg-light">
@@ -16,7 +28,7 @@ class MainView extends Component {
               <h2 className="font-weight-bold text-black">Approve Restaurants</h2>
             </div>
           </div>
-          <ApproveRestaurantListView restaurants={restaurants} />
+          <ApproveRestaurantListView restaurants={this.state.restaurants} />
         </div>
       </div>
     );

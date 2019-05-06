@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import ApproveRestaurantListItem from '../components/ApproveRestaurantListItem';
-
 const ApproveRestaurantListView = (props) => {
+  console.log(props)
   const { restaurants } = props;
 
   if (!restaurants.length) {
