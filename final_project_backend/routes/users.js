@@ -71,8 +71,6 @@ router.post('/:id/ratings', function(req, res) {
     });
 });
 
-
-
 /**
  * Retunrs all user reviews with userId for restaurant with restaurantId
  * @param {user id} userId 
