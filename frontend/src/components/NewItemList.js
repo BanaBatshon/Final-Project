@@ -28,8 +28,8 @@ class NewItemListTable extends Component {
                 {this.props.newItems.menuItem.map((item, index) => {
                   return (
                     <MenuItemRow key={ index } index={ index } name={item.name} tags={item.tags}/>
-                  )}
-                )}
+                  )})
+                }
               </tbody>
               </table>
             </div>
@@ -40,7 +40,6 @@ class NewItemListTable extends Component {
               </div>
           </div>
         </Fragment>
-
       )
     }
     else {

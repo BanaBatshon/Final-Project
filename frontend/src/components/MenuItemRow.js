@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 const MenuItemRow = (props) => {
   return (
     <tr>
@@ -10,8 +9,7 @@ const MenuItemRow = (props) => {
       {props.tags.map((tag, index) => {
         return (
           <span key={ index } className="badge badge-success">{tag.name}</span>
-        )}
-      )}
+        )})}
     </td>
     <td>
       <button type="button" className="btn btn-secondary btn-sm">Edit</button>
@@ -21,6 +19,3 @@ const MenuItemRow = (props) => {
   )}
   
   export default MenuItemRow;
-
-
-

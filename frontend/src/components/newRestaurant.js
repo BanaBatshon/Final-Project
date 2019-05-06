@@ -7,11 +7,7 @@ const NewRestaurant = () => {
     axios
     .post('http://localhost:3001/restaurant', values)
   })
-  return (
-    <div>
-      <NewRestaurantForm onSubmit={onSubmit}/>
-    </div>
-  )
+  return <div><NewRestaurantForm onSubmit={onSubmit}/> </div>
 }
 
 let NewRestaurantForm = props => {
@@ -69,7 +65,6 @@ let NewRestaurantForm = props => {
               <button type="submit" className="btn btn-primary  py-2 px-4">Submit</button>
             </div>
           </div>
-
         </div>
       </div>
     </form>

@@ -16,15 +16,13 @@ class NewItemForm extends Component {
       value: '',
       restaurantSuggestions: [],
       restaurants: []
-
-
     }
+
     this.fetchAllRestaurants();
     this.fetchAllTags();
   }
 
   fetchAllRestaurants = () => {
-
     axios.get(`http://localhost:3001/restaurants/`)
       .then(response => {
         const restaurantNames = [];
@@ -35,8 +33,8 @@ class NewItemForm extends Component {
       })
       .catch(error => {
         throw (error);
-      });
-  };
+      })
+  }
 
   escapeRegexCharacters = (str) => {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -44,13 +42,11 @@ class NewItemForm extends Component {
   
   getSuggestions = (value) => {
     const escapedValue = this.escapeRegexCharacters(value.trim());
-    
     if (escapedValue === '') {
       return [];
     }
-  
+
     const regex = new RegExp('^' + escapedValue, 'i');
-  
     return this.state.restaurantSuggestions.filter(restaurant => regex.test(restaurant.name));
   }
   
@@ -59,29 +55,24 @@ class NewItemForm extends Component {
   }
   
   renderSuggestion = (restaurantSuggestion) => {
-    return (
-      <span>{restaurantSuggestion.name}</span>
-    );
+    return <span>{restaurantSuggestion.name}</span>
   }
   
-    onChange = (event, { newValue, method }) => {
-      this.setState({
-        value: newValue
-      });
-    };
+  onChange = (event, { newValue, method }) => {
+    this.setState({ value: newValue })
+  }
     
-    onSuggestionsFetchRequested = ({ value }) => {
-      this.setState({restaurants: this.getSuggestions(value)});
-    };
-  
-    onSuggestionsClearRequested = () => {
-      this.setState({restaurants: []});
-    };
-    
-    onSuggestionSelected = (event) => {
-      this.props.setRestaurants(this.state.restaurants);
-    }
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({ restaurants: this.getSuggestions(value) });
+  }
 
+  onSuggestionsClearRequested = () => {
+    this.setState({ restaurants: [] })
+  }
+  
+  onSuggestionSelected = (event) => {
+    this.props.setRestaurants(this.state.restaurants);
+  }
 
   fetchAllTags = () => {
     axios
@@ -95,7 +86,7 @@ class NewItemForm extends Component {
     const tags = this.state.tags.slice(0)
     tags.splice(i, 1)
     this.setState({ tags }, function() {
-        this.props.setTags(this.state.tags);
+      this.props.setTags(this.state.tags);
     })
   }
  
@@ -111,12 +102,13 @@ class NewItemForm extends Component {
   }
 
   render() {
-    const { value, restaurantSuggestions } = this.state;
+    const { value } = this.state;
     const inputProps = {
       placeholder: "Search for restaurants",
       value,
       onChange: this.onChange
-    };
+    }
+
   return (
     <form onSubmit={ this.props.handleSubmit }>
       <div className="col-md-12 col-lg-8 mb-5">
@@ -132,8 +124,7 @@ class NewItemForm extends Component {
                   getSuggestionValue={this.getSuggestionValue}
                   renderSuggestion={this.renderSuggestion}
                   onSuggestionSelected={ this.onSuggestionSelected }
-                  inputProps={inputProps}
-                />
+                  inputProps={inputProps}/>
             </div>
           </div>
 
@@ -176,6 +167,5 @@ const mapStateToProps = (state) => ({
   newItems: state.newItems
 })
 
-export default connect(
-  mapStateToProps)(NewItemForm);
+export default connect(mapStateToProps)(NewItemForm)
 
