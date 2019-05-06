@@ -10,6 +10,7 @@ const RatingListView = (props) => {
       </div>
     )
   }
+
   return (
     <Fragment>
       {myRatings.map(rating => {

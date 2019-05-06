@@ -7,7 +7,8 @@ import { fetchAllMyRatings } from '../../actions/index';
 class MainView extends Component {
 
     componentDidMount() {
-        this.props.dispatch(fetchAllMyRatings(this.props.user.id));
+        this.props.dispatch(fetchAllMyRatings(1));
+        // this.props.dispatch(fetchAllMyRatings(this.props.user.id));
     }
     render() {
         return (
