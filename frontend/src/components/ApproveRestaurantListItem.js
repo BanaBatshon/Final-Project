@@ -12,7 +12,6 @@ class ApproveRestaurantListItem extends Component {
     return (
       <div className="row">
         <div className="col-md-12">
-  
           <div className="list-item bg-white p-4 d-block d-md-flex align-items-center">
             <div className="thumbnail-wrap">
               <img src="images/thumbnail_1.jpg" alt="" className="list-item-thumbnail" />
@@ -36,7 +35,7 @@ class ApproveRestaurantListItem extends Component {
             <div className="ml-auto">
                 <div className="d-flex justify-content-around pb-4">
                   <a href="#" onClick={(e) => {this.props.handleApproval(e, this.restaurant.id)}} className="approval-btns btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Approve</a>
-                  <a href="#" className="btn btn-danger btn-sm">Reject</a>
+                  <a href="#" onClick={(e) => {this.props.handleReject(e, this.restaurant.id)}}className="btn btn-danger btn-sm">Reject</a>
                 </div>
               </div>
           </div>

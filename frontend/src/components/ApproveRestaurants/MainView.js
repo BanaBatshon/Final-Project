@@ -10,6 +10,7 @@ class MainView extends Component {
     super(props);
     this.state = {restaurants: []};
     this.handleApproval = this.handleApproval.bind(this);
+    this.handleReject = this.handleReject.bind(this);
   }
   
   componentDidMount() {
@@ -43,6 +44,26 @@ class MainView extends Component {
       });
   }
 
+  handleReject = (event, id) => {
+    event.preventDefault();
+    return axios.delete(`${apiUrl}/restaurant/${id}`, {approved: true})
+      .then(response => {
+        this.setState((prevState) => {
+          let restaurants = prevState.restaurants;
+          let new_restaurants = [];
+          for(let i=0; i < restaurants.length; i++) {
+            if (restaurants[i].id !== id) {
+              new_restaurants.push(restaurants[i]);
+            }
+          }
+          return {restaurants: new_restaurants};
+        });
+      })
+      .catch(error => {
+        throw (error);
+      });
+  }
+
   render() {
     return (
       <div className="site-section bg-light">
@@ -52,7 +73,7 @@ class MainView extends Component {
               <h2 className="font-weight-bold text-black">Approve Restaurants</h2>
             </div>
           </div>
-          <ApproveRestaurantListView handleApproval={this.handleApproval} restaurants={this.state.restaurants} />
+          <ApproveRestaurantListView handleReject={this.handleReject} handleApproval={this.handleApproval} restaurants={this.state.restaurants} />
         </div>
       </div>
     );

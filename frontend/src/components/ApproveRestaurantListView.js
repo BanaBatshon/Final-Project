@@ -15,7 +15,7 @@ const ApproveRestaurantListView = (props) => {
     <Fragment>
       {restaurants.map(restaurant => {
           return (
-            <ApproveRestaurantListItem handleApproval={props.handleApproval} restaurant={restaurant} key={restaurant.id} />
+            <ApproveRestaurantListItem handleReject={props.handleReject} handleApproval={props.handleApproval} restaurant={restaurant} key={restaurant.id} />
           );
         })}
     </Fragment>
