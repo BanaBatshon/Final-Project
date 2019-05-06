@@ -9,6 +9,7 @@ class NewItemListTable extends Component {
     e.preventDefault();
     postMenuItemsToServer(this.props.newItems.menuItem);
   }
+  
   render() {
     if (this.props.newItems.menuItem.length) {
       return (
