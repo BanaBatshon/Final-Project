@@ -28,12 +28,16 @@ class NewItemForm extends Component {
   handleDelete = (i) => {
     const tags = this.state.tags.slice(0)
     tags.splice(i, 1)
-    this.setState({ tags })
+    this.setState({ tags }, function() {
+        this.props.setTags(this.state.tags);
+    })
   }
  
   handleAddition = (tag) => {
     const tags = [].concat(this.state.tags, tag)
-    this.setState({ tags })
+    this.setState({ tags }, function() {
+      this.props.setTags(this.state.tags);
+    })
   }
 
   render() {
@@ -44,15 +48,15 @@ class NewItemForm extends Component {
 
           <div className="row form-group">
             <div className="col-md-12 mb-3 mb-md-0">
-              <label className="font-weight-bold" htmlFor="name">Restaurant</label>
-              <Field name="name" component="input" type="text" id="name" className="form-control" placeholder="Search by restaurant name"/>
+              <label className="font-weight-bold" htmlFor="restaurantId">Restaurant</label>
+              <Field name="restaurantId" component="input" type="text" id="restaurantId" className="form-control" placeholder="Search by restaurant name"/>
             </div>
           </div>
 
           <div className="row form-group">
             <div className="col-md-12">
-              <label className="font-weight-bold" htmlFor="item">Dish</label>
-              <Field name="item" component="input" type="text" id="item" className="form-control" placeholder="eg. Pepperoni Pizza"/>
+              <label className="font-weight-bold" htmlFor="name">Dish</label>
+              <Field name="name" component="input" type="text" id="name" className="form-control" placeholder="eg. Pepperoni Pizza"/>
             </div>
           </div>
 
