@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Rating from 'react-rating'
+import Button from 'react-bootstrap/Button'
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+import EditRatingsModal from './EditRatingModal'
 
-export default ({ rating, index, deleteRatingHandler }) => {
-  
-  console.log(rating)
+export default ({ rating, index, deleteRatingHandler, editRatingHandler }) => {
+
+  const [modalShow, setModalShow] = useState(false);
+  let modalClose = () => setModalShow(false);
+
   return (
     <div className="row">
       <div className="col-md-12 px-0">
@@ -16,21 +21,35 @@ export default ({ rating, index, deleteRatingHandler }) => {
             </div>
             <div className="badge-wrap">
               <div>
-              <Rating
-                initialRating={rating.rating}
-                emptySymbol="ratings-sidebar fa fa-star-o fa-1x"
-                fullSymbol="ratings-sidebar fa fa-star fa-1x"
-                fractions={2}
-                readonly={true}
-              />
+                <Rating
+                  initialRating={rating.rating}
+                  emptySymbol="ratings-sidebar fa fa-star-o fa-1x"
+                  fullSymbol="ratings-sidebar fa fa-star fa-1x"
+                  fractions={2}
+                  readonly={true}
+                />
               </div>
               <span className="bg-primary text-white badge">Pending</span>
             </div>
           </div>
 
           <div className="my-ratings-actions ml-auto d-flex justify-content-between">
-            <a href="#" className="btn btn-secondary btn-sm">Edit</a>
-            <button onClick={() => deleteRatingHandler(rating)} className="btn btn-danger btn-sm">Delete</button> 
+            <ButtonToolbar>
+              <Button
+                variant="secondary sm"
+                onClick={() => setModalShow(true)}
+              >
+                Edit
+            </Button>
+
+              <EditRatingsModal
+                show={modalShow}
+                onHide={modalClose}
+                rating={rating}
+                submitEditRating={editRatingHandler}
+              />
+            </ButtonToolbar>
+            <button onClick={() => deleteRatingHandler(rating)} className="btn btn-danger btn-sm">Delete</button>
           </div>
         </div>
       </div>
