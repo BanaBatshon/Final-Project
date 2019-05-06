@@ -8,17 +8,6 @@ class ApproveRestaurantListItem extends Component {
     this.restaurant = props.restaurant;
   }
   
-  handleApproval = (event) => {
-    event.preventDefault();
-    return axios.patch(`${apiUrl}/unapprovedrestaurants`)
-      .then(response => {
-        this.setState({restaurants: response.data})
-      })
-      .catch(error => {
-        throw (error);
-      });
-  }
-
   render() {
     return (
       <div className="row">
@@ -46,7 +35,7 @@ class ApproveRestaurantListItem extends Component {
             </div>
             <div className="ml-auto">
                 <div className="d-flex justify-content-around pb-4">
-                  <a href="#" onClick={this.handleApproval} className="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Approve</a>
+                  <a href="#" onClick={(e) => {this.props.handleApproval(e, this.restaurant.id)}} className="approval-btns btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Approve</a>
                   <a href="#" className="btn btn-danger btn-sm">Reject</a>
                 </div>
               </div>
