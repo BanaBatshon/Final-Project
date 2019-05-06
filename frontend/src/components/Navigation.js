@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 
@@ -19,7 +19,10 @@ class LoginRouter extends React.Component {
       );
     } else {
       return (
-        <li><Link onClick={this.clickHandler} to="/"><span className="rounded bg-secondary py-2 px-3 text-white">Logout</span></Link></li>
+        <Fragment >
+           <li><Link to="/myratings">My Ratings</Link></li>
+           <li><Link onClick={this.clickHandler} to="/"><span className="rounded bg-secondary py-2 px-3 text-white">Logout</span></Link></li>
+        </Fragment>
       );
     }
   };
@@ -58,7 +61,6 @@ class Navigation extends React.Component {
                       <li><Link to="/">New Dish Submission</Link></li>
                     </ul>
                   </li>
-                  <li><Link to="/myratings">My Ratings</Link></li>
                   <LoginRouter user={this.props.user} loggedIn={loggedIn}/>
                 </ul>
               </nav>
