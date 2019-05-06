@@ -6,6 +6,20 @@ var cors = require('cors')
 router.use(cors());
 
 /**
+ * Endpoint to update a users reviews
+ */
+router.patch('/:id/ratings/', function(req, res) {
+  const id = req.params.id;
+  const rating = req.body.rating;
+  console.log(rating)
+  models.menu_item_ratings.update({rating: rating, updatedAt: new Date()}, 
+  {where: {id: id}})
+  .then(function(rows) {
+    res.send();
+  });
+});
+
+/**
  * Endpoint to get all user reviews for all restaurants
  * they have reviews.
  */
@@ -20,26 +34,10 @@ router.get('/:userid/ratings', function(req, res) {
 /**
  * Endpoint to delete a user review
  */
-router.delete('/:userid/ratings/:id', function(req, res) {
-  const user_id = req.params.userid;
-  const menu_item_id = req.params.id;
-  models.menu_item_ratings.destroy({where:{userId: user_id, menuitemId: menu_item_id}})
+router.delete('/:id/ratings/', function(req, res) {
+  const id = req.params.id;
+  models.menu_item_ratings.destroy({where:{id: id}})
   .then(function(result) {
-    res.send();
-  });
-});
-
-/**
- * Endpoint to update a users reviews
- */
-router.patch('/:userid/ratings/:id', function(req, res) {
-  const user_id = req.params.userid;
-  const rating = req.body.rating || 1;
-  const menu_item_id = req.params.id;
-
-  models.menu_item_ratings.update({rating: rating, updatedAt: new Date()}, 
-  {where: {menuitemId: menu_item_id, userId: user_id}})
-  .then(function(rows) {
     res.send();
   });
 });
