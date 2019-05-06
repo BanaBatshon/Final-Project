@@ -142,11 +142,11 @@ export const fetchAllDishes = () => {
     return axios.patch(`${apiUrl}/users/${id}/ratings`, {rating: review})
   };
 
-  export const deleteUserReview = (id) => {
+  export const deleteUserReview = (id, userId) => {
     return (dispatch) => {
       return axios.delete(`${apiUrl}/users/${id}/ratings`)
       .then(function(response) {
-        dispatch(fetchAllMyRatings(1)) //have to get user_id here
+        dispatch(fetchAllMyRatings(userId));
       })
     }
   };

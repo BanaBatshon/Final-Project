@@ -45,7 +45,7 @@ class RatingListItem extends Component {
 
   handleDeleteEvent = (event) => {
     event.preventDefault();
-    this.props.dispatch(deleteUserReview(this.state.rating.id));
+    this.props.dispatch(deleteUserReview(this.state.rating.id, this.state.rating.userId));
   }
 
   render() {
