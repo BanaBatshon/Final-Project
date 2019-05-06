@@ -192,7 +192,7 @@ module.exports = {
       + "and typesetting industry. Lorem Ipsum has been the " 
       + "industry's standard dummy text ever since the 1500s, ",
       website:	'',
-      approved: true,
+      approved: false,
       createdAt: new Date(),
       updatedAt : new Date()
     },
