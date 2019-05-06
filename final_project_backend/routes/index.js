@@ -11,7 +11,7 @@ router.use(cors());
  */
 router.get('/login/:id', function(req, res) {
   const user_id = req.params.id;
-  models.users.find({where:{id: user_id}})
+  models.users.find({where:{email: user_id}})
   .then(function(user) {
     res.json(user.dataValues);
   })
@@ -151,7 +151,7 @@ router.post('/restaurants', function(req, res) {
 
 function getMenuItemsByRestaurant(restaurantId) {
   return models.menu_items
-  .findAll({where: {restaurantId: restaurantId}, include: [models.menu_item_ratings]})
+  .findAll({where: {approved: true, restaurantId: restaurantId}, include: [models.menu_item_ratings]})
   .then(function(results) {
     let itemsArr = [];
     results.forEach(function(item) {
@@ -164,6 +164,7 @@ function getMenuItemsByRestaurant(restaurantId) {
       let avg_rating = (sum_ratings/count_ratings) ? (sum_ratings/count_ratings).toPrecision(2) : 0
       item.dataValues.menuitemratings = avg_rating;
       delete item.menuitemratings;
+      item.dataValues.numRatings = count_ratings;
       itemsArr.push(item.dataValues)
     });
     return itemsArr;
@@ -176,7 +177,7 @@ function getMenuItemsByRestaurant(restaurantId) {
  */
 function allItems() {
   return models.menu_items
-  .findAll({include: [{model: models.menu_item_tags, include: [models.tags]}, 
+  .findAll({where: {approved: true}, include: [{model: models.menu_item_tags, include: [models.tags]}, 
     models.menu_item_ratings, models.restaurants]})
   .then(function(results) {
     let menuArr = [];
@@ -193,6 +194,7 @@ function allItems() {
       });
       result.dataValues.restaurant = result.restaurant.dataValues.name;
       delete result.dataValues.menuitemratings;
+      result.dataValues['numRatings'] = count;
       result.dataValues['avg_rating'] = (sum_ratings/count).toPrecision(2);
       menuArr.push(result.dataValues);
     });
@@ -206,17 +208,19 @@ function allItems() {
  */
 function allRestaurants() {
   return models.restaurants
-  .findAll({include: [{model: models.restaurant_tags, 
+  .findAll({where: {approved: true}, include: [{model: models.restaurant_tags, 
     include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
   .then(function(results) {
     let restaurants = [];
     results.forEach(function(restaurant) {
+      let count_ratings = 0;
       let ratings = [];
       let sum = 0;
       restaurant.menuitems.forEach(function(item) {
         item.menuitemratings.forEach(function(rating) {
           ratings.push(rating.dataValues.rating);
           sum += rating.dataValues.rating;
+          count_ratings++;
         });
       });
       const avg_rating = (sum/ratings.length) ?  (sum/ratings.length).toPrecision(2):0;
@@ -226,6 +230,7 @@ function allRestaurants() {
       restaurant_tags.forEach(function(tag) {
         tagsArr.push(tag.dataValues.tag.name);
       });
+      restaurant.dataValues.numRatings = count_ratings;
       restaurant.dataValues.restauranttags = tagsArr;
       delete restaurant.dataValues.menuitems
       restaurants.push(restaurant.dataValues);
@@ -241,8 +246,8 @@ function allRestaurants() {
  */
 function getRestaurant(id) {
   return models.restaurants
-  .find({where: {id: id}, include: [{model: models.restaurant_tags, 
-    include: [models.tags]}, {model: models.menu_items, 
+  .find({where: {id: id, approved: true}, include: [{model: models.restaurant_tags, 
+    include: [models.tags]}, {model: models.menu_items, where: {approved: true},
       include: [models.menu_item_ratings, {model: models.menu_item_tags, 
         include: [models.tags]}]}]})
   .then(function(restaurant) {
@@ -268,9 +273,11 @@ function getRestaurant(id) {
         avg_ratings.sum += parseInt(rating.dataValues.rating);
         avg_ratings.count ++;
       });
+      item.dataValues['numRatings'] = ratings.length;
       item.dataValues.menuitemratings = (sum_ratings/ratings.length).toPrecision(2);
       menuItems.push(item.dataValues);
     });
+    restaurant.dataValues['numRatings'] = avg_ratings.count;
     avg_ratings = (avg_ratings.sum/avg_ratings.count).toPrecision(2);
     menuItems.sort(compare_ratings);
     restaurant.dataValues.menuitems = menuItems;
@@ -302,7 +309,7 @@ function getMenuItemIds (tag) {
  */
 function getMenuItemsById (arrIds) {
   return models.menu_items
-  .findAll({where: {id: {$in: arrIds}}, include:[{model: models.menu_item_tags, 
+  .findAll({where: {approved:true, id: {$in: arrIds}}, include:[{model: models.menu_item_tags, 
     include: [models.tags]}, models.menu_item_ratings, models.restaurants]})
   .then(function(results) {
     let menuItems = [];
@@ -321,6 +328,7 @@ function getMenuItemsById (arrIds) {
         reviewsArr.push({rating: rating.dataValues.rating, userId: rating.dataValues.userId});
         avg_ratings += rating.dataValues.rating;
       });
+      item.dataValues['numRatings'] = reviewsArr.length;
       item.dataValues['avg_rating'] = (avg_ratings/reviewsArr.length).toPrecision(2);
       item.dataValues.menuitemratings = reviewsArr;
       menuItems.push(item.dataValues);
@@ -336,7 +344,8 @@ function getMenuItemsById (arrIds) {
  */
 function getRestaurantsById(arr) {
   return models.restaurants
-  .findAll({where: {id: {$in: arr}}, include: [{model: models.menu_items, include: [models.menu_item_ratings]}, 
+  .findAll({where: {approved: true, id: {$in: arr}}, include: [{model: models.menu_items, 
+    where:{approved:true}, include: [models.menu_item_ratings]}, 
     {model : models.restaurant_tags, include: [models.tags]}]})
   .then(function(restaurants) {
     let restaurantsArr = [];
@@ -352,6 +361,7 @@ function getRestaurantsById(arr) {
       delete restaurant.dataValues.menuitems;
       avg_rating = (avg_rating/rating_count).toPrecision(2);
       restaurant.dataValues.avg_rating = avg_rating;
+      restaurant.dataValues['numRatings'] = rating_count;
       let tags = restaurant.dataValues.restauranttags;
       let tagsArr = [];
       tags.forEach(function(tag) {
@@ -365,7 +375,6 @@ function getRestaurantsById(arr) {
   });
 }
 
-getRestaurantsById([1])
 /**
  * Returns array of restaurant ids.
  * @param {Restaurant Tag} tag 
