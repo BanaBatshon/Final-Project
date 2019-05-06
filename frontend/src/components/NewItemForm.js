@@ -31,50 +31,57 @@ class NewItemForm extends Component {
         for (let restaurant of response.data) {
           restaurantNames.push({name: restaurant.name, restaurantId: restaurant.id})
         }
-        this.setState({ restaurants: restaurantNames })
-        console.log("restaurants in state: ", this.state.restaurants)
+        this.setState({ restaurantSuggestions: restaurantNames })
       })
       .catch(error => {
         throw (error);
       });
   };
 
-  escapeRegexCharacters = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  escapeRegexCharacters = (str) => {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
   
-  onChange = (event, { newValue }) => {
-    this.setState({
-      value: newValue
-    });
-  };
-
-  getSuggestions = value => {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
+  getSuggestions = (value) => {
+    const escapedValue = this.escapeRegexCharacters(value.trim());
+    
+    if (escapedValue === '') {
+      return [];
+    }
   
-    return inputLength === 0 ? [] : this.state.restaurants.filter(restaurant =>
-      restaurant.toLowerCase().slice(0, inputLength) === inputValue
+    const regex = new RegExp('^' + escapedValue, 'i');
+  
+    return this.state.restaurantSuggestions.filter(restaurant => regex.test(restaurant.name));
+  }
+  
+  getSuggestionValue = (restaurantSuggestion) => {
+    return restaurantSuggestion.name;
+  }
+  
+  renderSuggestion = (restaurantSuggestion) => {
+    return (
+      <span>{restaurantSuggestion.name}</span>
     );
   }
+  
+    onChange = (event, { newValue, method }) => {
+      this.setState({
+        value: newValue
+      });
+    };
+    
+    onSuggestionsFetchRequested = ({ value }) => {
+      this.setState({restaurants: this.getSuggestions(value)});
+    };
+  
+    onSuggestionsClearRequested = () => {
+      this.setState({restaurants: []});
+    };
+    
+    onSuggestionSelected = (event) => {
+      this.props.setRestaurants(this.state.restaurants);
+    }
 
-  getSuggestionValue = restaurantSuggestion => restaurantSuggestion;
-
-  renderSuggestion = restaurantSuggestion => (
-    <div>
-      {restaurantSuggestion}
-    </div>
-  );
-
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      restaurantSuggestions: this.getSuggestions(value)
-    });
-  };
-
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      restaurantSuggestions: []
-    });
-  };
 
   fetchAllTags = () => {
     axios
@@ -119,11 +126,12 @@ class NewItemForm extends Component {
             <div className="col-md-12 mb-3 mb-md-0">
               <label className="font-weight-bold" htmlFor="restaurantId">Restaurant</label>
                 <Autosuggest
-                  suggestions={this.state.restaurantSuggestions}
+                  suggestions={this.state.restaurants}
                   onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                   onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                   getSuggestionValue={this.getSuggestionValue}
                   renderSuggestion={this.renderSuggestion}
+                  onSuggestionSelected={ this.onSuggestionSelected }
                   inputProps={inputProps}
                 />
             </div>
