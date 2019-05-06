@@ -2,12 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux';
 import MenuItemRow from './MenuItemRow';
 import { Component, Fragment } from 'react';
-import { postToServer } from '../util/index.js';
+import { postMenuItemsToServer } from '../util/index.js';
 
 class NewItemListTable extends Component {
   handleOnSubmit = (e) => {
     e.preventDefault();
-    postToServer(this.props.newItems.menuItem);
+    postMenuItemsToServer(this.props.newItems.menuItem);
   }
   render() {
     if (this.props.newItems.menuItem.length) {
