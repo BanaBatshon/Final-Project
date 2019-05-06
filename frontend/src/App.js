@@ -4,8 +4,8 @@ import Home from './components/Home'
 import Restaurants from './components/Restaurants'
 import Navigation from './components/Navigation'
 import { BrowserRouter, Route } from 'react-router-dom'
-import NewRestaurant from './components/NewRestaurant';
-import AddNewItem from './components/AddNewItem';
+import NewRestaurant from './components/AddNewRestaurant/NewRestaurant';
+import AddNewItem from './components/AddNewDish/AddNewItem';
 
 class App extends Component {
   render() {
@@ -15,8 +15,8 @@ class App extends Component {
           <Navigation />
           <Route exact path='/' component={Home} />
           <Route path='/restaurants/explore' component={Restaurants} />
-          <Route path='/restaurant' component={NewRestaurant} />
-          <Route path='/item' component={AddNewItem} />
+          <Route path='/restaurant/new' component={NewRestaurant} />
+          <Route path='/item/new' component={AddNewItem} />
 
         </div>
       </BrowserRouter>
