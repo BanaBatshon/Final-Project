@@ -7,14 +7,14 @@ import { connect } from 'react-redux';
 class RatingListView extends Component {
 
   deleteRatingHandler = (rating) => {
-    this.props.dispatch(deleteRating(1, rating.menuitemId, rating.menuitem.restaurantId))
+    this.props.dispatch(deleteRating(1, rating.id, rating.menuitem.restaurantId))
   }
 
   editRatingHandler = (rating, newValue) => {
     const request = {
       userid: 1,
       rating: newValue,
-      id: rating.menuitemId,
+      id: rating.id,
       restaurantId: rating.menuitem.restaurantId
     }
     this.props.dispatch(editRating(request));
