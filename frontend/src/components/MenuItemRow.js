@@ -1,14 +1,15 @@
 import React from 'react'
 
+
 const MenuItemRow = (props) => {
   return (
     <tr>
-    <th scope="row">1</th>
+    <th scope="row">{ props.index + 1 }</th>
     <td>{props.name}</td>
     <td>
-      {props.tags.map((tag) => {
+      {props.tags.map((tag, index) => {
         return (
-          <span class="badge badge-success">{tag.name}</span>
+          <span key={ index } className="badge badge-success">{tag.name}</span>
         )}
       )}
     </td>
