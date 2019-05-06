@@ -89,6 +89,15 @@ router.get('/restaurants', function(req, res) {
   });
 });
 
+/**
+ * Route for getting a list of all unapproved restaurants
+ */
+router.get('/unapprovedrestaurants/', function(req, res) {
+  notApprovedRestaurants().then(function(result) {
+    res.json(result);
+  });
+});
+
  /* Route for getting detailed information for a restaurant
  */
 router.get('/restaurant/:id/', function(req, res) {
@@ -209,6 +218,42 @@ function allItems() {
 function allRestaurants() {
   return models.restaurants
   .findAll({where: {approved: true}, include: [{model: models.restaurant_tags, 
+    include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
+  .then(function(results) {
+    let restaurants = [];
+    results.forEach(function(restaurant) {
+      let count_ratings = 0;
+      let ratings = [];
+      let sum = 0;
+      restaurant.menuitems.forEach(function(item) {
+        item.menuitemratings.forEach(function(rating) {
+          ratings.push(rating.dataValues.rating);
+          sum += rating.dataValues.rating;
+          count_ratings++;
+        });
+      });
+      const avg_rating = (sum/ratings.length) ?  (sum/ratings.length).toPrecision(2):0;
+      restaurant.dataValues['avg_rating'] = avg_rating;
+      let restaurant_tags = restaurant.dataValues.restauranttags;
+      let tagsArr = [];
+      restaurant_tags.forEach(function(tag) {
+        tagsArr.push(tag.dataValues.tag.name);
+      });
+      restaurant.dataValues.numRatings = count_ratings;
+      restaurant.dataValues.restauranttags = tagsArr;
+      delete restaurant.dataValues.menuitems
+      restaurants.push(restaurant.dataValues);
+    });
+    return restaurants;
+  });
+}
+
+/**
+ * Returns a list of all unapproved restaurants with tag names
+ */
+function notApprovedRestaurants() {
+  return models.restaurants
+  .findAll({where: {approved: false}, include: [{model: models.restaurant_tags, 
     include: [models.tags]}, {model: models.menu_items, include: [models.menu_item_ratings]}]})
   .then(function(results) {
     let restaurants = [];
