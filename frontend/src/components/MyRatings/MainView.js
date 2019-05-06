@@ -1,4 +1,4 @@
-import DishListView from '../DishListView';
+import RatingListView from '../RatingListView';
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { fetchAllMyRatings } from '../../actions/index';
@@ -7,7 +7,8 @@ import { fetchAllMyRatings } from '../../actions/index';
 class MainView extends Component {
 
     componentDidMount() {
-        this.props.dispatch(fetchAllMyRatings(1));
+        //this.props.dispatch(fetchAllMyRatings(1));
+        this.props.dispatch(fetchAllMyRatings(this.props.user.id));
     }
 
     render() {
@@ -19,7 +20,7 @@ class MainView extends Component {
                     <h2 className="font-weight-bold text-black">My Ratings</h2>
                     </div>
                 </div>
-                  return <DishListView dishes={this.props.myRatings} />
+                    <RatingListView myRatings={this.props.myRatings} />
                 </div>
             </div>
             );
@@ -28,7 +29,8 @@ class MainView extends Component {
 
 const mapStateToProps = state => {
   return {
-     myRatings: state.myRatings.myRatings
+     myRatings: state.myRatings.myRatings,
+     user: state.user.user
   };
 };
 

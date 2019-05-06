@@ -8,3 +8,4 @@ export const FETCH_MY_RATINGS_BY_RESTAURANT = 'FETCH_MY_RATINGS_BY_RESTAURANT';
 export const ADD_RATING = 'ADD_RATING';
 export const DELETE_RATING = 'DELETE_RATING';
 export const EDIT_RATING = 'EDIT_RATING';
+export const LOGIN = 'LOGIN';

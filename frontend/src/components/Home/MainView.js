@@ -21,8 +21,7 @@ const MainView = (props) => {
 
 const mapStateToProps = state => {
   return {
-    dishes: state.dishes.dishes
-  };
+    dishes: state.dishes.dishes };
 };
 
 export default connect(

@@ -1452,3 +1452,15 @@ a {
 .ratings-sidebar {
  padding: 0.1rem;
 }
+
+.list-rating {
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  font-size: 1.3em;
+}
+
+.list-rating-review {
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  font-size: 1.0em;
+}

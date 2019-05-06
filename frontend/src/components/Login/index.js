@@ -1,16 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import MainView from './MainView';
-import HeroSearch from '../HeroSearch';
+import LoginBanner from './LoginBanner';
+import Footer from '../Footer';
 
-class RestaurantsSearchResults extends Component {
+class Login extends Component {
   render() {
     return (
       <Fragment>
-        <HeroSearch/>
+        <LoginBanner />
         <MainView />
+        <Footer />
       </Fragment>
     );
   }
 }
 
-export default RestaurantsSearchResults;
+export default Login;

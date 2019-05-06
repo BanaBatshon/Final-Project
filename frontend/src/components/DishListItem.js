@@ -33,8 +33,8 @@ export default ({ dish: { name, restaurantId, avg_rating, menuitemtags, restaura
           <Rating
                 readonly={true}
                 initialRating={parseFloat(avg_rating)}
-                fullSymbol="fa fa-star fa-2x"
-                emptySymbol="fa fa-star-o fa-2x"
+                fullSymbol="list-rating fa fa-star"
+                emptySymbol="list-rating fa fa-star-o"
                 fractions={2}
               />
           </div>

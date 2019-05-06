@@ -1,7 +1,9 @@
 import {
   FETCH_RESTAURANTS, FETCH_RESTAURANT_SEARCH_RESULTS, FETCH_RESTAURANT,
-  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_MY_RATINGS, FETCH_MY_RATINGS_BY_RESTAURANT, ADD_RATING, DELETE_RATING, EDIT_RATING
+  FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_MY_RATINGS,
+   FETCH_MY_RATINGS_BY_RESTAURANT, ADD_RATING, DELETE_RATING, EDIT_RATING, LOGIN
 } from './types';
+
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:3001';
@@ -200,3 +202,35 @@ export const editRating = ({ userid, id, rating, restaurantId }) => {
       });
   };
 };
+
+  export const login = (user) => {
+    return {
+      type: LOGIN,
+      user
+    }
+  };
+  
+  export const loginRequest = (email) => {
+    return (dispatch) => {
+      return axios.get(`${apiUrl}/login/${email}`)
+        .then(response => {
+          dispatch(login(response.data))
+        })
+        .catch(error => {
+          throw (error);
+        });
+    };
+  };
+  
+  export const editUserReview = (id, review) => {
+    return axios.patch(`${apiUrl}/users/${id}/ratings`, {rating: review})
+  };
+
+  export const deleteUserReview = (id, userId) => {
+    return (dispatch) => {
+      return axios.delete(`${apiUrl}/users/${id}/ratings`)
+      .then(function(response) {
+        dispatch(fetchAllMyRatings(userId));
+      })
+    }
+  };

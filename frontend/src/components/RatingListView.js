@@ -10,11 +10,12 @@ const RatingListView = (props) => {
       </div>
     )
   }
+
   return (
     <Fragment>
       {myRatings.map(rating => {
           return (
-            <RatingListItem rating={rating.menuitem} key={rating.id} />
+            <RatingListItem rating={rating} key={rating.id} />
           );
         })}
     </Fragment>
