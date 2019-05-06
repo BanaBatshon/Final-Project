@@ -3,7 +3,7 @@ import Tag from './Tag';
 import { Link } from 'react-router-dom';
 import Rating from 'react-rating';
 import { connect } from 'react-redux';
-import { editUserReview, fetchAllMyRatings } from '../actions/index';
+import { editUserReview } from '../actions/index';
 import { deleteUserReview } from '../actions/index';
 
 class RatingItem extends Component {
