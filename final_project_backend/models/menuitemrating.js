@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var menu_item_ratings = sequelize.define('menuitemratings', {
-    rating: DataTypes.INTEGER
+    rating: DataTypes.FLOAT
   }, {
     classMethods: {
       associate: function(models) {
