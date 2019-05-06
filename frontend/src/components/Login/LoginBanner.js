@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Background from '../../images/hero_bg_6.jpg';
 
 const style = {backgroundImage: (`url(${Background})`)}

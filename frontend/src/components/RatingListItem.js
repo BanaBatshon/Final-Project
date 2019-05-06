@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 import Tag from './Tag';
 import { Link } from 'react-router-dom'
 import Rating from 'react-rating'
+import { editUserReview } from '../actions/index';
 
 class RatingItem extends Component {
-  constructor(props) {
-    super(props);
-  }
   render () {
     return (<Rating
       readonly={!this.props.modify}
@@ -28,7 +26,7 @@ class RatingListItem extends Component {
   }
 
   handleChange = (event) => {
-    console.log(event)
+    editUserReview(this.state.rating.id, event)
     this.setState((prevState) => {
       let rating = prevState.rating;
       rating.rating = event;
@@ -41,7 +39,6 @@ class RatingListItem extends Component {
     this.setState((prevState) => {
       return {modify: true, rating: prevState.rating};
     });
-    //console.log(this.rating.id);
   };
 
   render() {
