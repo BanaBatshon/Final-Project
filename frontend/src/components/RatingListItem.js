@@ -27,15 +27,20 @@ export default ({ rating: { id, rating, menuitem } }) => {
               </div>
             </div>
           </div>
-
           <div className="ml-auto">
-          <Rating
+            <div className="d-flex justify-content-around pb-4">
+              <Rating
                 readonly={true}
                 initialRating={parseFloat(rating)}
-                fullSymbol="list-rating fa fa-star"
-                emptySymbol="list-rating fa fa-star-o"
+                fullSymbol="list-rating-review fa fa-star"
+                emptySymbol="list-rating-review fa fa-star-o"
                 fractions={2}
               />
+            </div>
+            <div className="my-ratings-actions ml-auto d-flex justify-content-between">
+              <a href="#" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Edit</a>
+              <a href="#" class="btn btn-danger btn-sm">Delete</a>
+            </div>
           </div>
         </div>
       </div>
