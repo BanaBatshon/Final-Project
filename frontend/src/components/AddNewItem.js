@@ -4,18 +4,28 @@ import NewItemForm from './NewItemForm';
 import NewItemList from './NewItemList';
 import { addNewItemToNewItemList } from '../actions';
 
-
 class AddNewItem extends Component {
-  
-  handleSubmit = values => {
-    this.props.dispatch(addNewItemToNewItemList(values));
-    console.log("values: ", values)
+
+  constructor(props) {
+    super(props)
+
+    this.tags = [];
   }
   
+  handleSubmit = (values) => {
+    let newItem = Object.assign({}, values);
+    newItem.restaurantId = Number(newItem.restaurantId) //delete later
+    newItem.tags= this.tags;
+    this.props.dispatch(addNewItemToNewItemList(newItem))
+  }
+
+  setTags = (tags) => {
+    this.tags = tags
+  }
   render() {
     return (
       <Fragment>
-        <NewItemForm onSubmit={ this.handleSubmit }/>
+        <NewItemForm setTags={ this.setTags} onSubmit={ this.handleSubmit }/>
         <NewItemList />
       </Fragment>
     );
