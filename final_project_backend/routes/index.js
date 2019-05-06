@@ -117,6 +117,17 @@ router.get('/restaurant/:id/', function(req, res) {
   })
 });
 
+ /* Route for getting detailed information for a restaurant
+ */
+router.patch('/restaurant/:id/', function(req, res) {
+  const restaurantId = req.params.id;
+  models.restaurants.update({approved: true, updatedAt: new Date()}, 
+  {where: {id: restaurantId}})
+  .then(function(rows) {
+    res.json(rows);
+  });
+});
+
 /**
  * Route for processing search results based on id(tags)
  */
