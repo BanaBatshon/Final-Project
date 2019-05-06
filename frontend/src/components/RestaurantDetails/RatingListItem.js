@@ -1,7 +1,9 @@
 import React from 'react';
 import Rating from 'react-rating'
 
-export default ({ rating, index }) => {
+export default ({ rating, index, deleteRatingHandler }) => {
+  
+  console.log(rating)
   return (
     <div className="row">
       <div className="col-md-12 px-0">
@@ -28,7 +30,7 @@ export default ({ rating, index }) => {
 
           <div className="my-ratings-actions ml-auto d-flex justify-content-between">
             <a href="#" className="btn btn-secondary btn-sm">Edit</a>
-            <a href="#" className="btn btn-danger btn-sm">Delete</a>
+            <button onClick={() => deleteRatingHandler(rating)} className="btn btn-danger btn-sm">Delete</button> 
           </div>
         </div>
       </div>
