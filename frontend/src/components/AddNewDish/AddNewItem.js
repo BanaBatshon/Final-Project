@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import NewItemForm from './NewItemForm';
 import NewItemList from './NewItemList';
-import { addNewItemToNewItemList } from '../actions';
+import { addNewItemToNewItemList } from '../../actions';
 import {reset} from 'redux-form';
 
 class AddNewItem extends Component {
