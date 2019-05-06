@@ -11,7 +11,6 @@ router.use(cors());
 router.patch('/:id/ratings/', function(req, res) {
   const id = req.params.id;
   const rating = req.body.rating;
-  console.log(rating)
   models.menu_item_ratings.update({rating: rating, updatedAt: new Date()}, 
   {where: {id: id}})
   .then(function(rows) {
