@@ -7,11 +7,7 @@ class LoginBanner extends Component {
     
     render() {
         return (
-            <div className="unit-5 overlay hero-container" style={style}>
-                <div className="container text-center">
-                    <h2 className="mb-0">Login</h2>
-                </div>
-            </div>
+            <div className="unit-5 overlay hero-container" style={style}></div>
         );
     }
 }

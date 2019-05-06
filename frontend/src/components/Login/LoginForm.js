@@ -27,10 +27,10 @@ class LoginForm extends Component {
         return (
             <Fragment>
                 {redirect && (<Redirect to="/" />)}
-                    <div className="site-section bg-light">
+                    <div className="bg-light">
                         <div className="container">
                             <div className="row">
-                            <div className="col-md-12 col-lg-8 mb-5">
+                            <div className="offset-lg-2 col-md-12 col-lg-8 mb-5">
                                 <form onSubmit={this.handleSubmit} className="p-5 bg-white">
                                     <div className="row form-group">
                                         <div className="col-md-12">
