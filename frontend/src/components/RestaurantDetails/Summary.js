@@ -1,4 +1,5 @@
 import React from 'react';
+import Rating from 'react-rating'
 
 const Summary = (props) => {
   const { details } = props;
@@ -18,11 +19,14 @@ const Summary = (props) => {
         </div>
 
         <div className="ml-auto">
-          <span className="p-4">200 Upvotes</span>
-          <a href="#" className="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span
-            className="icon-thumbs-up"></span></a>
-          <a href="#" className="btn btn-secondary rounded-circle btn-favorite text-gray-500"><span
-            className="icon-thumbs-down"></span></a>
+          <Rating
+            initialRating={details.avg_rating}
+            emptySymbol="ratings-sidebar fa fa-star-o fa-1x"
+            fullSymbol="ratings-sidebar fa fa-star fa-1x"
+            fractions={2}
+            readonly={true}
+          />
+          <span class="num-ratings">{details.numRatings}</span>
         </div>
       </div>
       <div className="row col-md-12 pb-4">
