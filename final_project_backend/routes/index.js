@@ -194,7 +194,7 @@ function allItems() {
       });
       result.dataValues.restaurant = result.restaurant.dataValues.name;
       delete result.dataValues.menuitemratings;
-      result.dataValues.numRatings = count_ratings;
+      result.dataValues['numRatings'] = count;
       result.dataValues['avg_rating'] = (sum_ratings/count).toPrecision(2);
       menuArr.push(result.dataValues);
     });
