@@ -17,6 +17,14 @@ class LoginRouter extends React.Component {
       return (
         <li><Link to="/login"><span className="rounded bg-secondary py-2 px-3 text-white">Login</span></Link></li>
       );
+    } else if (this.props.loggedIn && this.props.admin) {
+      return (
+        <Fragment >
+           <li><Link to="/approve/restaurants">Approve Restaurants</Link></li>
+           <li><Link to="/approve/dishes">Approve Dishes</Link></li>
+           <li><Link onClick={this.clickHandler} to="/"><span className="rounded bg-secondary py-2 px-3 text-white">Logout</span></Link></li>
+        </Fragment>
+      );
     } else {
       return (
         <Fragment >
@@ -32,6 +40,10 @@ class Navigation extends React.Component {
 
   render() {
     let loggedIn;
+    let admin = false;
+    if (this.props.user.user_type === 'admin') {
+      admin = true;
+    }
     if(this.props.user.id) {
       loggedIn = true;
     } else {
@@ -61,7 +73,7 @@ class Navigation extends React.Component {
                       <li><Link to="/">New Dish Submission</Link></li>
                     </ul>
                   </li>
-                  <LoginRouter user={this.props.user} loggedIn={loggedIn}/>
+                  <LoginRouter admin={admin} user={this.props.user} loggedIn={loggedIn}/>
                 </ul>
               </nav>
             </div>

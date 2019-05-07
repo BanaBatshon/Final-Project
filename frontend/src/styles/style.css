@@ -1464,3 +1464,7 @@ a {
   padding-right: 0.3em;
   font-size: 1.0em;
 }
+
+.approval-btns {
+  margin-right: 1rem;
+}
