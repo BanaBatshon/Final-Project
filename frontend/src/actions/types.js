@@ -1,3 +1,6 @@
 export const FETCH_RESTAURANTS = 'FETCH_RESTAURANTS';
 export const NEW_ITEM_ADDED = 'NEW_MENU_ITEM_ADDED';
 export const FETCH_NEW_ITEMS = 'FETCH_NEW_ITEMS';
+export const ADD_RATING = 'ADD_RATING';
+export const DELETE_RATING = 'DELETE_RATING';
+export const EDIT_RATING = 'EDIT_RATING';
