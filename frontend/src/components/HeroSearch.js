@@ -9,8 +9,8 @@ const heroStyle = {
 class HeroSearch extends Component {
     render() {
         return (
-            <div className="unit-5 overlay" style={heroStyle}>
-                <div className="container text-center">
+            <div className="unit-5 overlay hero-searchbar" style={heroStyle}>
+                <div className="container text-center searchbar-container">
                     <div className="row row-custom align-items-center">
                         <div className="col-md-10">
                             <SearchBar/>

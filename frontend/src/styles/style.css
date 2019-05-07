@@ -231,7 +231,7 @@ a {
   margin-bottom: 0px;
   width: 100%;
   border-bottom: none;
-  z-index: 2;
+  z-index: 3;
   position: relative; }
   .site-navbar .site-logo {
     font-weight: 200; }
@@ -1467,4 +1467,12 @@ a {
 
 .num-ratings {
   margin-left: 0.5rem;
+}
+
+.searchbar-container {
+  margin-top: 2.5rem;
+}
+
+.hero-searchbar {
+  height: 400px;
 }
