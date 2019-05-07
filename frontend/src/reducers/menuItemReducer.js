@@ -1,4 +1,4 @@
-import { NEW_ITEM_ADDED } from '../actions/types';
+import { NEW_ITEM_ADDED, NEW_ITEM_REMOVED } from '../actions/types';
 
 const initialState = {
   menuItem: []
@@ -11,6 +11,11 @@ export default function menuItemReducer(state = initialState, action) {
       ...state,
       menuItem: state.menuItem
     }
+    case NEW_ITEM_REMOVED:
+     return {
+       ...state,
+       menuItem: state.menuItem.filter((item) => item.name !== action.menuItem.name)
+     };
     default:
       return state;
   }
