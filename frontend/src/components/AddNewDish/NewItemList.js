@@ -27,7 +27,7 @@ class NewItemListTable extends Component {
               <tbody>
                 {this.props.newItems.menuItem.map((item, index) => {
                   return (
-                    <MenuItemRow key={ index } index={ index } name={item.name} tags={item.tags}/>
+                    <MenuItemRow key={ index } index={ index } name={item.name} tags={item.tags} item={ item }/>
                   )})
                 }
               </tbody>
