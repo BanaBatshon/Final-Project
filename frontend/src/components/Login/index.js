@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import MainView from './MainView';
 import LoginBanner from './LoginBanner';
-import Footer from '../Footer';
 
 class Login extends Component {
   render() {
@@ -9,7 +8,6 @@ class Login extends Component {
       <Fragment>
         <LoginBanner />
         <MainView />
-        <Footer />
       </Fragment>
     );
   }

@@ -14,6 +14,7 @@ import ApproveDishes from './components/ApproveDishes';
 import { BrowserRouter, Route } from 'react-router-dom'
 import 'font-awesome/css/font-awesome.min.css';
 import ScrollToTop from './components/ScrollToTop'
+import Footer from './components/Footer'
 
 class App extends Component {
   render() {
@@ -32,6 +33,7 @@ class App extends Component {
             <Route path='/login' component={Login} />
             <Route path='/approve/restaurants' component={ApproveRestaurants} />
             <Route path='/approve/dishes' component={ApproveDishes} />
+            <Footer />
           </div>
         </ScrollToTop>
       </BrowserRouter>
