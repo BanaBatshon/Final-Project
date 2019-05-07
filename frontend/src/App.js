@@ -11,22 +11,25 @@ import MyRatings from './components/MyRatings'
 import Login from './components/Login';
 import { BrowserRouter, Route } from 'react-router-dom'
 import 'font-awesome/css/font-awesome.min.css';
+import ScrollToTop from './components/ScrollToTop'
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="site-wrap">
-          <Navigation />
-          <Route exact path='/' component={Home} />
-          <Route path='/restaurants/explore' component={ExploreRestaurants} />
-          <Route path='/restaurants/results' component={RestaurantSearchResults} />
-          <Route path='/restaurant' component={RestaurantDetails} />
-          <Route path='/dishes/explore' component={ExploreDishes} />
-          <Route path='/dishes/results' component={DishSearchResults} />
-          <Route path='/myratings' component={MyRatings} />
-          <Route path='/login' component={Login} />
-        </div>
+        <ScrollToTop>
+          <div className="site-wrap">
+            <Navigation />
+            <Route exact path='/' component={Home} />
+            <Route path='/restaurants/explore' component={ExploreRestaurants} />
+            <Route path='/restaurants/results' component={RestaurantSearchResults} />
+            <Route path='/restaurant' component={RestaurantDetails} />
+            <Route path='/dishes/explore' component={ExploreDishes} />
+            <Route path='/dishes/results' component={DishSearchResults} />
+            <Route path='/myratings' component={MyRatings} />
+            <Route path='/login' component={Login} />
+          </div>
+        </ScrollToTop>
       </BrowserRouter>
     );
   }
