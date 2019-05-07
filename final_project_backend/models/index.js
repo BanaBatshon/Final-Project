@@ -11,7 +11,8 @@ const models = {
   menu_item_tags: sequelize.import('./menuitemtag'),
   menu_items: sequelize.import('./menuitem'),
   restaurant_tags: sequelize.import('./restauranttag'),
-  restaurants: sequelize.import('./restaurant')
+  restaurants: sequelize.import('./restaurant'),
+  restaurant_images: sequelize.import('./restaurant_images')
 };
 
 Object.keys(models).forEach(modelName => {
