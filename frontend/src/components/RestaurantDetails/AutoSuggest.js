@@ -92,6 +92,7 @@ class AutoSuggest extends Component {
   };
 
   onSuggestionSelected = (event, { suggestion }) => {
+    event.preventDefault();
 
     if (suggestion.isAddNew) {
       console.log('Add new:', this.state.value);
