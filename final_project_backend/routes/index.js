@@ -54,6 +54,14 @@ router.get('/items', function(req, res) {
   });
 });
 
+/**
+ * Endpoint to retrieve all items in database
+ */
+router.get('/unapproveditems', function(req, res) {
+  unApprovedItems().then(function(results) {
+    res.json(results);
+  });
+});
 
 /**
  * Endpoint to retrieve all items for a restaurant with id id
@@ -117,7 +125,7 @@ router.get('/restaurant/:id/', function(req, res) {
   })
 });
 
- /* Route for getting detailed information for a restaurant
+ /* Route for updating detailed information for a restaurant
  */
 router.patch('/restaurant/:id/', function(req, res) {
   const restaurantId = req.params.id;
@@ -128,7 +136,7 @@ router.patch('/restaurant/:id/', function(req, res) {
   });
 });
 
- /* Route for getting detailed information for a restaurant
+ /* Route for deleting detailed information for a restaurant
  */
 router.delete('/restaurant/:id/', function(req, res) {
   const restaurantId = req.params.id;
@@ -176,6 +184,33 @@ router.get('/items/:id/', function(req, res) {
   .catch(function(err) {
     res.json({});
   })
+});
+
+ /* Route for getting detailed information for a restaurant
+ */
+router.patch('/item/:id/', function(req, res) {
+  const menuId = req.params.id;
+  models.menu_items.update({approved: true, updatedAt: new Date()}, 
+  {where: {id: menuId}})
+  .then(function(rows) {
+    res.json(rows);
+  });
+});
+
+ /* Route for getting detailed information for a restaurant
+ */
+router.delete('/item/:id/', function(req, res) {
+  const menuId = req.params.id;
+  models.menu_item_tags.destroy({where: {menuitemId: menuId}})
+  .then(function(row) {
+    models.menu_item_ratings.destroy({where:{menuitemId: menuId}})
+    .then(function(result) {
+      models.menu_items.destroy({where: {id: menuId}})
+      .then(function(rows) {
+        res.json(rows);
+      });
+    })
+  });
 });
 
 /**
@@ -247,6 +282,37 @@ function allItems() {
       delete result.dataValues.menuitemratings;
       result.dataValues['numRatings'] = count;
       result.dataValues['avg_rating'] = parseFloat((sum_ratings/count).toPrecision(2));
+      menuArr.push(result.dataValues);
+    });
+    menuArr.sort(compare_avg_ratings);
+    return menuArr;
+  });
+}
+
+/**
+ * Gets all items for explore dishes page
+ */
+function unApprovedItems() {
+  return models.menu_items
+  .findAll({where: {approved: false}, include: [{model: models.menu_item_tags, include: [models.tags]}, 
+    models.menu_item_ratings, models.restaurants]})
+  .then(function(results) {
+    let menuArr = [];
+    results.forEach(function(result) {
+      let tagsArr = [];
+      result.dataValues.menuitemtags.forEach(function(tag) {
+        tagsArr.push(tag.dataValues.tag.name);
+      });
+      result.dataValues.menuitemtags = tagsArr;
+      let count = result.dataValues.menuitemratings.length;
+      let sum_ratings = 0;
+      result.dataValues.menuitemratings.forEach(function(rating) {
+        sum_ratings += rating.dataValues.rating;
+      });
+      result.dataValues.restaurant = result.restaurant.dataValues.name;
+      delete result.dataValues.menuitemratings;
+      result.dataValues['numRatings'] = count;
+      result.dataValues['avg_rating'] = (sum_ratings/count).toPrecision(2);
       menuArr.push(result.dataValues);
     });
     menuArr.sort(compare_avg_ratings);
