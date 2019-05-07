@@ -10,15 +10,15 @@ export default ({ dish: { name, restaurantId, avg_rating, menuitemtags, restaura
 
         <div className="list-item bg-white p-4 d-block d-md-flex align-items-center">
           <div className="thumbnail-wrap">
-            <img src="images/thumbnail_1.jpg" alt="" className="list-item-thumbnail" />
+            <img src="" alt="" className="list-item-thumbnail" />
           </div>
           <div className="mb-4 mb-md-0 mr-5">
             <div className="list-item-header d-flex align-items-center">
               <h2 className="mr-3 text-black h4"><Link to={`/restaurant/${restaurantId}`}>{name}</Link></h2>
               <div className="badge-wrap">
-                {menuitemtags.map(dishTag => {
+                {menuitemtags.map((dishTag,index) => {
                   return (
-                    <Tag tag={dishTag} />
+                    <Tag key={index} tag={dishTag} />
                   );
                 })}
               </div>

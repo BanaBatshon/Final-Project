@@ -231,7 +231,7 @@ a {
   margin-bottom: 0px;
   width: 100%;
   border-bottom: none;
-  z-index: 2;
+  z-index: 3;
   position: relative; }
   .site-navbar .site-logo {
     font-weight: 200; }
@@ -1318,8 +1318,8 @@ a {
   .list-item .badge-wrap {
     position: relative;
     top: -5px; }
-  .list-item .badge {
-    border-radius: 30px; }
+  /* .list-item .badge {
+    border-radius: 14px; } */
   .list-item:hover, .list-item:focus {
     box-shadow: 0 0 40px -5px rgba(0, 0, 0, 0.2);
     top: -5px;
@@ -1467,4 +1467,19 @@ a {
 
 .approval-btns {
   margin-right: 1rem;
+}
+.num-ratings {
+  margin-left: 0.5rem;
+}
+
+.searchbar-container {
+  margin-top: 2.5rem;
+}
+
+.hero-searchbar {
+  height: 400px;
+}
+
+.dish-badge {
+  border-radius: 14px !important; 
 }

@@ -28,7 +28,7 @@ export default ({ rating, index, deleteRatingHandler, editRatingHandler }) => {
                   readonly={true}
                 />
               </div>
-              <span className="bg-primary text-white badge">Pending</span>
+              <span className="bg-success text-white badge">{ rating.menuitem.approved ? "Approved" : "Pending" }</span>
             </div>
           </div>
 

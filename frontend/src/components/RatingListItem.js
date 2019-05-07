@@ -61,9 +61,9 @@ class RatingListItem extends Component {
               <div className="list-item-header d-flex align-items-center">
                 <h2 className="mr-3 text-black h4"><Link to={`/restaurant/${menuitem.restaurantId}`}>{menuitem.name}</Link></h2>
                 <div className="badge-wrap">
-                  {menuitem.menuitemtags.map(tag => {
+                  {menuitem.menuitemtags.map((tag, index) => {
                     return (
-                      <Tag tag={tag} />
+                      <Tag key={index} tag={tag} />
                     );
                   })}
                 </div>
