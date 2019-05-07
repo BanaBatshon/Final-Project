@@ -54,6 +54,14 @@ router.get('/items', function(req, res) {
   });
 });
 
+/**
+ * Endpoint to retrieve all items in database
+ */
+router.get('/unapproveditems', function(req, res) {
+  unApprovedItems().then(function(results) {
+    res.json(results);
+  });
+});
 
 /**
  * Endpoint to retrieve all items for a restaurant with id id
@@ -117,7 +125,7 @@ router.get('/restaurant/:id/', function(req, res) {
   })
 });
 
- /* Route for getting detailed information for a restaurant
+ /* Route for updating detailed information for a restaurant
  */
 router.patch('/restaurant/:id/', function(req, res) {
   const restaurantId = req.params.id;
@@ -128,7 +136,7 @@ router.patch('/restaurant/:id/', function(req, res) {
   });
 });
 
- /* Route for getting detailed information for a restaurant
+ /* Route for deleting detailed information for a restaurant
  */
 router.delete('/restaurant/:id/', function(req, res) {
   const restaurantId = req.params.id;
@@ -178,6 +186,33 @@ router.get('/items/:id/', function(req, res) {
   })
 });
 
+ /* Route for getting detailed information for a restaurant
+ */
+router.patch('/item/:id/', function(req, res) {
+  const menuId = req.params.id;
+  models.menu_items.update({approved: true, updatedAt: new Date()}, 
+  {where: {id: menuId}})
+  .then(function(rows) {
+    res.json(rows);
+  });
+});
+
+ /* Route for getting detailed information for a restaurant
+ */
+router.delete('/item/:id/', function(req, res) {
+  const menuId = req.params.id;
+  models.menu_item_tags.destroy({where: {menuitemId: menuId}})
+  .then(function(row) {
+    models.menu_item_ratings.destroy({where:{menuitemId: menuId}})
+    .then(function(result) {
+      models.menu_items.destroy({where: {id: menuId}})
+      .then(function(rows) {
+        res.json(rows);
+      });
+    })
+  });
+});
+
 /**
  * Endpoint to create new restaurants
  */
@@ -212,7 +247,7 @@ function getMenuItemsByRestaurant(restaurantId) {
         sum_ratings += rating.dataValues.rating;
         count_ratings++;
       });
-      let avg_rating = (sum_ratings/count_ratings) ? (sum_ratings/count_ratings).toPrecision(2) : 0
+      let avg_rating = (sum_ratings/count_ratings) ? parseFloat((sum_ratings/count_ratings).toPrecision(2)) : 0
       item.dataValues.menuitemratings = avg_rating;
       delete item.menuitemratings;
       item.dataValues.numRatings = count_ratings;
@@ -229,6 +264,37 @@ function getMenuItemsByRestaurant(restaurantId) {
 function allItems() {
   return models.menu_items
   .findAll({where: {approved: true}, include: [{model: models.menu_item_tags, include: [models.tags]}, 
+    models.menu_item_ratings, models.restaurants]})
+  .then(function(results) {
+    let menuArr = [];
+    results.forEach(function(result) {
+      let tagsArr = [];
+      result.dataValues.menuitemtags.forEach(function(tag) {
+        tagsArr.push(tag.dataValues.tag.name);
+      });
+      result.dataValues.menuitemtags = tagsArr;
+      let count = result.dataValues.menuitemratings.length;
+      let sum_ratings = 0;
+      result.dataValues.menuitemratings.forEach(function(rating) {
+        sum_ratings += rating.dataValues.rating;
+      });
+      result.dataValues.restaurant = result.restaurant.dataValues.name;
+      delete result.dataValues.menuitemratings;
+      result.dataValues['numRatings'] = count;
+      result.dataValues['avg_rating'] = parseFloat((sum_ratings/count).toPrecision(2));
+      menuArr.push(result.dataValues);
+    });
+    menuArr.sort(compare_avg_ratings);
+    return menuArr;
+  });
+}
+
+/**
+ * Gets all items for explore dishes page
+ */
+function unApprovedItems() {
+  return models.menu_items
+  .findAll({where: {approved: false}, include: [{model: models.menu_item_tags, include: [models.tags]}, 
     models.menu_item_ratings, models.restaurants]})
   .then(function(results) {
     let menuArr = [];
@@ -274,7 +340,7 @@ function allRestaurants() {
           count_ratings++;
         });
       });
-      const avg_rating = (sum/ratings.length) ?  (sum/ratings.length).toPrecision(2):0;
+      const avg_rating = (sum/ratings.length) ?  parseFloat((sum/ratings.length).toPrecision(2)):0;
       restaurant.dataValues['avg_rating'] = avg_rating;
       let restaurant_tags = restaurant.dataValues.restauranttags;
       let tagsArr = [];
@@ -310,7 +376,7 @@ function notApprovedRestaurants() {
           count_ratings++;
         });
       });
-      const avg_rating = (sum/ratings.length) ?  (sum/ratings.length).toPrecision(2):0;
+      const avg_rating = (sum/ratings.length) ?  parseFloat((sum/ratings.length).toPrecision(2)):0;
       restaurant.dataValues['avg_rating'] = avg_rating;
       let restaurant_tags = restaurant.dataValues.restauranttags;
       let tagsArr = [];
@@ -361,11 +427,11 @@ function getRestaurant(id) {
         avg_ratings.count ++;
       });
       item.dataValues['numRatings'] = ratings.length;
-      item.dataValues.menuitemratings = (sum_ratings/ratings.length).toPrecision(2);
+      item.dataValues.menuitemratings = parseFloat((sum_ratings/ratings.length).toPrecision(2));
       menuItems.push(item.dataValues);
     });
     restaurant.dataValues['numRatings'] = avg_ratings.count;
-    avg_ratings = (avg_ratings.sum/avg_ratings.count) ? (avg_ratings.sum/avg_ratings.count).toPrecision(2): 0;
+    avg_ratings = (avg_ratings.sum/avg_ratings.count) ? parseFloat((avg_ratings.sum/avg_ratings.count).toPrecision(2)): 0;
     menuItems.sort(compare_ratings);
     restaurant.dataValues.menuitems = menuItems;
     restaurant.dataValues['avg_rating'] = avg_ratings;
@@ -416,7 +482,7 @@ function getMenuItemsById (arrIds) {
         avg_ratings += rating.dataValues.rating;
       });
       item.dataValues['numRatings'] = reviewsArr.length;
-      item.dataValues['avg_rating'] = (avg_ratings/reviewsArr.length).toPrecision(2);
+      item.dataValues['avg_rating'] = parseFloat((avg_ratings/reviewsArr.length).toPrecision(2));
       item.dataValues.menuitemratings = reviewsArr;
       menuItems.push(item.dataValues);
     });
@@ -446,7 +512,7 @@ function getRestaurantsById(arr) {
         });
       });
       delete restaurant.dataValues.menuitems;
-      avg_rating = (avg_rating/rating_count).toPrecision(2);
+      avg_rating = parseFloat((avg_rating/rating_count).toPrecision(2));
       restaurant.dataValues.avg_rating = avg_rating;
       restaurant.dataValues['numRatings'] = rating_count;
       let tags = restaurant.dataValues.restauranttags;
