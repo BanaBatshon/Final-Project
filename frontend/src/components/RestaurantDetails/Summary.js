@@ -1,5 +1,6 @@
 import React from 'react';
 import Rating from 'react-rating'
+import RestaurantTag from '../RestaurantTag'
 
 const Summary = (props) => {
   const { details } = props;
@@ -13,7 +14,13 @@ const Summary = (props) => {
             <h1 className="mr-3 pb-3 text-black h2">{details.name}</h1>
           </div>
           <div className="list-item-body d-block d-md-flex">
+
             <div className="badge-wrap">
+              {details.restauranttags.map((restaurantTag, index) => {
+                return (
+                  <RestaurantTag key={index} tag={restaurantTag}/>
+                );
+              })}
             </div>
           </div>
         </div>

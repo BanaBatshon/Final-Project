@@ -1318,8 +1318,8 @@ a {
   .list-item .badge-wrap {
     position: relative;
     top: -5px; }
-  .list-item .badge {
-    border-radius: 30px; }
+  /* .list-item .badge {
+    border-radius: 14px; } */
   .list-item:hover, .list-item:focus {
     box-shadow: 0 0 40px -5px rgba(0, 0, 0, 0.2);
     top: -5px;
@@ -1475,4 +1475,8 @@ a {
 
 .hero-searchbar {
   height: 400px;
+}
+
+.dish-badge {
+  border-radius: 14px !important; 
 }

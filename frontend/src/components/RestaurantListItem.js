@@ -1,5 +1,5 @@
 import React from 'react';
-import Tag from './Tag';
+import RestaurantTag from './RestaurantTag'
 import { Link } from 'react-router-dom'
 import Rating from 'react-rating'
 
@@ -16,9 +16,9 @@ export default ({ restaurant: { name, address, avg_rating, restauranttags, id } 
             <div className="list-item-header d-flex align-items-center">
               <h2 className="mr-3 text-black h4"><Link to={`/restaurant/${id}`}>{name}</Link></h2>
               <div className="badge-wrap">
-                {restauranttags.map(restaurantTag => {
+                {restauranttags.map((restaurantTag, index) => {
                   return (
-                    <Tag tag={restaurantTag} />
+                    <RestaurantTag key={index} tag={restaurantTag} />
                   );
                 })}
               </div>

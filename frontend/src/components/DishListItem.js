@@ -16,9 +16,9 @@ export default ({ dish: { name, restaurantId, avg_rating, menuitemtags, restaura
             <div className="list-item-header d-flex align-items-center">
               <h2 className="mr-3 text-black h4"><Link to={`/restaurant/${restaurantId}`}>{name}</Link></h2>
               <div className="badge-wrap">
-                {menuitemtags.map(dishTag => {
+                {menuitemtags.map((dishTag,index) => {
                   return (
-                    <Tag tag={dishTag} />
+                    <Tag key={index} tag={dishTag} />
                   );
                 })}
               </div>

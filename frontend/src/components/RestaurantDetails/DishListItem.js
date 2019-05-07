@@ -1,7 +1,8 @@
 import React from 'react';
 import Rating from 'react-rating'
+import Tag from '../Tag'
 
-export default ({ dish: { name, menuitemratings, numRatings }, index }) => {
+export default ({ dish: { name, menuitemratings, numRatings, menuitemtags }, index }) => {
   return (
     <div className="row">
       <div className="col-md-12 px-0">
@@ -12,8 +13,11 @@ export default ({ dish: { name, menuitemratings, numRatings }, index }) => {
             <div className="list-item-header d-flex align-items-center">
               <h2 className="mr-3 text-black h4"><strong>{index != null ? `${index + 1}.` : ''} </strong>{name}</h2>
               <div className="badge-wrap">
-                <span className="bg-primary text-white badge py-2 px-4">Pizza</span>
-                <span className="bg-primary text-white badge py-2 px-4">Italian</span>
+                { menuitemtags.map((itemTag, i) => {
+                  return (
+                  <Tag key={i} tag={itemTag} />
+                  );
+                })}
               </div>
             </div>
           </div>

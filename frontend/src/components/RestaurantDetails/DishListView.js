@@ -11,6 +11,7 @@ const DishListView = (props) => {
       </div>
     )
   }
+
   return (
     <Fragment>
       {dishes.map((dish, index) => {
