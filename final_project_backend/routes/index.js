@@ -237,16 +237,22 @@ router.post('/restaurants', function(req, res) {
 
 function getMenuItemsByRestaurant(restaurantId) {
   return models.menu_items
-  .findAll({where: {approved: true, restaurantId: restaurantId}, include: [models.menu_item_ratings]})
+  .findAll({where: {approved: true, restaurantId: restaurantId}, include: [models.menu_item_ratings,
+     {model: models.menu_item_tags, include: [models.tags]}]})
   .then(function(results) {
     let itemsArr = [];
     results.forEach(function(item) {
+      let tags = [];
+      item.menuitemtags.forEach(function(tag) {
+        tags.push(tag.dataValues.tag.dataValues.name);
+      });
       let sum_ratings = 0;
       let count_ratings = 0;
       item.menuitemratings.forEach(function(rating) {
         sum_ratings += rating.dataValues.rating;
         count_ratings++;
       });
+      item.dataValues.menuitemtags = tags;
       let avg_rating = (sum_ratings/count_ratings) ? parseFloat((sum_ratings/count_ratings).toPrecision(2)) : 0
       item.dataValues.menuitemratings = avg_rating;
       delete item.menuitemratings;
@@ -256,7 +262,6 @@ function getMenuItemsByRestaurant(restaurantId) {
     return itemsArr;
   });
 }
-
 
 /**
  * Gets all items for explore dishes page
