@@ -32,36 +32,37 @@ class AddNewItem extends Component {
 
   render() {
     return (
-      <div className="site-section bg-light">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12 col-lg-8 mb-5 bg-white">
-              <NewItemForm
-                setTags={this.setTags}
-                setRestaurants={this.setRestaurants}
-                onSubmit={this.handleSubmit}
-              />
-              <NewItemList />
-            </div>
 
-            <div class="col-lg-4">
-              <div class="p-4 mb-3 bg-white">
-                <h3 class="h5 text-black mb-3">Submission Disclaimer</h3>
-                <p class="mb-4">
-                  We thank you for your contribution to Foodie. Your effort is
-                  what makes Foodie the #1 food review site on the internet.
-                  Please allow up to 48 hours for your submission to be approved
-                  and points to be credited to your account. Thanks!
+        <div className="site-section bg-light">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-lg-8 mb-5 bg-white">
+                <NewItemForm
+                  setTags={this.setTags}
+                  setRestaurants={this.setRestaurants}
+                  onSubmit={this.handleSubmit}
+                />
+                <NewItemList />
+              </div>
+
+              <div className="col-lg-4">
+                <div className="p-4 mb-3 bg-white">
+                  <h3 className="h5 text-black mb-3">Submission Disclaimer</h3>
+                  <p className="mb-4">
+                    We thank you for your contribution to Foodie. Your effort is
+                    what makes Foodie the #1 food review site on the internet.
+                    Please allow up to 48 hours for your submission to be approved
+                    and points to be credited to your account. Thanks!
                 </p>
-                <p class="mb-0 font-weight-bold">Questions?</p>
-                <p class="mb-0">
-                  <a href="#">youremail@domain.com</a>
-                </p>
+                  <p className="mb-0 font-weight-bold">Questions?</p>
+                  <p className="mb-0">
+                    <a href="#">youremail@domain.com</a>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
     );
   }
 }
