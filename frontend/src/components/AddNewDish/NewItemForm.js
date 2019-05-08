@@ -114,13 +114,14 @@ class NewItemForm extends Component {
     };
 
     return (
-      <form onSubmit={this.props.handleSubmit} action="#" class="p-5">
+      <form onSubmit={this.props.handleSubmit} action="#" className="p-5">
         <div className="row form-group">
-          <div className="col-md-12 mb-3 mb-md-0">
+          <div className="col-md-12 mb-3 mb-md-0 rest-auto-suggest">
             <label className="font-weight-bold" htmlFor="restaurantId">
               Restaurant
             </label>
             <Autosuggest
+              className="asdffff"
               suggestions={this.state.restaurants}
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
               onSuggestionsClearRequested={this.onSuggestionsClearRequested}

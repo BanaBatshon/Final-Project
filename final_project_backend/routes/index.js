@@ -91,6 +91,10 @@ router.post('/items', function(req, res) {
           tagId: tag.id, createdAt: new Date(), updatedAt: new Date()}).save()
       });
      res.send();
+    })
+    .catch(function (err) {
+      // print the error details
+      console.log(err);
     });
 });
 

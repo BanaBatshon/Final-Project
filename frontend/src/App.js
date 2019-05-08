@@ -17,6 +17,7 @@ import ScrollToTop from './components/ScrollToTop'
 import Footer from './components/Footer'
 import NewRestaurant from './components/AddNewRestaurant/NewRestaurant';
 import AddNewItem from './components/AddNewDish/AddNewItem';
+import Success from './components/Success';
 
 class App extends Component {
   render() {
@@ -38,6 +39,7 @@ class App extends Component {
             <Route path='/login' component={Login} />
             <Route path='/approve/restaurants' component={ApproveRestaurants} />
             <Route path='/approve/dishes' component={ApproveDishes} />
+            <Route path='/success' component={Success} />
             <Footer />
           </div>
         </ScrollToTop>

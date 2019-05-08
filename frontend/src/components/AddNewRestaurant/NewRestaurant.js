@@ -1,37 +1,58 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { Field, reduxForm } from "redux-form";
 import axios from "axios";
+import { Redirect } from 'react-router-dom';
 
-const NewRestaurant = () => {
-  const onSubmit = values => {
+class NewRestaurant extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      redirect: false
+    }
+  }
+
+  onSubmit = values => {
     axios.post("http://localhost:3001/restaurants", values);
+    this.setState({ redirect: true });    
   };
-  return (
-    <div className="site-section bg-light">
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12 col-lg-8 mb-5">
-            <NewRestaurantForm onSubmit={onSubmit} />{" "}
-          </div>
-          <div className="col-lg-4">
-            <div className="p-4 mb-3 bg-white">
-              <h3 className="h5 text-black mb-3">Submission Disclaimer</h3>
-              <p className="mb-4">
-                We thank you for your contribution to Foodie. Your effort is
-                what makes Foodie the #1 food review site on the internet.
-                Please allow up to 48 hours for your submission to be approved
-                and points to be credited to your account. Thanks!
-              </p>
-              <p className="mb-0 font-weight-bold">Questions?</p>
-              <p className="mb-0">
-                <a href="#">youremail@domain.com</a>
-              </p>
+  
+  render() {
+    const { redirect } = this.state
+
+    return (
+
+      <Fragment>
+        {redirect && (<Redirect to="/success" />)}
+        <div className="site-section bg-light">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-lg-8 mb-5">
+                <NewRestaurantForm onSubmit={this.onSubmit} />{" "}
+              </div>
+              <div className="col-lg-4">
+                <div className="p-4 mb-3 bg-white">
+                  <h3 className="h5 text-black mb-3">Submission Disclaimer</h3>
+                  <p className="mb-4">
+                    We thank you for your contribution to Foodie. Your effort is
+                    what makes Foodie the #1 food review site on the internet.
+                    Please allow up to 48 hours for your submission to be approved
+                    and points to be credited to your account. Thanks!
+                  </p>
+                  <p className="mb-0 font-weight-bold">Questions?</p>
+                  <p className="mb-0">
+                    <a href="#">youremail@domain.com</a>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      </Fragment>
+    );
+  }
+  
 };
 
 let NewRestaurantForm = props => {
