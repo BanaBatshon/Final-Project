@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Background from '../../images/hero_bg_6.jpg';
+import Background from '../images/hero_bg_6.jpg';
 
 const style = {backgroundImage: (`url(${Background})`)}
 
-class LoginBanner extends Component {
+class HeroBanner extends Component {
     
     render() {
         return (
@@ -12,4 +12,4 @@ class LoginBanner extends Component {
     }
 }
 
-export default LoginBanner;
+export default HeroBanner;

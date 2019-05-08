@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import MainView from './MainView';
-import LoginBanner from './LoginBanner';
+import HeroBanner from '../HeroBanner';
 
 class Login extends Component {
   render() {
     return (
       <Fragment>
-        <LoginBanner />
+        <HeroBanner />
         <MainView />
       </Fragment>
     );
