@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 import '../src/styles/bootstrap.min.css';
 import '../src/styles/style.css';
+import '../src/styles/react-tag.css';
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
@@ -16,6 +17,10 @@ import { fetchAllDishes } from './actions/index';
 import registerServiceWorker from './registerServiceWorker';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/form-cleanup
 const store = createStore(rootReducer,composeEnhancers(
   applyMiddleware(thunk)
 ));

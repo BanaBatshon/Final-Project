@@ -1,7 +1,7 @@
 import {
   FETCH_RESTAURANTS, FETCH_RESTAURANT_SEARCH_RESULTS, FETCH_RESTAURANT,
   FETCH_DISHES, FETCH_DISH_SEARCH_RESULTS, FETCH_MY_RATINGS,
-   FETCH_MY_RATINGS_BY_RESTAURANT, ADD_RATING, DELETE_RATING, EDIT_RATING, LOGIN
+   FETCH_MY_RATINGS_BY_RESTAURANT, ADD_RATING, DELETE_RATING, EDIT_RATING, LOGIN, NEW_ITEM_ADDED, NEW_ITEM_REMOVED, FETCH_NEW_ITEMS
 } from './types';
 
 import axios from 'axios';
@@ -234,3 +234,24 @@ export const editRating = ({ userid, id, rating, restaurantId }) => {
       })
     }
   };
+
+  export const addNewItemToNewItemList = (menuItem) => {
+  return {
+    type: NEW_ITEM_ADDED,
+    menuItem
+  }
+};
+
+export const removeNewItemToNewItemList = (menuItem) => {
+  return {
+    type: NEW_ITEM_REMOVED,
+    menuItem
+  }
+};
+
+export const fetchNewItems = (newItems) => {
+  return {
+    type: FETCH_NEW_ITEMS,
+    newItems
+  }
+};

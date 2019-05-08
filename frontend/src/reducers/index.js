@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import restaurants from './restaurantReducer';
+import menuItem from './menuItemReducer';
+import fetchNewItems from './fetchNewItemsReducer';
 import myRatings from './userReducer';
 import dishes from './dishReducer';
 import user from './userReducer';
@@ -11,5 +13,7 @@ export default combineReducers({
     myRatings: myRatings,
     dishes: dishes,
     form: formReducer,
-    user: user
-});
+    user: user,
+    newItems: menuItem,
+    fetchNewItems: fetchNewItems
+})
