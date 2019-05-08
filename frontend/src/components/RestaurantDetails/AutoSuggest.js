@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import axios from 'axios';
 import { withRouter } from "react-router-dom"
+import AddDishModal from './AddDishModal'
 
 class AutoSuggest extends Component {
 
@@ -11,7 +12,8 @@ class AutoSuggest extends Component {
     this.state = {
       value: '',
       suggestions: [],
-      dishes: []
+      dishes: [],
+      modalShow: false
     };
 
     this.fetchAllRestaurantDishes();
@@ -95,16 +97,18 @@ class AutoSuggest extends Component {
     event.preventDefault();
 
     if (suggestion.isAddNew) {
-      console.log('Add new:', this.state.value);
+      this.setState({ modalShow: true })
     } else {
       this.props.selection(suggestion);
     }
-    this.setState({
-      value: ''
-    });
+    // this.setState({
+    //   value: ''
+    // });
   };
 
   render() {
+    let modalClose = () => this.setState({ modalShow: false });
+
     const { value, suggestions } = this.state;
     const inputProps = {
       placeholder: "Search for dish",
@@ -113,6 +117,8 @@ class AutoSuggest extends Component {
     };
 
     return (
+      <Fragment>
+
       <Autosuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -122,6 +128,14 @@ class AutoSuggest extends Component {
         onSuggestionSelected={this.onSuggestionSelected}
         inputProps={inputProps}
       />
+
+      <AddDishModal
+        show={this.state.modalShow}
+        onHide={modalClose}
+        restaurant={this.props.restaurant}
+        newDish={this.state.value}
+      />
+      </Fragment>
     );
   }
 }
