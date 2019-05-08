@@ -17,10 +17,6 @@ import { fetchAllDishes } from './actions/index';
 import registerServiceWorker from './registerServiceWorker';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-<<<<<<< HEAD
-=======
-
->>>>>>> feature/form-cleanup
 const store = createStore(rootReducer,composeEnhancers(
   applyMiddleware(thunk)
 ));
