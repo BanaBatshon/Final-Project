@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import MenuItemRow from "./MenuItemRow";
-import { Component, Fragment } from "react";
+import { Component } from "react";
 import { postMenuItemsToServer } from "../../util/index.js";
 
 class NewItemListTable extends Component {

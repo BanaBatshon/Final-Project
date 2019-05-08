@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import NewItemForm from "./NewItemForm";
 import NewItemList from "./NewItemList";
