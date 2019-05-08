@@ -13,44 +13,40 @@ class NewItemListTable extends Component {
   render() {
     if (this.props.newItems.menuItem.length) {
       return (
-        <Fragment>
-          <div className="table table-sm">
-            <table>
-              <thead>
-                <tr>
-                  <th className="w-5">#</th>
-                  <th className="w-25">Dish</th>
-                  <th className="w-25">Tags</th>
-                  <th className="w-15" />
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.newItems.menuItem.map((item, index) => {
-                  return (
-                    <MenuItemRow
-                      key={index}
-                      index={index}
-                      name={item.name}
-                      tags={item.tags}
-                      item={item}
-                    />
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+        <div className="row p-5">
+          <table className="table table-sm">
+            <thead>
+              <tr>
+                <th className="w-5">#</th>
+                <th className="w-25">Dish</th>
+                <th className="w-25">Tags</th>
+                <th className="w-15" />
+              </tr>
+            </thead>
+            <tbody>
+              {this.props.newItems.menuItem.map((item, index) => {
+                return (
+                  <MenuItemRow
+                    key={index}
+                    index={index}
+                    name={item.name}
+                    tags={item.tags}
+                    item={item}
+                  />
+                );
+              })}
+            </tbody>
+          </table>
 
-          <div className="row form-group">
-            <div className="col-md-12">
-              <button
-                onClick={this.handleOnSubmit}
-                className="btn btn-primary  py-2 px-4"
-              >
-                Submit
-              </button>
-            </div>
+          <div className="col-md-12 py-3 mt-3 d-block d-md-flex justify-content-center">
+            <button
+              onClick={this.handleOnSubmit}
+              className="btn btn-primary  py-2 px-4"
+            >
+              Submit
+            </button>
           </div>
-        </Fragment>
+        </div>
       );
     } else {
       return <div />;

@@ -114,98 +114,67 @@ class NewItemForm extends Component {
     };
 
     return (
-      <div class="site-section bg-light">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 col-lg-8 mb-5">
-              <form
-                onSubmit={this.props.handleSubmit}
-                action="#"
-                class="p-5 bg-white"
-              >
-                <div className="row form-group">
-                  <div className="col-md-12 mb-3 mb-md-0">
-                    <label className="font-weight-bold" htmlFor="restaurantId">
-                      Restaurant
-                    </label>
-                    <Autosuggest
-                      suggestions={this.state.restaurants}
-                      onSuggestionsFetchRequested={
-                        this.onSuggestionsFetchRequested
-                      }
-                      onSuggestionsClearRequested={
-                        this.onSuggestionsClearRequested
-                      }
-                      getSuggestionValue={this.getSuggestionValue}
-                      renderSuggestion={this.renderSuggestion}
-                      onSuggestionSelected={this.onSuggestionSelected}
-                      inputProps={inputProps}
-                    />
-                  </div>
-                </div>
-
-                <div className="row form-group">
-                  <div className="col-md-12">
-                    <label className="font-weight-bold" htmlFor="name">
-                      Dish
-                    </label>
-                    <Field
-                      name="name"
-                      component="input"
-                      type="text"
-                      id="name"
-                      className="form-control"
-                      placeholder="eg. Pepperoni Pizza"
-                    />
-                  </div>
-                </div>
-
-                <div className="row form-group">
-                  <div className="col-md-12">
-                    <label className="font-weight-bold" htmlFor="tags">
-                      Tags
-                    </label>
-                    <ReactTags
-                      className="form-control"
-                      tags={this.state.tags}
-                      suggestions={this.state.tagSuggestions}
-                      handleDelete={this.handleDelete}
-                      handleAddition={this.handleAddition}
-                    />
-                  </div>
-                </div>
-
-                <div className="row form-group">
-                  <div className="col-md-12">
-                    <button
-                      type="submit"
-                      onClick={this.deletTags}
-                      className="btn btn-primary  py-2 px-4"
-                    >
-                      Add Dish
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="col-lg-4">
-              <div class="p-4 mb-3 bg-white">
-                <h3 class="h5 text-black mb-3">Submission Disclaimer</h3>
-                <p class="mb-4">
-                  We thank you for your contribution to Foodie. Your effort is
-                  what makes Foodie the #1 food review site on the internet.
-                  Please allow up to 48 hours for your submission to be approved
-                  and points to be credited to your account. Thanks!
-                </p>
-                <p class="mb-0 font-weight-bold">Questions?</p>
-                <p class="mb-0">
-                  <a href="#">youremail@domain.com</a>
-                </p>
-              </div>
-            </div>
+      <form onSubmit={this.props.handleSubmit} action="#" class="p-5">
+        <div className="row form-group">
+          <div className="col-md-12 mb-3 mb-md-0">
+            <label className="font-weight-bold" htmlFor="restaurantId">
+              Restaurant
+            </label>
+            <Autosuggest
+              suggestions={this.state.restaurants}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              getSuggestionValue={this.getSuggestionValue}
+              renderSuggestion={this.renderSuggestion}
+              onSuggestionSelected={this.onSuggestionSelected}
+              inputProps={inputProps}
+            />
           </div>
         </div>
-      </div>
+
+        <div className="row form-group">
+          <div className="col-md-12">
+            <label className="font-weight-bold" htmlFor="name">
+              Dish
+            </label>
+            <Field
+              name="name"
+              component="input"
+              type="text"
+              id="name"
+              className="form-control"
+              placeholder="eg. Pepperoni Pizza"
+            />
+          </div>
+        </div>
+
+        <div className="row form-group">
+          <div className="col-md-12">
+            <label className="font-weight-bold" htmlFor="tags">
+              Tags
+            </label>
+            <ReactTags
+              className="form-control"
+              tags={this.state.tags}
+              suggestions={this.state.tagSuggestions}
+              handleDelete={this.handleDelete}
+              handleAddition={this.handleAddition}
+            />
+          </div>
+        </div>
+
+        <div className="row form-group">
+          <div className="col-md-12">
+            <button
+              type="submit"
+              onClick={this.deletTags}
+              className="btn btn-primary float-right py-2 px-4"
+            >
+              Add Dish
+            </button>
+          </div>
+        </div>
+      </form>
     );
   }
 }
