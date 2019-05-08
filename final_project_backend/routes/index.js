@@ -221,9 +221,10 @@ router.post('/restaurants', function(req, res) {
   const address = req.body.address;
   const phone_number = req.body.phone_number;
   const website = req.body.website;
-  const approved = req.body.approved;
+  const approved = false;
+  const description = req.body.description;
   models.restaurants.build({name: name, address: address, phone_number: phone_number, 
-    website: website, approved: approved, createdAt: new Date(), updatedAt: new Date()})
+    website: website, approved: approved, description: description, createdAt: new Date(), updatedAt: new Date()})
     .save()
     .then(function(restaurant) {
       res.status(200).end();

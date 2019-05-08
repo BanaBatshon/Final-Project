@@ -9,3 +9,6 @@ export const ADD_RATING = 'ADD_RATING';
 export const DELETE_RATING = 'DELETE_RATING';
 export const EDIT_RATING = 'EDIT_RATING';
 export const LOGIN = 'LOGIN';
+export const NEW_ITEM_ADDED = 'NEW_MENU_ITEM_ADDED';
+export const NEW_ITEM_REMOVED = 'NEW_MENU_ITEM_REMOVED';
+export const FETCH_NEW_ITEMS = 'FETCH_NEW_ITEMS';
