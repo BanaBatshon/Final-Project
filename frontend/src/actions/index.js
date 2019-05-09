@@ -205,7 +205,12 @@ export const editRating = ({ userid, id, rating, restaurantId }) => {
     return axios.patch(`${apiUrl}/users/${id}/ratings`, { rating })
       .then(response => {
         dispatch(editRatingSuccess(response.data))
-        dispatch(fetchAllMyRatingsByRestaurant(userid, restaurantId))
+      })
+      .then(() => {
+        dispatch(fetchAllMyRatingsByRestaurant(userid, restaurantId));
+      })
+      .then(() => {
+        dispatch(fetchSingleRestaurant('/restaurant/' + restaurantId));
       })
       .catch(error => {
         throw (error);
