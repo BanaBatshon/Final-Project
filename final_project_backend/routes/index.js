@@ -82,8 +82,7 @@ router.post('/items', function(req, res) {
   const approved = false;
   const tags = req.body.tags; //|| [{id: 28, name: 'pizza'}, {id: 7, name:'italian'}, {id :2, name: 'pasta'}];
 
-  models.menu_items.build({name: name, restaurantId: restaurantId, 
-    approved: approved, createdAt: new Date(), updatedAt: new Date()})
+  models.menu_items.build({name: name, restaurantId: restaurantId, approved: approved, createdAt: new Date(), updatedAt: new Date()})
     .save().then(function(menu_item) {
       let menuitemId = menu_item.dataValues.id;
       tags.forEach(function(tag) {
@@ -291,7 +290,7 @@ function allItems() {
       result.dataValues.restaurant = result.restaurant.dataValues.name;
       delete result.dataValues.menuitemratings;
       result.dataValues['numRatings'] = count;
-      result.dataValues['avg_rating'] = parseFloat((sum_ratings/count).toPrecision(2));
+      result.dataValues['avg_rating'] = (sum_ratings/count) ? parseFloat((sum_ratings/count).toPrecision(2)) : 0
       menuArr.push(result.dataValues);
     });
     menuArr.sort(compare_avg_ratings);
@@ -437,7 +436,7 @@ function getRestaurant(id) {
         avg_ratings.count ++;
       });
       item.dataValues['numRatings'] = ratings.length;
-      item.dataValues.menuitemratings = parseFloat((sum_ratings/ratings.length).toPrecision(2));
+      item.dataValues.menuitemratings = parseFloat((sum_ratings/ratings.length).toPrecision(2)) || 0;
       menuItems.push(item.dataValues);
     });
     restaurant.dataValues['numRatings'] = avg_ratings.count;
@@ -492,7 +491,8 @@ function getMenuItemsById (arrIds) {
         avg_ratings += rating.dataValues.rating;
       });
       item.dataValues['numRatings'] = reviewsArr.length;
-      item.dataValues['avg_rating'] = parseFloat((avg_ratings/reviewsArr.length).toPrecision(2));
+      item.dataValues['avg_rating'] = parseFloat((avg_ratings/reviewsArr.length).toPrecision(2)) || 0;
+      (avg_ratings.sum/avg_ratings.count) ? parseFloat((avg_ratings.sum/avg_ratings.count).toPrecision(2)): 0;
       item.dataValues.menuitemratings = reviewsArr;
       menuItems.push(item.dataValues);
     });
@@ -522,7 +522,7 @@ function getRestaurantsById(arr) {
         });
       });
       delete restaurant.dataValues.menuitems;
-      avg_rating = parseFloat((avg_rating/rating_count).toPrecision(2));
+      avg_rating = parseFloat((avg_rating/rating_count).toPrecision(2)) || 0;
       restaurant.dataValues.avg_rating = avg_rating;
       restaurant.dataValues['numRatings'] = rating_count;
       let tags = restaurant.dataValues.restauranttags;

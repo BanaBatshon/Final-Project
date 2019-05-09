@@ -1,9 +1,16 @@
 import DishListView from '../DishListView';
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchAllDishes } from '../../actions/index';
 
-const MainView = (props) => {
-  const { dishes } = props
+class MainView extends Component {
+
+  componentDidMount() {
+    this.props.dispatch(fetchAllDishes());
+  }
+
+  render() {
+    const { dishes } = this.props
   
   return (
     <div className="site-section bg-light">
@@ -17,7 +24,9 @@ const MainView = (props) => {
       </div>
     </div>
   );
-};
+  }
+}
+  
 
 const mapStateToProps = state => {
   return {
