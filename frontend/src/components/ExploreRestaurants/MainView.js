@@ -1,11 +1,18 @@
 import RestaurantListView from '../RestaurantListView';
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchAllRestaurants } from '../../actions/index';
 
-const MainView = (props) => {
-  const { restaurants } = props
-  
-  return (
+class MainView extends Component {
+
+  componentDidMount() {
+    this.props.dispatch(fetchAllRestaurants());
+  }
+
+  render() {
+    const { restaurants } = this.props
+
+    return (
     <div className="site-section bg-light">
       <div className="container">
         <div className="row justify-content-start text-left mb-5">
@@ -16,7 +23,7 @@ const MainView = (props) => {
         <RestaurantListView restaurants={restaurants} />
       </div>
     </div>
-  );
+  )}
 };
 
 const mapStateToProps = state => {
