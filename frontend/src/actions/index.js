@@ -154,7 +154,12 @@ export const createdRating = ({ userId, menuitemId, rating, restaurantId }) => {
     return axios.post(`${apiUrl}/users/${userId}/ratings`, { userId, menuitemId, rating })
       .then(response => {
         dispatch(createRatingSuccess(response.data))
+      })
+      .then(() => {
         dispatch(fetchAllMyRatingsByRestaurant(userId, restaurantId));
+      })
+      .then(() => {
+        dispatch(fetchSingleRestaurant('/restaurant/' + restaurantId));
       })
       .catch(error => {
         throw (error);
@@ -174,7 +179,12 @@ export const deleteRating = (userId, id, restaurantId) => {
     return axios.delete(`${apiUrl}/users/${id}/ratings`)
       .then(response => {
         dispatch(deleteRatingSuccess(response.data))
-        dispatch(fetchAllMyRatingsByRestaurant(userId, restaurantId))
+      })
+      .then(() => {
+        dispatch(fetchAllMyRatingsByRestaurant(userId, restaurantId));
+      })
+      .then(() => {
+        dispatch(fetchSingleRestaurant('/restaurant/' + restaurantId));
       })
       .catch(error => {
         throw (error);
