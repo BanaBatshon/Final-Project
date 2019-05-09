@@ -81,9 +81,11 @@ router.post('/items', function(req, res) {
   const restaurantId = req.body.restaurantId;// || 1;
   const approved = false;
   const tags = req.body.tags; //|| [{id: 28, name: 'pizza'}, {id: 7, name:'italian'}, {id :2, name: 'pasta'}];
+  const numRatings = 0;
+  const avg_rating = 0;
 
   models.menu_items.build({name: name, restaurantId: restaurantId, 
-    approved: approved, createdAt: new Date(), updatedAt: new Date()})
+    approved: approved, numRatings: numRatings, avg_rating: avg_rating, createdAt: new Date(), updatedAt: new Date()})
     .save().then(function(menu_item) {
       let menuitemId = menu_item.dataValues.id;
       tags.forEach(function(tag) {
@@ -259,6 +261,7 @@ function getMenuItemsByRestaurant(restaurantId) {
       });
       item.dataValues.menuitemtags = tags;
       let avg_rating = (sum_ratings/count_ratings) ? parseFloat((sum_ratings/count_ratings).toPrecision(2)) : 0
+      console.log(avg_rating);
       item.dataValues.menuitemratings = avg_rating;
       delete item.menuitemratings;
       item.dataValues.numRatings = count_ratings;
@@ -291,7 +294,7 @@ function allItems() {
       result.dataValues.restaurant = result.restaurant.dataValues.name;
       delete result.dataValues.menuitemratings;
       result.dataValues['numRatings'] = count;
-      result.dataValues['avg_rating'] = parseFloat((sum_ratings/count).toPrecision(2));
+      result.dataValues['avg_rating'] = (sum_ratings/count) ? parseFloat((sum_ratings/count).toPrecision(2)) : 0
       menuArr.push(result.dataValues);
     });
     menuArr.sort(compare_avg_ratings);
