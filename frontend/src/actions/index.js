@@ -66,7 +66,7 @@ export const fetchAllSearchRestaurants = (query) => {
   };
 };
 
-export const fetchDishes = (dishes) => {
+export const fetchDishes = (dishes = []) => {
   return {
     type: FETCH_DISHES,
     dishes
