@@ -13,9 +13,9 @@ const RatingListView = (props) => {
 
   return (
     <Fragment>
-      {myRatings.map(rating => {
+      {myRatings.map((rating, index) => {
           return (
-            <RatingListItem rating={rating} key={rating.id} />
+            <RatingListItem rating={rating} index={index} key={rating.id} />
           );
         })}
     </Fragment>
