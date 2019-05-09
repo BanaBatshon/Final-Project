@@ -12,9 +12,9 @@ const DishListView = (props) => {
   }
   return (
     <Fragment>
-      {dishes.map(dish => {
+      {dishes.map((dish, index) => {
           return (
-            <DishListItem dish={dish} key={dish.id} />
+            <DishListItem dish={dish} index={index} key={dish.id} />
           );
         })}
     </Fragment>

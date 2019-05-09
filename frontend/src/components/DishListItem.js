@@ -3,14 +3,14 @@ import Tag from './Tag';
 import { Link } from 'react-router-dom'
 import Rating from 'react-rating'
 
-export default ({ dish: { name, restaurantId, avg_rating, menuitemtags, restaurant } }) => {
+export default ({ dish: { name, restaurantId, avg_rating, menuitemtags, restaurant }, index }) => {
   return (
     <div className="row">
       <div className="col-md-12">
 
         <div className="list-item bg-white p-4 d-block d-md-flex align-items-center">
           <div className="thumbnail-wrap">
-            <img src="" alt="" className="list-item-thumbnail" />
+            <img src={`/images/thumbnail_${index + 1}.jpg`} alt="" className="list-item-thumbnail" />
           </div>
           <div className="mb-4 mb-md-0 mr-5">
             <div className="list-item-header d-flex align-items-center">
