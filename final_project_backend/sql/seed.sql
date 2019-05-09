@@ -47,6 +47,6 @@ WHERE  T1."ctid"    < T2."ctid"       -- select the "older" ones
   AND  T1."userId"    = T2."userId"       -- list columns that define duplicates
   AND  T1."menuitemId" = T2."menuitemId";
 
-ALTER SEQUENCE menuitemratings_id_seq RESTART 1001;
+ALTER SEQUENCE menuitemratings_id_seq RESTART 1401;
 ALTER SEQUENCE menuitems_id_seq RESTART 25;
 ALTER SEQUENCE restaurants_id_seq RESTART 6;

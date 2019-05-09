@@ -1,5 +1,5 @@
 id,first_name,last_name,email,phone_number,password,user_type,updatedAt,createdAt
-1,Will,Sands-Allan,wsandsallan0@bloomberg.com,(992) 5211608,MiL9OnDm,user,2018-06-09 16:02:02,2019-03-22 11:03:16
+1,Will,Sands-Allan,user@foodie.com,(992) 5211608,MiL9OnDm,user,2018-06-09 16:02:02,2019-03-22 11:03:16
 2,Lelia,Cockett,lcockett1@free.fr,(217) 3419973,7KMHm9rI,user,2018-07-22 16:22:39,2018-08-24 21:57:42
 3,Delmer,Joyes,djoyes2@answers.com,(318) 9576906,usveiX,user,2019-04-15 14:36:21,2019-03-29 01:29:13
 4,Rogers,Nield,rnield3@google.es,(668) 2910636,pJIVx4vQ,user,2018-12-01 00:23:10,2018-07-30 04:29:19
@@ -200,3 +200,4 @@ id,first_name,last_name,email,phone_number,password,user_type,updatedAt,createdA
 199,Theodore,Jarvis,tjarvis5i@oracle.com,(510) 3092145,Nt133FZPTB,user,2018-08-05 16:55:06,2018-06-30 19:23:27
 200,Noble,Bernadot,nbernadot5j@wix.com,(773) 5058951,aBS1Pu,user,2019-02-07 10:32:11,2018-08-03 14:49:59
 201,Super,Admin,test3@test.com,(773) 5058951,aBS1Pu,admin,2019-02-07 10:32:11,2018-08-03 14:49:59
+202,Super,Admin,admin@foodie.com,(773) 5058951,aBS1Pu,admin,2019-02-07 10:32:11,2018-08-03 14:49:59
