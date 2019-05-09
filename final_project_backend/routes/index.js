@@ -361,6 +361,7 @@ function allRestaurants() {
       delete restaurant.dataValues.menuitems
       restaurants.push(restaurant.dataValues);
     });
+    restaurants.sort(compare_avg_ratings)
     return restaurants;
   });
 }
