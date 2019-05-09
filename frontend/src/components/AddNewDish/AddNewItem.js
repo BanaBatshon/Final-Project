@@ -35,6 +35,11 @@ class AddNewItem extends Component {
 
         <div className="site-section bg-light">
           <div className="container">
+          <div className="row justify-content-start text-left mb-5">
+              <div className="col-md-9">
+                <h2 className="font-weight-bold text-black">New Dishes Submission</h2>
+              </div>
+            </div>
             <div className="row">
               <div className="col-md-12 col-lg-8 mb-5 bg-white">
                 <NewItemForm

@@ -15,9 +15,9 @@ class NewRestaurant extends Component {
 
   onSubmit = values => {
     axios.post("http://localhost:3001/restaurants", values);
-    this.setState({ redirect: true });    
+    this.setState({ redirect: true });
   };
-  
+
   render() {
     const { redirect } = this.state
 
@@ -27,6 +27,11 @@ class NewRestaurant extends Component {
         {redirect && (<Redirect to="/success" />)}
         <div className="site-section bg-light">
           <div className="container">
+            <div className="row justify-content-start text-left mb-5">
+              <div className="col-md-9">
+                <h2 className="font-weight-bold text-black">New Restaurant Submission</h2>
+              </div>
+            </div>
             <div className="row">
               <div className="col-md-12 col-lg-8 mb-5">
                 <NewRestaurantForm onSubmit={this.onSubmit} />{" "}
@@ -52,7 +57,7 @@ class NewRestaurant extends Component {
       </Fragment>
     );
   }
-  
+
 };
 
 let NewRestaurantForm = props => {
