@@ -6,7 +6,7 @@ Foodie is a full stack web app that allows users to search for the best dishes a
 
 When a user searches for a food of interest (eg. pizza, burger, etc..), a list of results (restaurants or dishes depending on the search type) ranked from the best to the worst will be returned back to the user. 
 
-Clicking on one of the results from the list will route to the restaurant details page where users are shown the restaurant contact info, a list view of top dishes and the ability to reate dishes.
+Clicking on one of the results from the list will route to the restaurant details page where users are shown the restaurant contact info, a list view of top dishes and the ability to rate dishes.
 
 Users can make submissions of new or missing restaurants and dishes through the use of our forms. New submissions are marked as pending and are not accessible until they are approved by the admin.
 
